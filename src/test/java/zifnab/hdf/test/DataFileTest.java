@@ -1,7 +1,6 @@
 package zifnab.hdf.test;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import javax.annotation.Nonnull;
@@ -83,12 +82,17 @@ public class DataFileTest
   private String writeElement( @Nonnull final DataElement root )
     throws IOException
   {
-    final Path file = Files.createTempFile( "zifnab", ".txt" );
+    final Path file = createTempDataFile();
+    createDataFile( root, file ).write();
+    return readContent( file );
+  }
+
+  @Nonnull
+  private DataFile createDataFile( @Nonnull final DataElement root, @Nonnull final Path file )
+  {
     final DataFile dataFile = new DataFile( file, root );
     assertEquals( dataFile.getPath(), file );
     assertEquals( dataFile.getRoot(), root );
-    dataFile.write();
-
-    return readContent( file );
+    return dataFile;
   }
 }
