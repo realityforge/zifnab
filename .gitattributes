@@ -1,8 +1,5 @@
 # DO NOT EDIT: File is auto-generated
 * -text
-*.graphql text
-*.graphqls text
-*.java text
 *.md text
 *.rake text
 *.yaml text
