@@ -68,9 +68,15 @@ public final class DataElement
   void write( @Nonnull final Writer writer, final int depth )
     throws IOException
   {
+    writeSelf( writer, depth );
+    writeChildren( writer, depth );
+  }
+
+  private void writeSelf( @Nonnull final Writer writer, final int depth )
+    throws IOException
+  {
     writeIndent( writer, depth );
     writeTokens( writer );
-    writeChildren( writer, depth );
   }
 
   private void writeChildren( @Nonnull final Writer writer, final int depth )
