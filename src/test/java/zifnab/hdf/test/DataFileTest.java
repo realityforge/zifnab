@@ -14,47 +14,7 @@ public class DataFileTest
   extends AbstractTest
 {
   @Test
-  public void writeWithOneLayer()
-    throws Exception
-  {
-    final DataElement root = new DataElement( null, Arrays.asList( "tip", "spike:" ) );
-
-    final String output = writeElement( root );
-    assertEquals( output, "tip spike:\n" );
-  }
-
-  @Test
-  public void writeTokensWithSpaces()
-    throws Exception
-  {
-    final DataElement root = new DataElement( null, Arrays.asList( "tip", "awesome spike:" ) );
-
-    final String output = writeElement( root );
-    assertEquals( output, "tip \"awesome spike:\"\n" );
-  }
-
-  @Test
-  public void writeTokensWithQuotes()
-    throws Exception
-  {
-    final DataElement root = new DataElement( null, "planet", "Air \"quotes\"" );
-
-    final String output = writeElement( root );
-    assertEquals( output, "planet `Air \"quotes\"`\n" );
-  }
-
-  @Test
-  public void writeEmptyToken()
-    throws Exception
-  {
-    final DataElement root = new DataElement( null, "planet", "" );
-
-    final String output = writeElement( root );
-    assertEquals( output, "planet \"\"\n" );
-  }
-
-  @Test
-  public void writeWithMultipleLayers()
+  public void writeComplexRepresentation()
     throws Exception
   {
     final DataElement root = new DataElement( null, "mission", "Drought Relief" );

@@ -12,7 +12,6 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
@@ -77,86 +76,8 @@ public final class DataFile
     {
       try ( final Writer writer = new BufferedWriter( fileWriter ) )
       {
-        write( writer, _root, 0 );
+        _root.write( writer, 0 );
       }
-    }
-  }
-
-  private void write( @Nonnull final Writer writer, @Nonnull final DataElement element, final int depth )
-    throws IOException
-  {
-    writeIndent( writer, depth );
-    writeTokens( writer, element );
-    writeChildren( writer, element, depth );
-  }
-
-  private void writeChildren( @Nonnull final Writer writer, @Nonnull final DataElement element, final int depth )
-    throws IOException
-  {
-    for ( final DataElement child : element.getChildren() )
-    {
-      write( writer, child, depth + 1 );
-    }
-  }
-
-  private void writeTokens( @Nonnull final Writer writer,
-                            @Nonnull final DataElement element )
-    throws IOException
-  {
-    final List<String> tokens = element.getTokens();
-    assert !tokens.isEmpty();
-    boolean first = true;
-    for ( final String token : tokens )
-    {
-      if ( !first )
-      {
-        writer.write( ' ' );
-      }
-      first = false;
-      writeToken( writer, token );
-    }
-    writer.write( '\n' );
-  }
-
-  private void writeToken( @Nonnull final Writer writer, @Nonnull final String token )
-    throws IOException
-  {
-    if ( token.isEmpty() )
-    {
-      writer.write( "\"\"" );
-    }
-    else
-    {
-      final boolean tokenContainsQuote = token.contains( "\"" );
-      if ( tokenContainsQuote )
-      {
-        writer.write( '`' );
-        writer.write( token );
-        writer.write( '`' );
-      }
-      else
-      {
-        final boolean tokenContainsSpace = token.contains( " " );
-        if ( tokenContainsSpace )
-        {
-          writer.write( '"' );
-          writer.write( token );
-          writer.write( '"' );
-        }
-        else
-        {
-          writer.write( token );
-        }
-      }
-    }
-  }
-
-  private void writeIndent( @Nonnull final Writer writer, final int depth )
-    throws IOException
-  {
-    for ( int i = 0; i < depth; i++ )
-    {
-      writer.write( "\t" );
     }
   }
 }

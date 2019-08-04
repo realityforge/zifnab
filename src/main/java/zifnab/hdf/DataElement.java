@@ -1,5 +1,7 @@
 package zifnab.hdf;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public final class DataElement
+  extends DataNode
 {
   @Nullable
   private final DataElement _parent;
@@ -59,5 +62,74 @@ public final class DataElement
       _children = new ArrayList<>();
     }
     _children.add( Objects.requireNonNull( child ) );
+  }
+
+  @Override
+  void write( @Nonnull final Writer writer, final int depth )
+    throws IOException
+  {
+    writeIndent( writer, depth );
+    writeTokens( writer );
+    writeChildren( writer, depth );
+  }
+
+  private void writeChildren( @Nonnull final Writer writer, final int depth )
+    throws IOException
+  {
+    for ( final DataElement child : getChildren() )
+    {
+      child.write( writer, depth + 1 );
+    }
+  }
+
+  private void writeTokens( @Nonnull final Writer writer )
+    throws IOException
+  {
+    final List<String> tokens = getTokens();
+    assert !tokens.isEmpty();
+    boolean first = true;
+    for ( final String token : tokens )
+    {
+      if ( !first )
+      {
+        writer.write( ' ' );
+      }
+      first = false;
+      writeToken( writer, token );
+    }
+    writer.write( '\n' );
+  }
+
+  private void writeToken( @Nonnull final Writer writer, @Nonnull final String token )
+    throws IOException
+  {
+    if ( token.isEmpty() )
+    {
+      writer.write( "\"\"" );
+    }
+    else
+    {
+      final boolean tokenContainsQuote = token.contains( "\"" );
+      if ( tokenContainsQuote )
+      {
+        writer.write( '`' );
+        writer.write( token );
+        writer.write( '`' );
+      }
+      else
+      {
+        final boolean tokenContainsSpace = token.contains( " " );
+        if ( tokenContainsSpace )
+        {
+          writer.write( '"' );
+          writer.write( token );
+          writer.write( '"' );
+        }
+        else
+        {
+          writer.write( token );
+        }
+      }
+    }
   }
 }
