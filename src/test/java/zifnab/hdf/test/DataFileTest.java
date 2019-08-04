@@ -78,6 +78,19 @@ public class DataFileTest
                   "\t\tnot attributes farming\n" );
   }
 
+  @Test
+  public void writeToDifferentFile()
+    throws Exception
+  {
+    final DataElement root = new DataElement( null, Arrays.asList( "tip", "spike:" ) );
+
+    final Path file1 = createTempDataFile();
+    final Path file2 = createTempDataFile();
+    createDataFile( root, file1 ).writeTo( file2 );
+    final String output = readContent( file2 );
+    assertEquals( output, "tip spike:\n" );
+  }
+
   @Nonnull
   private String writeElement( @Nonnull final DataElement root )
     throws IOException
