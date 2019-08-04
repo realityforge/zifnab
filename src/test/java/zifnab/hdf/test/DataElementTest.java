@@ -21,6 +21,16 @@ public class DataElementTest
   }
 
   @Test
+  public void constructWithVarargsCtor()
+  {
+    final DataElement element = new DataElement( null, "planet", "Dune" );
+
+    assertNull( element.getParent() );
+    assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
+    assertTrue( element.getChildren().isEmpty() );
+  }
+
+  @Test
   public void constructNested()
   {
     final List<String> parentTokens = Arrays.asList( "planet", "AK5" );
