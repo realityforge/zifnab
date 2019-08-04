@@ -25,6 +25,7 @@ public final class DataElement
   public DataElement( @Nullable final DataElement parent, @Nonnull final List<String> tokens )
   {
     assert !tokens.isEmpty();
+    assert tokens.stream().noneMatch( line -> line.contains( "\n" ) );
     _parent = parent;
     _tokens = new ArrayList<>( Objects.requireNonNull( tokens ) );
     if ( null != _parent )
