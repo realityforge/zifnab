@@ -29,6 +29,13 @@ public abstract class AbstractTest
   }
 
   @Nonnull
+  protected final Path createTempDataFile()
+    throws IOException
+  {
+    return Files.createTempFile( "zifnab", ".txt" );
+  }
+
+  @Nonnull
   protected final String readContent( @Nonnull final Path file )
     throws IOException
   {
