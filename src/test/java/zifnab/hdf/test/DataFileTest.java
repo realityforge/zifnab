@@ -90,6 +90,6 @@ public class DataFileTest
     assertEquals( dataFile.getRoot(), root );
     dataFile.write();
 
-    return new String( Files.readAllBytes( dataFile.getPath() ), StandardCharsets.UTF_8 );
+    return readContent( file );
   }
 }

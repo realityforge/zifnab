@@ -3,6 +3,8 @@ package zifnab;
 import gir.Gir;
 import gir.io.FileUtil;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import org.testng.IHookCallBack;
@@ -24,6 +26,13 @@ public abstract class AbstractTest
     {
       assertNull( e );
     }
+  }
+
+  @Nonnull
+  protected final String readContent( @Nonnull final Path file )
+    throws IOException
+  {
+    return new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
   }
 
   @Nonnull
