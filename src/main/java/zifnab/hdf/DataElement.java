@@ -1,6 +1,7 @@
 package zifnab.hdf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,11 @@ public final class DataElement
   private final List<String> _tokens;
   @Nullable
   private List<DataElement> _children;
+
+  public DataElement( @Nullable final DataElement parent, @Nonnull final String... tokens )
+  {
+    this( parent, Arrays.asList( tokens ) );
+  }
 
   public DataElement( @Nullable final DataElement parent, @Nonnull final List<String> tokens )
   {
