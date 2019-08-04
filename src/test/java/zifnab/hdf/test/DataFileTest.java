@@ -44,6 +44,16 @@ public class DataFileTest
   }
 
   @Test
+  public void writeEmptyToken()
+    throws Exception
+  {
+    final DataElement root = new DataElement( null, "planet", "" );
+
+    final String output = writeElement( root );
+    assertEquals( output, "planet \"\"\n" );
+  }
+
+  @Test
   public void writeWithMultipleLayers()
     throws Exception
   {

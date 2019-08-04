@@ -91,25 +91,32 @@ public final class DataFile
   private void writeToken( @Nonnull final Writer writer, @Nonnull final String token )
     throws IOException
   {
-    final boolean tokenContainsQuote = token.contains( "\"" );
-    if ( tokenContainsQuote )
+    if ( token.isEmpty() )
     {
-      writer.write( '`' );
-      writer.write( token );
-      writer.write( '`' );
+      writer.write( "\"\"" );
     }
     else
     {
-      final boolean tokenContainsSpace = token.contains( " " );
-      if ( tokenContainsSpace )
+      final boolean tokenContainsQuote = token.contains( "\"" );
+      if ( tokenContainsQuote )
       {
-        writer.write( '"' );
+        writer.write( '`' );
         writer.write( token );
-        writer.write( '"' );
+        writer.write( '`' );
       }
       else
       {
-        writer.write( token );
+        final boolean tokenContainsSpace = token.contains( " " );
+        if ( tokenContainsSpace )
+        {
+          writer.write( '"' );
+          writer.write( token );
+          writer.write( '"' );
+        }
+        else
+        {
+          writer.write( token );
+        }
       }
     }
   }
