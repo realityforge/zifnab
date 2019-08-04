@@ -1,9 +1,10 @@
-package zifnab.hdf;
+package zifnab.hdf.test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.testng.annotations.Test;
+import zifnab.hdf.DataElement;
 import static org.testng.Assert.*;
 
 public class DataElementTest
