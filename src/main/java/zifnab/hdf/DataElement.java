@@ -18,7 +18,7 @@ public final class DataElement
   @Nonnull
   private final List<String> _tokens;
   @Nullable
-  private List<DataElement> _children;
+  private List<DataNode> _children;
 
   public DataElement( @Nullable final DataElement parent, @Nonnull final String... tokens )
   {
@@ -50,7 +50,7 @@ public final class DataElement
   }
 
   @Nonnull
-  public List<DataElement> getChildren()
+  public List<DataNode> getChildren()
   {
     return null == _children ? Collections.emptyList() : Collections.unmodifiableList( _children );
   }
@@ -76,7 +76,7 @@ public final class DataElement
   private void writeChildren( @Nonnull final Writer writer, final int depth )
     throws IOException
   {
-    for ( final DataElement child : getChildren() )
+    for ( final DataNode child : getChildren() )
     {
       child.write( writer, depth + 1 );
     }
