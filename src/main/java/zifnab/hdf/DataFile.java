@@ -1,10 +1,17 @@
 package zifnab.hdf;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -32,6 +39,29 @@ public final class DataFile
   public DataElement getRoot()
   {
     return _root;
+  }
+
+  @Nonnull
+  public static DataFile read( @Nonnull final Path file )
+    throws IOException
+  {
+    try ( final InputStream inputStream = new FileInputStream( file.toFile() ) )
+    {
+      try ( final Reader fileReader = new InputStreamReader( inputStream, StandardCharsets.UTF_8 ) )
+      {
+        try ( final BufferedReader reader = new BufferedReader( fileReader ) )
+        {
+          return readFile( file, reader );
+        }
+      }
+    }
+  }
+
+  @Nonnull
+  private static DataFile readFile( @Nonnull final Path file, @Nonnull final BufferedReader reader )
+  {
+    //TODO: Implement me!
+    return new DataFile( file, new DataElement( null, new ArrayList<>() ) );
   }
 
   public void write()
