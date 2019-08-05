@@ -55,7 +55,7 @@ public final class DataElement
     return null == _children ? Collections.emptyList() : Collections.unmodifiableList( _children );
   }
 
-  private void append( @Nonnull final DataElement child )
+  void append( @Nonnull final DataNode child )
   {
     if ( null == _children )
     {
