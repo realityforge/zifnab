@@ -6,3 +6,7 @@ complete as there is too much un-said.
 
 * Change usages of `Collections.unmodifiableList(...)` so that they are compiled out in
   production mode.
+
+* Add comment nodes.
+
+* Attach `SourceLocation` values to nodes so can better trace errors.
