@@ -20,7 +20,7 @@ public class DataDocument
     return null == _children ? Collections.emptyList() : Collections.unmodifiableList( _children );
   }
 
-  public void append( @Nonnull final DataElement child )
+  public void append( @Nonnull final DataNode child )
   {
     if ( null == _children )
     {
