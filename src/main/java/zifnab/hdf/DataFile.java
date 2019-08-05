@@ -1,12 +1,12 @@
 package zifnab.hdf;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
@@ -41,25 +41,18 @@ public final class DataFile
 
   @Nonnull
   public static DataFile read( @Nonnull final Path file )
-    throws IOException
+    throws IOException, DataParseException
   {
     try ( final InputStream inputStream = new FileInputStream( file.toFile() ) )
     {
       try ( final Reader fileReader = new InputStreamReader( inputStream, StandardCharsets.UTF_8 ) )
       {
-        try ( final BufferedReader reader = new BufferedReader( fileReader ) )
+        try ( final LineNumberReader reader = new LineNumberReader( fileReader ) )
         {
-          return readFile( file, reader );
+          return new DataFile( file, new Parser( file.toString(), reader ).getDocument() );
         }
       }
     }
-  }
-
-  @Nonnull
-  private static DataFile readFile( @Nonnull final Path file, @Nonnull final BufferedReader reader )
-  {
-    //TODO: Implement me!
-    return new DataFile( file, new DataDocument() );
   }
 
   public void write()

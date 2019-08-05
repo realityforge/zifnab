@@ -42,11 +42,9 @@ public abstract class AbstractTest
     return new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
   }
 
-  @Nonnull
-  protected final Path writeContent( @Nonnull final String path, @Nonnull final String content )
+  protected final void writeContent( @Nonnull final Path path, @Nonnull final String content )
     throws IOException
   {
-    FileUtil.write( path, content );
-    return FileUtil.getCurrentDirectory().resolve( path );
+    Files.write( path, content.getBytes( StandardCharsets.UTF_8 ) );
   }
 }
