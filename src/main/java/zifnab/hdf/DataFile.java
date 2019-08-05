@@ -11,7 +11,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
@@ -20,12 +19,12 @@ public final class DataFile
   @Nonnull
   private final Path _path;
   @Nonnull
-  private DataElement _root;
+  private DataDocument _document;
 
-  public DataFile( @Nonnull final Path path, @Nonnull final DataElement root )
+  public DataFile( @Nonnull final Path path, @Nonnull final DataDocument document )
   {
     _path = Objects.requireNonNull( path );
-    _root = Objects.requireNonNull( root );
+    _document = Objects.requireNonNull( document );
   }
 
   @Nonnull
@@ -35,9 +34,9 @@ public final class DataFile
   }
 
   @Nonnull
-  public DataElement getRoot()
+  public DataDocument getDocument()
   {
-    return _root;
+    return _document;
   }
 
   @Nonnull
@@ -60,7 +59,7 @@ public final class DataFile
   private static DataFile readFile( @Nonnull final Path file, @Nonnull final BufferedReader reader )
   {
     //TODO: Implement me!
-    return new DataFile( file, new DataElement( null, new ArrayList<>() ) );
+    return new DataFile( file, new DataDocument() );
   }
 
   public void write()
@@ -76,7 +75,7 @@ public final class DataFile
     {
       try ( final Writer writer = new BufferedWriter( fileWriter ) )
       {
-        _root.write( writer, 0 );
+        _document.write( writer );
       }
     }
   }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
+import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
 import static org.testng.Assert.*;
@@ -134,7 +135,9 @@ public class DataElementTest
     throws IOException
   {
     final Path file = createTempDataFile();
-    new DataFile( file, root ).write();
+    final DataDocument document = new DataDocument();
+    document.append( root );
+    new DataFile( file, document ).write();
     return readContent( file );
   }
 }
