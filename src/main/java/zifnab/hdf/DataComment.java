@@ -24,7 +24,6 @@ public final class DataComment
                       @Nonnull final String comment )
   {
     super( location );
-    assert !comment.isEmpty();
     assert !comment.contains( "\n" );
     _parent = parent;
     _comment = Objects.requireNonNull( comment );
