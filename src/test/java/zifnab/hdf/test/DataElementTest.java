@@ -6,11 +6,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
+import org.realityforge.guiceyloops.shared.ValueUtil;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
+import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
 public class DataElementTest
@@ -20,9 +22,25 @@ public class DataElementTest
   public void constructTopLevel()
   {
     final List<String> tokens = Arrays.asList( "planet", "Dune" );
-    final DataElement element = new DataElement( null, tokens );
+    final DataElement element = new DataElement( null, null, tokens );
 
     assertNull( element.getParent() );
+    assertNull( element.getLocation() );
+    assertEquals( element.getTokens(), tokens );
+    assertTrue( element.getChildren().isEmpty() );
+  }
+  @Test
+  public void constructWithSourceLocation()
+  {
+    final SourceLocation location =
+      new SourceLocation( ValueUtil.randomString(),
+                          Math.abs( ValueUtil.randomInt() ),
+                          Math.abs( ValueUtil.randomInt() ) );
+    final List<String> tokens = Arrays.asList( "planet", "Dune" );
+    final DataElement element = new DataElement( location, null, tokens );
+
+    assertNull( element.getParent() );
+    assertEquals( element.getLocation(), location );
     assertEquals( element.getTokens(), tokens );
     assertTrue( element.getChildren().isEmpty() );
   }
@@ -33,6 +51,7 @@ public class DataElementTest
     final DataElement element = new DataElement( null, "planet", "Dune" );
 
     assertNull( element.getParent() );
+    assertNull( element.getLocation() );
     assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
     assertTrue( element.getChildren().isEmpty() );
   }
@@ -40,18 +59,18 @@ public class DataElementTest
   @Test
   public void constructNested()
   {
-    final List<String> parentTokens = Arrays.asList( "planet", "AK5" );
-    final DataElement parent = new DataElement( null, parentTokens );
+    final DataElement parent = new DataElement( null, "planet", "AK5" );
 
-    final List<String> childTokens = Arrays.asList( "name", "Akaron 5" );
-    final DataElement child = new DataElement( parent, childTokens );
+    final DataElement child = new DataElement( parent, "name", "Akaron 5" );
 
     assertNull( parent.getParent() );
-    assertEquals( parent.getTokens(), parentTokens );
+    assertNull( parent.getLocation() );
+    assertEquals( parent.getTokens(), Arrays.asList( "planet", "AK5" ) );
     assertEquals( parent.getChildren(), Collections.singletonList( child ) );
 
     assertEquals( child.getParent(), parent );
-    assertEquals( child.getTokens(), childTokens );
+    assertNull( child.getLocation() );
+    assertEquals( child.getTokens(), Arrays.asList( "name", "Akaron 5" ) );
     assertTrue( child.getChildren().isEmpty() );
   }
 
@@ -59,7 +78,7 @@ public class DataElementTest
   public void writeWithOneLayer()
     throws Exception
   {
-    final DataElement root = new DataElement( null, Arrays.asList( "tip", "spike:" ) );
+    final DataElement root = new DataElement( null, "tip", "spike:" );
 
     final String output = writeElement( root );
     assertEquals( output, "tip spike:\n" );
@@ -69,7 +88,7 @@ public class DataElementTest
   public void writeTokensWithSpaces()
     throws Exception
   {
-    final DataElement root = new DataElement( null, Arrays.asList( "tip", "awesome spike:" ) );
+    final DataElement root = new DataElement( null, "tip", "awesome spike:" );
 
     final String output = writeElement( root );
     assertEquals( output, "tip \"awesome spike:\"\n" );

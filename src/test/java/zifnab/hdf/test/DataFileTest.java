@@ -2,7 +2,6 @@ package zifnab.hdf.test;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
@@ -56,9 +55,9 @@ public class DataFileTest
   public void write_multipleRootElements()
     throws Exception
   {
-    final DataElement element1 = new DataElement( null, Arrays.asList( "tip", "spike:" ) );
-    final DataElement element2 = new DataElement( null, Arrays.asList( "planet", "Mars" ) );
-    final DataElement element3 = new DataElement( null, Arrays.asList( "planet", "Luna" ) );
+    final DataElement element1 = new DataElement( null, "tip", "spike:" );
+    final DataElement element2 = new DataElement( null, "planet", "Mars" );
+    final DataElement element3 = new DataElement( null, "planet", "Luna" );
 
     final Path file = createTempDataFile();
     final DataDocument document = new DataDocument();
@@ -78,7 +77,7 @@ public class DataFileTest
   public void write_defaultFile()
     throws Exception
   {
-    final DataElement element = new DataElement( null, Arrays.asList( "tip", "spike:" ) );
+    final DataElement element = new DataElement( null, "tip", "spike:" );
 
     final Path file = createTempDataFile();
     final DataDocument document = new DataDocument();
@@ -92,7 +91,7 @@ public class DataFileTest
   public void writeToDifferentFile()
     throws Exception
   {
-    final DataElement element = new DataElement( null, Arrays.asList( "tip", "spike:" ) );
+    final DataElement element = new DataElement( null, "tip", "spike:" );
 
     final Path file1 = createTempDataFile();
     final Path file2 = createTempDataFile();

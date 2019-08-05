@@ -16,6 +16,14 @@ public final class DataComment
 
   public DataComment( @Nullable final DataElement parent, @Nonnull final String comment )
   {
+    this( null, parent, comment );
+  }
+
+  public DataComment( @Nullable final SourceLocation location,
+                      @Nullable final DataElement parent,
+                      @Nonnull final String comment )
+  {
+    super( location );
     assert !comment.isEmpty();
     assert !comment.contains( "\n" );
     _parent = parent;

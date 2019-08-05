@@ -11,6 +11,7 @@ import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
 import zifnab.hdf.DataNode;
+import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
 public class DataCommentTest
@@ -24,6 +25,21 @@ public class DataCommentTest
 
     assertNull( element.getParent() );
     assertEquals( element.getComment(), comment );
+  }
+
+  @Test
+  public void constructWithSourceLocation()
+  {
+    final String comment = ValueUtil.randomString();
+    final SourceLocation location =
+      new SourceLocation( ValueUtil.randomString(),
+                          Math.abs( ValueUtil.randomInt() ),
+                          Math.abs( ValueUtil.randomInt() ) );
+    final DataComment element = new DataComment( location, null, comment );
+
+    assertNull( element.getParent() );
+    assertEquals( element.getComment(), comment );
+    assertEquals( element.getLocation(), location );
   }
 
   @Test
