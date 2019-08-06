@@ -10,7 +10,7 @@ public abstract class DataNode
   @Nullable
   private final SourceLocation _location;
 
-  protected DataNode( @Nullable final SourceLocation location )
+  DataNode( @Nullable final SourceLocation location )
   {
     _location = location;
   }
