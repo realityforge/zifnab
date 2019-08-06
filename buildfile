@@ -32,6 +32,7 @@ define 'zifnab' do
   ipr.add_default_testng_configuration(:jvm_args => '-ea ')
 
   iml.excluded_directories << project._('tmp')
+  ipr.extra_modules << 'example/example.iml'
 
   ipr.add_component_from_artifact(:idea_codestyle)
   ipr.add_component('NullableNotNullManager') do |component|
@@ -55,3 +56,15 @@ define 'zifnab' do
     end
   end
 end
+
+define 'example', :base_dir => "#{File.dirname(__FILE__)}/example" do
+  compile.options.source = '1.8'
+  compile.options.target = '1.8'
+
+  compile.with project('zifnab').package(:jar),
+               project('zifnab').compile.dependencies
+  project.no_ipr
+end
+
+task('idea' => 'example:idea')
+task('package' => 'example:package')

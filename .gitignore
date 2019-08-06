@@ -6,4 +6,5 @@
 /tmp
 /reports
 /target
-/*/generated
+/*/reports
+/*/target
