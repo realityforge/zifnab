@@ -33,9 +33,14 @@ public final class ReadDataFormat
             dataFile.getDocument().getChildren().stream().filter( e -> e instanceof DataElement ).count();
           System.out.println( "Success - " + topLevelElements + " top-level elements found." );
         }
-        catch ( IOException | DataParseException e )
+        catch ( final DataParseException e )
         {
-          System.out.println( "Error: " + e );
+          System.out.println( "Error: Failed to parse file - " + e );
+          System.out.println( e.getLocation().toString() );
+        }
+        catch ( final IOException e )
+        {
+          System.out.println( "Error: Failed to read file - " + e );
         }
       }
     }
