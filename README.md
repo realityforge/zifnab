@@ -22,6 +22,58 @@ The Maven dependency is:
 
 See the `examples/` directory for a few examples of the tools in use.
 
+### Data File Format
+
+The `zifnab.hdf` package contains tools for reading and writing the data file format used by `Endless Sky`.
+
+#### Reading
+
+Reading the file format is as simple as:
+
+```java
+final Path file = ...;
+final DataFile dataFile = DataFile.read( file );
+```
+
+The `DataFile` object has a reference to the in memory representation of the data format and it is reasonably
+easy to traverse to extract information from the the file. i.e.
+
+```java
+final long topLevelElements =
+  dataFile.getDocument().getChildren().stream().filter( e -> e instanceof DataElement ).count();
+System.out.println( topLevelElements + " top-level elements found in file." );
+```
+
+#### Writing
+
+The current API for generating data in the correct format is low-level. A high-level API is expected to be available
+in the future. The low-level API for constructing the data file looks like:
+
+```java
+final DataDocument document = new DataDocument();
+document.append( new DataComment( null, "The humanitarian mission!" ) );
+final DataElement element1 = new DataElement( null, "mission", "Drought Relief" );
+document.append( element1 );
+new DataComment( element1, "The name of the mission as presented to user" );
+new DataElement( element1, "name", "Drought relief to <planet>" );
+final DataElement offer = new DataElement( element1, "to", "offer" );
+new DataElement( offer, "random", "<", "10" );
+
+final DataFile dataFile = new DataFile( Paths.get( "output.txt" ), document );
+dataFile.write();
+```
+
+And this would produce a file named `output.txt` that contains
+
+```
+# The humanitarian mission!
+mission "Drought Relief"
+	# The name of the mission as presented to user
+	name "Drought relief to <planet>"
+	to offer
+		random < 10
+```
+
 # Contributing
 
 The project was released as open source so others could benefit from the project. We are thankful for any
