@@ -141,6 +141,28 @@ public class ParserTest
   }
 
   @Test
+  public void parseIndentWithNoContent()
+    throws Exception
+  {
+    final Path file = createTempDataFile();
+    writeContent( file, "planet Mars\n" +
+                        "\t\n" +
+                        "\tname \"God of War\"\n" );
+
+    final DataDocument document = DataFile.read( file ).getDocument();
+
+    final List<DataNode> children = document.getChildren();
+    assertEquals( children.size(), 1 );
+
+    assertChildLocation( children, 0, file, 1, 0 );
+    final DataElement mars = ensureChildIsElement( children, 0, null, "planet", "Mars" );
+    final List<DataNode> marsChildren = mars.getChildren();
+    assertEquals( marsChildren.size(), 1 );
+    final DataElement name = ensureChildIsElement( marsChildren, 0, mars, "name", "God of War" );
+    assertEquals( name.getChildren().size(), 0 );
+  }
+
+  @Test
   public void parseBackTickedToken()
     throws Exception
   {

@@ -72,8 +72,11 @@ final class Parser
     {
       _column = 0;
       parseIndentation();
-
-      if ( '#' == _line.charAt( _column ) )
+      if ( _line.length() <= _column )
+      {
+        return;
+      }
+      else if ( '#' == _line.charAt( _column ) )
       {
         final SourceLocation location = newLocation();
         final String comment;
@@ -225,7 +228,7 @@ final class Parser
     throws DataParseException
   {
     int indent = 0;
-    while ( _line.charAt( _column ) == '\t' )
+    while ( _line.length() > _column && _line.charAt( _column ) == '\t' )
     {
       _column++;
       indent++;
