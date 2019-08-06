@@ -34,6 +34,5 @@ public final class ReadDataFormat
         }
       }
     }
-    System.out.println( "args = " + args );
   }
 }
