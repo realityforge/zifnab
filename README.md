@@ -20,6 +20,8 @@ The Maven dependency is:
 </dependency>
 ```
 
+See the `examples/` directory for a few examples of the tools in use.
+
 # Contributing
 
 The project was released as open source so others could benefit from the project. We are thankful for any
