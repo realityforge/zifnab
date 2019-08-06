@@ -52,7 +52,7 @@ task 'perform_release' do
     end
 
     stage('ZapWhite', 'Ensure that zapwhite produces no changes') do
-      sh "bundle exec zapwhite --exclude-pattern 'compiler/src/test/fixtures/.*'"
+      sh "bundle exec zapwhite"
     end
 
     stage('GitClean', 'Ensure there is nothing to commit and the working tree is clean') do
@@ -118,7 +118,7 @@ HEADER
 HEADER
       IO.write('CHANGELOG.md', changelog)
 
-      `bundle exec zapwhite --exclude-pattern 'compiler/src/test/fixtures/.*'`
+      `bundle exec zapwhite`
       sh 'git add CHANGELOG.md'
       sh 'git commit -m "Update CHANGELOG.md in preparation for next development iteration"'
     end
