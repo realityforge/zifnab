@@ -1,8 +1,10 @@
 package zifnab.examples;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.annotation.Nonnull;
+import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
 import zifnab.hdf.DataParseException;
 
@@ -25,8 +27,11 @@ public final class ReadDataFormat
         System.out.println( "Parsing " + filename + " ..." );
         try
         {
-          DataFile.read( Paths.get( filename ) );
-          System.out.println( "Success." );
+          final Path file = Paths.get( filename );
+          final DataFile dataFile = DataFile.read( file );
+          final long topLevelElements =
+            dataFile.getDocument().getChildren().stream().filter( e -> e instanceof DataElement ).count();
+          System.out.println( "Success - " + topLevelElements + " top-level elements found." );
         }
         catch ( IOException | DataParseException e )
         {
