@@ -63,6 +63,9 @@ define 'example', :base_dir => "#{File.dirname(__FILE__)}/example" do
 
   compile.with project('zifnab').package(:jar),
                project('zifnab').compile.dependencies
+
+  package(:jar)
+
   project.no_ipr
 end
 
