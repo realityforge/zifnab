@@ -29,6 +29,7 @@ public class DataElementTest
     assertEquals( element.getTokens(), tokens );
     assertTrue( element.getChildren().isEmpty() );
   }
+
   @Test
   public void constructWithSourceLocation()
   {
