@@ -9,7 +9,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class DataDocument
+public final class DataDocument
 {
   @Nullable
   private List<DataNode> _children;
