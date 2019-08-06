@@ -1,6 +1,9 @@
 package zifnab.hdf.test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
@@ -99,6 +102,20 @@ public class DataFileTest
     document.append( element );
     createDataFile( document, file1 ).writeTo( file2 );
     final String output = readContent( file2 );
+    assertEquals( output, "tip spike:\n" );
+  }
+
+  @Test
+  public void writeToInMemoryWriter()
+    throws Exception
+  {
+    final DataElement element = new DataElement( null, "tip", "spike:" );
+
+    final DataDocument document = new DataDocument();
+    document.append( element );
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    createDataFile( document, createTempDataFile() ).writeTo( new OutputStreamWriter( baos, StandardCharsets.UTF_8 ) );
+    final String output = new String( baos.toByteArray(), StandardCharsets.UTF_8 );
     assertEquals( output, "tip spike:\n" );
   }
 

@@ -66,10 +66,16 @@ public final class DataFile
   {
     try ( final Writer fileWriter = new FileWriter( file.toFile() ) )
     {
-      try ( final Writer writer = new BufferedWriter( fileWriter ) )
-      {
-        _document.write( writer );
-      }
+      writeTo( fileWriter );
+    }
+  }
+
+  public void writeTo( @Nonnull final Writer writer )
+    throws IOException
+  {
+    try ( final Writer bufferedWriter = new BufferedWriter( writer ) )
+    {
+      _document.write( bufferedWriter );
     }
   }
 }
