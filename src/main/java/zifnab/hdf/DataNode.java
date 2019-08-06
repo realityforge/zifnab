@@ -16,7 +16,7 @@ public abstract class DataNode
   }
 
   @Nullable
-  public SourceLocation getLocation()
+  public final SourceLocation getLocation()
   {
     return _location;
   }
