@@ -21,12 +21,11 @@ public class DataElementTest
   @Test
   public void constructTopLevel()
   {
-    final List<String> tokens = Arrays.asList( "planet", "Dune" );
-    final DataElement element = new DataElement( null, null, tokens );
+    final DataElement element = new DataElement( null, "planet", "Dune" );
 
     assertNull( element.getParent() );
     assertNull( element.getLocation() );
-    assertEquals( element.getTokens(), tokens );
+    assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
     assertTrue( element.getChildren().isEmpty() );
   }
 
