@@ -4,7 +4,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class DataParseException
+public final class DataParseException
   extends Exception
 {
   @Nonnull
