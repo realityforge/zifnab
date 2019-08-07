@@ -33,6 +33,7 @@ define 'zifnab' do
 
   iml.excluded_directories << project._('tmp')
   ipr.extra_modules << 'example/example.iml'
+  ipr.extra_modules << 'endless-sky/endless-sky.iml'
 
   ipr.add_component_from_artifact(:idea_codestyle)
   ipr.add_component('NullableNotNullManager') do |component|
