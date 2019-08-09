@@ -1,5 +1,7 @@
 # Change Log
 
+### Unreleased
+
 ### [v0.02](https://github.com/realityforge/zifnab/tree/v0.02) (2019-08-09)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.01...v0.02)
 
