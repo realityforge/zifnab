@@ -65,6 +65,15 @@ public final class DataElement
     return Collections.unmodifiableList( _tokens );
   }
 
+  public void assertTokenName( @Nonnull final String name )
+  {
+    if ( !name.equals( getName() ) )
+    {
+      final String message = "Data element named '" + getName() + "' expected to be named '" + name + "'";
+      throw new DataAccessException( message, getLocation() );
+    }
+  }
+
   @Nonnull
   public List<DataNode> getChildren()
   {

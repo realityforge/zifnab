@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import org.realityforge.guiceyloops.shared.ValueUtil;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
+import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataComment;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
@@ -185,6 +186,39 @@ public class DataElementTest
                   "\tsource\n" +
                   "\t\tgovernment Republic\n" +
                   "\t\tnot attributes farming\n" );
+  }
+
+  @Test
+  public void assertTokenName()
+  {
+    final DataElement element = new DataElement( null, "planet", "Dune" );
+
+    element.assertTokenName( "planet" );
+  }
+
+  @Test
+  public void assertTokenName_errorWithNoLocation()
+  {
+    final DataElement element = new DataElement( null, "planet", "Dune" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.assertTokenName( "Dune" ) );
+
+    assertEquals( exception.getMessage(), "Data element named 'planet' expected to be named 'Dune'" );
+    assertNull( exception.getLocation() );
+  }
+
+  @Test
+  public void assertTokenName_errorWithLocation()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.assertTokenName( "Dune" ) );
+
+    assertEquals( exception.getMessage(), "Data element named 'planet' expected to be named 'Dune'" );
+    assertEquals( exception.getLocation(), location );
   }
 
   @Nonnull
