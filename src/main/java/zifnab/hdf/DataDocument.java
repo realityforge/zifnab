@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -18,6 +19,17 @@ public final class DataDocument
   public List<DataNode> getChildren()
   {
     return null == _children ? Collections.emptyList() : Collections.unmodifiableList( _children );
+  }
+
+  @Nonnull
+  public List<DataElement> getChildElements()
+  {
+    return null == _children ?
+           Collections.emptyList() :
+           Collections.unmodifiableList( _children.stream()
+                                           .filter( e -> e instanceof DataElement )
+                                           .map( e -> (DataElement) e )
+                                           .collect( Collectors.toList() ) );
   }
 
   public void append( @Nonnull final DataNode child )

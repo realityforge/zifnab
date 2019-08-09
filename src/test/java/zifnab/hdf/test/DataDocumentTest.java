@@ -6,6 +6,7 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
+import zifnab.hdf.DataComment;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
@@ -20,6 +21,7 @@ public class DataDocumentTest
     final DataDocument document = new DataDocument();
 
     assertTrue( document.getChildren().isEmpty() );
+    assertTrue( document.getChildElements().isEmpty() );
   }
 
   @Test
@@ -30,11 +32,14 @@ public class DataDocumentTest
     assertTrue( document.getChildren().isEmpty() );
 
     final DataElement element1 = new DataElement( null, "planet", "Dune" );
+    final DataComment comment1 = new DataComment( null, "some random comment" );
     final DataElement element2 = new DataElement( null, "planet", "Mars" );
     document.append( element1 );
+    document.append( comment1 );
     document.append( element2 );
 
-    assertEquals( document.getChildren(), Arrays.asList( element1, element2 ) );
+    assertEquals( document.getChildren(), Arrays.asList( element1, comment1, element2 ) );
+    assertEquals( document.getChildElements(), Arrays.asList( element1, element2 ) );
   }
 
   @Test
