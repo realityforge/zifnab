@@ -26,8 +26,10 @@ public final class SystemConfig
   private String haze;
   @Nullable
   private String music;
-  private double habitable = 1000;
-  private double belt = 1500;
+  @Nullable
+  private Double habitable;
+  @Nullable
+  private Double belt;
   @Nonnull
   private final Set<String> links = new HashSet<>();
   @Nonnull
@@ -105,22 +107,24 @@ public final class SystemConfig
     this.music = music;
   }
 
-  public double getHabitable()
+  @Nullable
+  public Double getHabitable()
   {
     return habitable;
   }
 
-  public void setHabitable( final double habitable )
+  public void setHabitable( @Nullable final Double habitable )
   {
     this.habitable = habitable;
   }
 
-  public double getBelt()
+  @Nullable
+  public Double getBelt()
   {
     return belt;
   }
 
-  public void setBelt( final double belt )
+  public void setBelt( @Nullable final Double belt )
   {
     this.belt = belt;
   }
