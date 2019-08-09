@@ -446,6 +446,12 @@ public final class SystemConfig
       return Collections.unmodifiableList( objects );
     }
 
+    @Nullable
+    public StellarObject findObjectByName( @Nonnull final String name )
+    {
+      return objects.stream().filter( o -> name.equals( o.getName() ) ).findAny().orElse( null );
+    }
+
     public void addObject( @Nonnull final StellarObject object )
     {
       objects.add( object );
