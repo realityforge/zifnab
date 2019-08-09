@@ -202,6 +202,67 @@ public class SystemConfigTest
     assertTrue( system.getObjects().isEmpty() );
   }
 
+  @Test
+  public void parseWithNestedStellarObjects()
+    throws Exception
+  {
+    final String data =
+      "system \"Blue Zone\"\n" +
+      "\tpos -100 50.5\n" +
+      "\tobject Zen\n" +
+      "\t\tsprite star/k0\n" +
+      "\t\tdistance 89.6163\n" +
+      "\t\tperiod 14.9791\n" +
+      "\t\toffset 180\n" +
+      "\t\tobject `Zen Minor`\n" +
+      "\t\t\tsprite planet/luna\n" +
+      "\t\t\tdistance 400.4\n" +
+      "\t\t\tperiod 29.3\n" +
+      "\t\t\tobject Whizzer\n" +
+      "\t\t\t\tsprite planet/blue\n" +
+      "\t\t\t\tdistance 50.1\n" +
+      "\t\t\t\tperiod 4.2\n";
+
+    final List<DataElement> elements = asDataDocument( data ).getChildElements();
+    assertEquals( elements.size(), 1 );
+
+    final DataElement element = elements.get( 0 );
+    assertTrue( SystemConfig.matches( element ) );
+    final SystemConfig system = SystemConfig.from( element );
+
+    assertEquals( system.getName(), "Blue Zone" );
+
+    // Stellar Objects
+    assertEquals( system.getObjects().size(), 1 );
+
+    final SystemConfig.StellarObject zen = system.findObjectByName( "Zen" );
+    assertNotNull( zen );
+    assertEquals( zen.getName(), "Zen" );
+    assertEquals( zen.getSprite(), "star/k0" );
+    assertEquals( zen.getDistance(), 89.6163D );
+    assertEquals( zen.getPeriod(), 14.9791D );
+    assertEquals( zen.getOffset(), 180D );
+    assertEquals( zen.getObjects().size(), 1 );
+
+    final SystemConfig.StellarObject zenMinor = zen.findObjectByName( "Zen Minor" );
+    assertNotNull( zenMinor );
+    assertEquals( zenMinor.getName(), "Zen Minor" );
+    assertEquals( zenMinor.getSprite(), "planet/luna" );
+    assertEquals( zenMinor.getDistance(), 400.4D );
+    assertEquals( zenMinor.getPeriod(), 29.3D );
+    assertEquals( zenMinor.getOffset(), 0D );
+    assertEquals( zenMinor.getObjects().size(), 1 );
+
+    final SystemConfig.StellarObject whizzer = zenMinor.findObjectByName( "Whizzer" );
+    assertNotNull( whizzer );
+    assertEquals( whizzer.getName(), "Whizzer" );
+    assertEquals( whizzer.getSprite(), "planet/blue" );
+    assertEquals( whizzer.getDistance(), 50.1D );
+    assertEquals( whizzer.getPeriod(), 4.2D );
+    assertEquals( whizzer.getOffset(), 0D );
+    assertTrue( whizzer.getObjects().isEmpty() );
+  }
+
   @Nonnull
   private DataDocument asDataDocument( @Nonnull final String data )
     throws IOException, DataParseException
