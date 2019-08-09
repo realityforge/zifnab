@@ -100,6 +100,49 @@ public final class DataElement
   }
 
   @Nonnull
+  public String getStringAt( final int index )
+  {
+    if ( index >= _tokens.size() )
+    {
+      final String message =
+        "Data element named '" + getName() + "' does not contain a token at index " + index;
+      throw new DataAccessException( message, getLocation() );
+    }
+    else
+    {
+      return Objects.requireNonNull( _tokens.get( index ) );
+    }
+  }
+
+  public int getIntAt( final int index )
+  {
+    final String token = getStringAt( index );
+    try
+    {
+      return Integer.parseInt( token );
+    }
+    catch ( final NumberFormatException e )
+    {
+      throw new DataAccessException( "Token at index " + index + " for data element named '" + getName() +
+                                     "' has value '" + token + "' which is not an integer", getLocation() );
+    }
+  }
+
+  public double getDoubleAt( final int index )
+  {
+    final String token = getStringAt( index );
+    try
+    {
+      return Double.parseDouble( token );
+    }
+    catch ( final NumberFormatException e )
+    {
+      throw new DataAccessException( "Token at index " + index + " for data element named '" + getName() +
+                                     "' has value '" + token + "' which is not an double", getLocation() );
+    }
+  }
+
+  @Nonnull
   public List<DataNode> getChildren()
   {
     return null == _children ? Collections.emptyList() : Collections.unmodifiableList( _children );

@@ -298,6 +298,100 @@ public class DataElementTest
     assertNull( exception.getLocation() );
   }
 
+  @Test
+  public void getStringAt()
+  {
+    final DataElement element = new DataElement( null, "planet", "Dune" );
+
+    assertEquals( element.getStringAt( 0 ), "planet" );
+    assertEquals( element.getStringAt( 1 ), "Dune" );
+  }
+
+  @Test
+  public void getStringAt_badIndex()
+  {
+    final DataElement element = new DataElement( null, "planet", "Dune" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getStringAt( 2 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' does not contain a token at index 2" );
+    assertNull( exception.getLocation() );
+  }
+
+  @Test
+  public void getIntAt()
+  {
+    final DataElement element = new DataElement( null, "trade", "sugar", "230" );
+
+    assertEquals( element.getIntAt( 2 ), 230 );
+  }
+
+  @Test
+  public void getIntAt_badIndex()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getIntAt( 2 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' does not contain a token at index 2" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
+  public void getIntAt_badType()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getIntAt( 1 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Token at index 1 for data element named 'planet' has value 'Dune' which is not an integer" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
+  public void getDoubleAt()
+  {
+    final DataElement element = new DataElement( null, "trade", "sugar", "23.5" );
+
+    assertEquals( element.getDoubleAt( 2 ), 23.5D );
+  }
+
+  @Test
+  public void getDoubleAt_badIndex()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getDoubleAt( 2 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' does not contain a token at index 2" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
+  public void getDoubleAt_badType()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getDoubleAt( 1 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Token at index 1 for data element named 'planet' has value 'Dune' which is not an double" );
+    assertEquals( exception.getLocation(), location );
+  }
+
   @Nonnull
   private String writeElement( @Nonnull final DataElement root )
     throws IOException
