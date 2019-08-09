@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import org.realityforge.guiceyloops.shared.ValueUtil;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
+import zifnab.hdf.DataComment;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
@@ -28,6 +29,7 @@ public class DataElementTest
     assertEquals( element.getName(), "planet" );
     assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
     assertTrue( element.getChildren().isEmpty() );
+    assertTrue( element.getChildElements().isEmpty() );
   }
 
   @Test
@@ -45,6 +47,7 @@ public class DataElementTest
     assertEquals( element.getName(), "planet" );
     assertEquals( element.getTokens(), tokens );
     assertTrue( element.getChildren().isEmpty() );
+    assertTrue( element.getChildElements().isEmpty() );
   }
 
   @Test
@@ -57,6 +60,7 @@ public class DataElementTest
     assertEquals( element.getName(), "planet" );
     assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
     assertTrue( element.getChildren().isEmpty() );
+    assertTrue( element.getChildElements().isEmpty() );
   }
 
   @Test
@@ -71,12 +75,41 @@ public class DataElementTest
     assertEquals( parent.getName(), "planet" );
     assertEquals( parent.getTokens(), Arrays.asList( "planet", "AK5" ) );
     assertEquals( parent.getChildren(), Collections.singletonList( child ) );
+    assertEquals( parent.getChildElements(), Collections.singletonList( child ) );
 
     assertEquals( child.getParent(), parent );
     assertNull( child.getLocation() );
     assertEquals( child.getName(), "name" );
     assertEquals( child.getTokens(), Arrays.asList( "name", "Akaron 5" ) );
     assertTrue( child.getChildren().isEmpty() );
+    assertTrue( child.getChildElements().isEmpty() );
+  }
+
+  @Test
+  public void constructNestedWithComments()
+  {
+    final DataElement parent = new DataElement( null, "planet", "AK5" );
+
+    final DataComment comment = new DataComment( parent, "The home planet of the queen in waiting" );
+    final DataElement child = new DataElement( parent, "name", "Akaron 5" );
+
+    assertNull( parent.getParent() );
+    assertNull( parent.getLocation() );
+    assertEquals( parent.getName(), "planet" );
+    assertEquals( parent.getTokens(), Arrays.asList( "planet", "AK5" ) );
+    assertEquals( parent.getChildren(), Arrays.asList( comment, child ) );
+    assertEquals( parent.getChildElements(), Collections.singletonList( child ) );
+
+    assertEquals( comment.getParent(), parent );
+    assertNull( comment.getLocation() );
+    assertEquals( comment.getComment(), "The home planet of the queen in waiting" );
+
+    assertEquals( child.getParent(), parent );
+    assertNull( child.getLocation() );
+    assertEquals( child.getName(), "name" );
+    assertEquals( child.getTokens(), Arrays.asList( "name", "Akaron 5" ) );
+    assertTrue( child.getChildren().isEmpty() );
+    assertTrue( child.getChildElements().isEmpty() );
   }
 
   @Test

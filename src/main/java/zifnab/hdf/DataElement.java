@@ -64,6 +64,17 @@ public final class DataElement
     return null == _children ? Collections.emptyList() : Collections.unmodifiableList( _children );
   }
 
+  @Nonnull
+  public List<DataElement> getChildElements()
+  {
+    return null == _children ?
+           Collections.emptyList() :
+           Collections.unmodifiableList( _children.stream()
+                                           .filter( e -> e instanceof DataElement )
+                                           .map( e -> (DataElement) e )
+                                           .collect( Collectors.toList() ) );
+  }
+
   void append( @Nonnull final DataNode child )
   {
     if ( null == _children )
