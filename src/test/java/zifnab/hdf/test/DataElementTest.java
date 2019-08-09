@@ -25,6 +25,7 @@ public class DataElementTest
 
     assertNull( element.getParent() );
     assertNull( element.getLocation() );
+    assertEquals( element.getName(), "planet" );
     assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
     assertTrue( element.getChildren().isEmpty() );
   }
@@ -41,6 +42,7 @@ public class DataElementTest
 
     assertNull( element.getParent() );
     assertEquals( element.getLocation(), location );
+    assertEquals( element.getName(), "planet" );
     assertEquals( element.getTokens(), tokens );
     assertTrue( element.getChildren().isEmpty() );
   }
@@ -52,6 +54,7 @@ public class DataElementTest
 
     assertNull( element.getParent() );
     assertNull( element.getLocation() );
+    assertEquals( element.getName(), "planet" );
     assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
     assertTrue( element.getChildren().isEmpty() );
   }
@@ -65,11 +68,13 @@ public class DataElementTest
 
     assertNull( parent.getParent() );
     assertNull( parent.getLocation() );
+    assertEquals( parent.getName(), "planet" );
     assertEquals( parent.getTokens(), Arrays.asList( "planet", "AK5" ) );
     assertEquals( parent.getChildren(), Collections.singletonList( child ) );
 
     assertEquals( child.getParent(), parent );
     assertNull( child.getLocation() );
+    assertEquals( child.getName(), "name" );
     assertEquals( child.getTokens(), Arrays.asList( "name", "Akaron 5" ) );
     assertTrue( child.getChildren().isEmpty() );
   }

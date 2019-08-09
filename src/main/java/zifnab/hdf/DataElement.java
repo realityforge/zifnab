@@ -47,6 +47,12 @@ public final class DataElement
   }
 
   @Nonnull
+  public String getName()
+  {
+    return Objects.requireNonNull( _tokens.get( 0 ) );
+  }
+
+  @Nonnull
   public List<String> getTokens()
   {
     return Collections.unmodifiableList( _tokens );
