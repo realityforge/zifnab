@@ -257,6 +257,45 @@ public class DataElementTest
     assertNull( exception.getLocation() );
   }
 
+  @Test
+  public void assertTokenCountMM()
+  {
+    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataElement child = new DataElement( element, "name", "The Red Planet" );
+
+    element.assertTokenCount( 1, 2 );
+    child.assertTokenCount( 0, 4 );
+  }
+
+  @Test
+  public void assertTokenCountMM_error()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    new DataElement( element, "name", "The Red Planet" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0, 1 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' expected to contain between 0 and 1 tokens but contains 2 tokens" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
+  public void assertTokenCountMM_error_emptyLocation()
+  {
+    final DataElement element = new DataElement( null, "planet", "Dune" );
+    new DataElement( element, "name", "The Red Planet" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0, 1 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' expected to contain between 0 and 1 tokens but contains 2 tokens" );
+    assertNull( exception.getLocation() );
+  }
+
   @Nonnull
   private String writeElement( @Nonnull final DataElement root )
     throws IOException

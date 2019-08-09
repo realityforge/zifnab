@@ -86,6 +86,18 @@ public final class DataElement
     }
   }
 
+  public void assertTokenCount( final int minLength, final int maxLength )
+  {
+    final int size = _tokens.size();
+    if ( size < minLength || size > maxLength )
+    {
+      final String message =
+        "Data element named '" + getName() + "' expected to contain between " + minLength + " and " + maxLength +
+        " tokens but contains " + size + " tokens";
+      throw new DataAccessException( message, getLocation() );
+    }
+  }
+
   @Nonnull
   public List<DataNode> getChildren()
   {
