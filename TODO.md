@@ -12,7 +12,7 @@ complete as there is too much un-said.
   - `e.element("planet", "mars")`
   - `e.comment(location, "Great planet!")`
   - `e.comment("Great planet!")`
-  
+
   These can be extracted into a common interface with default methods? Also `getChildElements()`
   can probably migrate there as well.
 
