@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Add initial spike for parsing, building and manipulating an in memory representation of the `system` data from Endless Sky. The method `zifnab.config.SystemConfig.from(DataElement)` is used to parse system data.
+
 ### [v0.02](https://github.com/realityforge/zifnab/tree/v0.02) (2019-08-09)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.01...v0.02)
 
