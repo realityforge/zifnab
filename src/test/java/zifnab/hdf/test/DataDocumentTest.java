@@ -50,14 +50,14 @@ public class DataDocumentTest
 
     assertTrue( document.getChildren().isEmpty() );
 
-    final DataElement element1 = new DataElement( null, "planet", "Dune" );
-    final DataElement element2 = new DataElement( null, "planet", "Mars" );
-    document.append( element1 );
-    document.append( element2 );
+    document.append( new DataElement( null, "planet", "Dune" ) );
+    document.append( new DataComment( null, "The red planet" ) );
+    document.append( new DataElement( null, "planet", "Mars" ) );
 
     final String output = writeDocument( document );
     assertEquals( output, "planet Dune\n" +
                           "\n" +
+                          "# The red planet\n" +
                           "planet Mars\n" );
   }
 
