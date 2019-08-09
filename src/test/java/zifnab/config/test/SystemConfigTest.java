@@ -9,10 +9,12 @@ import org.testng.annotations.Test;
 import zifnab.AbstractTest;
 import zifnab.config.Position;
 import zifnab.config.SystemConfig;
+import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
 import zifnab.hdf.DataParseException;
+import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
 public class SystemConfigTest
@@ -261,6 +263,35 @@ public class SystemConfigTest
     assertEquals( whizzer.getPeriod(), 4.2D );
     assertEquals( whizzer.getOffset(), 0D );
     assertTrue( whizzer.getObjects().isEmpty() );
+  }
+
+  @Test
+  public void parseWhereStellarObjectHasUnknownKey()
+    throws Exception
+  {
+    final String data =
+      "system \"Blue Zone\"\n" +
+      "\tpos -100 50.5\n" +
+      "\tobject Zen\n" +
+      "\t\tsprite star/k0\n" +
+      "\t\tdistance 89.6163\n" +
+      "\t\tperiod 14.9791\n" +
+      "\t\toffset 180\n" +
+      "\t\tunknownkey 180\n";
+
+    final List<DataElement> elements = asDataDocument( data ).getChildElements();
+    assertEquals( elements.size(), 1 );
+
+    final DataElement element = elements.get( 0 );
+    assertTrue( SystemConfig.matches( element ) );
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> SystemConfig.from( element ) );
+
+    assertEquals( exception.getMessage(), "Unexpected data element named 'unknownkey'" );
+    final SourceLocation location = exception.getLocation();
+    assertNotNull( location );
+    assertEquals( location.getLineNumber(), 8 );
+    assertEquals( location.getColumnNumber(), 2 );
   }
 
   @Nonnull
