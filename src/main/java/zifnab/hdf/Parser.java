@@ -233,7 +233,12 @@ final class Parser
       _column++;
       indent++;
     }
-    if ( indent > _indent + 1 )
+    if( _line.length() <= _column )
+    {
+      //We have a line that contains just tabs. It is ignored as the native parser ignores it.
+      return;
+    }
+    else if ( indent > _indent + 1 )
     {
       final String message = "Invalid file. Moved from indent level " + _indent + " to indent level " + indent;
       throw newDataParseException( message );

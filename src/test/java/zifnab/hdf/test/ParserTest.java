@@ -141,6 +141,29 @@ public class ParserTest
   }
 
   @Test
+  public void parseSkipsLinesThatOnlyContainWhitespace()
+    throws Exception
+  {
+    final Path file = createTempDataFile();
+    writeContent( file, "planet Mars\n" +
+                        "\t\t\n" +
+                        "\tname \"The red planet\"\n" );
+
+    final DataDocument document = DataFile.read( file ).getDocument();
+
+    final List<DataNode> children = document.getChildren();
+    assertEquals( children.size(), 1 );
+
+    assertChildLocation( children, 0, file, 1, 0 );
+    final DataElement mars = ensureChildIsElement( children, 0, null, "planet", "Mars" );
+    final List<DataNode> marsChildren = mars.getChildren();
+    assertEquals( marsChildren.size(), 1 );
+    assertChildLocation( marsChildren, 0, file, 3, 1 );
+    final DataElement name = ensureChildIsElement( marsChildren, 0, mars, "name", "The red planet" );
+    assertTrue( name.getChildren().isEmpty() );
+  }
+
+  @Test
   public void parseIndentWithNoContent()
     throws Exception
   {
