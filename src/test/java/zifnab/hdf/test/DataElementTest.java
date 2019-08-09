@@ -240,7 +240,8 @@ public class DataElementTest
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0 ) );
 
-    assertEquals( exception.getMessage(), "Data element named 'planet' expected to contain 0 tokens but contains 2 tokens" );
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' expected to contain 0 tokens but contains 2 tokens" );
     assertEquals( exception.getLocation(), location );
   }
 
@@ -253,7 +254,8 @@ public class DataElementTest
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0 ) );
 
-    assertEquals( exception.getMessage(), "Data element named 'planet' expected to contain 0 tokens but contains 2 tokens" );
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' expected to contain 0 tokens but contains 2 tokens" );
     assertNull( exception.getLocation() );
   }
 
