@@ -168,6 +168,40 @@ public class SystemConfigTest
     }
   }
 
+  @Test
+  public void parseMinimalSystem()
+    throws Exception
+  {
+    final String data =
+      "system \"Red Zone\"\n" +
+      "\tpos 2.1 3.5\n";
+
+    final List<DataElement> elements = asDataDocument( data ).getChildElements();
+    assertEquals( elements.size(), 1 );
+
+    final DataElement element = elements.get( 0 );
+    assertTrue( SystemConfig.matches( element ) );
+    final SystemConfig system = SystemConfig.from( element );
+
+    assertEquals( system.getName(), "Red Zone" );
+    assertNull( system.getGovernment() );
+    assertNull( system.getMusic() );
+    assertNull( system.getHabitable() );
+    assertNull( system.getBelt() );
+    assertNull( system.getHaze() );
+
+    final Position pos = system.getPos();
+    assertNotNull( pos );
+    assertEquals( pos.getX(), 2.1D );
+    assertEquals( pos.getY(), 3.5D );
+
+    assertTrue( system.getLinks().isEmpty() );
+    assertTrue( system.getAsteroids().isEmpty() );
+    assertTrue( system.getTrades().isEmpty() );
+    assertTrue( system.getFleets().isEmpty() );
+    assertTrue( system.getObjects().isEmpty() );
+  }
+
   @Nonnull
   private DataDocument asDataDocument( @Nonnull final String data )
     throws IOException, DataParseException
