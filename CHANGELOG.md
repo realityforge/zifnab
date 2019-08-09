@@ -1,6 +1,7 @@
 # Change Log
 
-### Unreleased
+### [v0.02](https://github.com/realityforge/zifnab/tree/v0.02) (2019-08-09)
+[Full Changelog](https://github.com/realityforge/zifnab/compare/v0.01...v0.02)
 
 * Add `DataDocument.getChildElements()` helper method that returns a list of the child elements, skipping all the comments.
 * Add `DataElement.getName()` helper method that accesses the first token of line.
