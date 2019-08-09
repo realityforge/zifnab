@@ -22,7 +22,14 @@ public final class DataElement
 
   public DataElement( @Nullable final DataElement parent, @Nonnull final String... tokens )
   {
-    this( null, parent, Arrays.asList( tokens ) );
+    this( null, parent, tokens );
+  }
+
+  public DataElement( @Nullable final SourceLocation location,
+                      @Nullable final DataElement parent,
+                      @Nonnull final String... tokens )
+  {
+    this( location, parent, Arrays.asList( tokens ) );
   }
 
   public DataElement( @Nullable final SourceLocation location,
