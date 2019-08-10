@@ -27,3 +27,5 @@ complete as there is too much un-said.
 * Investigate other tools and see if they offer any ideas:
   - https://github.com/endless-sky/endless-sky-tools
   - https://github.com/EndlessSkyCommunity/awesome-endless-sky
+
+* Add a simple application that exposes a (read-only?) GraphQL API for accessing ES data. 
