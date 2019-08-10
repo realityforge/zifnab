@@ -16,7 +16,7 @@ The Maven dependency is:
 <dependency>
   <groupId>org.realityforge.zifnab</groupId>
   <artifactId>zifnab</artifactId>
-  <version>0.02</version>
+  <version>0.03</version>
 </dependency>
 ```
 
