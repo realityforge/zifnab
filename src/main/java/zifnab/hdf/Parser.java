@@ -98,7 +98,7 @@ final class Parser
       else
       {
         final SourceLocation location = newLocation();
-        final List<String> tokens = parseTokens();
+        final String[] tokens = parseTokens();
         final DataElement node = new DataElement( location, _parentNode, tokens );
         _lastNode = node;
         if ( null == _parentNode )
@@ -110,7 +110,7 @@ final class Parser
   }
 
   @Nonnull
-  private List<String> parseTokens()
+  private String[] parseTokens()
     throws DataParseException
   {
     final List<String> tokens = new ArrayList<>();
@@ -120,7 +120,7 @@ final class Parser
       tokens.add( token );
     }
 
-    return tokens;
+    return tokens.toArray( new String[ 0 ] );
   }
 
   @Nullable
