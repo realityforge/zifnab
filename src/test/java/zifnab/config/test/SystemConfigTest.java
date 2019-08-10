@@ -294,6 +294,30 @@ public class SystemConfigTest
     assertEquals( location.getColumnNumber(), 2 );
   }
 
+  @Test
+  public void parseWhereSystemHasUnknownKey()
+    throws Exception
+  {
+    final String data =
+      "system \"Blue Zone\"\n" +
+      "\tpos -100 50.5\n" +
+      "\tbadkey 180\n";
+
+    final List<DataElement> elements = asDataDocument( data ).getChildElements();
+    assertEquals( elements.size(), 1 );
+
+    final DataElement element = elements.get( 0 );
+    assertTrue( SystemConfig.matches( element ) );
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> SystemConfig.from( element ) );
+
+    assertEquals( exception.getMessage(), "Unexpected data element named 'badkey'" );
+    final SourceLocation location = exception.getLocation();
+    assertNotNull( location );
+    assertEquals( location.getLineNumber(), 3 );
+    assertEquals( location.getColumnNumber(), 1 );
+  }
+
   @Nonnull
   private DataDocument asDataDocument( @Nonnull final String data )
     throws IOException, DataParseException
