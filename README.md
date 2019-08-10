@@ -39,8 +39,7 @@ The `DataFile` object has a reference to the in memory representation of the dat
 easy to traverse to extract information from the the file. i.e.
 
 ```java
-final long topLevelElements =
-  dataFile.getDocument().getChildren().stream().filter( e -> e instanceof DataElement ).count();
+final long topLevelElements = dataFile.getDocument().getChildElements().size();
 System.out.println( topLevelElements + " top-level elements found in file." );
 ```
 
