@@ -233,7 +233,7 @@ final class Parser
       _column++;
       indent++;
     }
-    if( _line.length() <= _column )
+    if ( _line.length() <= _column )
     {
       //We have a line that contains just tabs. It is ignored as the native parser ignores it.
       return;
