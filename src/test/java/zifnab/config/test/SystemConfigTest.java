@@ -252,7 +252,6 @@ public class SystemConfigTest
 
   @Test
   public void parseWhereStellarObjectHasUnknownKey()
-    throws Exception
   {
     final String data =
       "system \"Blue Zone\"\n" +
@@ -276,7 +275,6 @@ public class SystemConfigTest
 
   @Test
   public void parseWhereSystemHasUnknownKey()
-    throws Exception
   {
     final String data =
       "system \"Blue Zone\"\n" +
@@ -295,7 +293,6 @@ public class SystemConfigTest
 
   @Test
   public void parseInvalidProperty()
-    throws Exception
   {
     final String data =
       "system \"Blue Zone\"\n" +
