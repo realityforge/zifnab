@@ -7,8 +7,6 @@ import zifnab.hdf.DataElement;
 
 final class SystemConfigParser
 {
-  private static final String NAME = "system";
-
   private SystemConfigParser()
   {
   }
@@ -17,7 +15,7 @@ final class SystemConfigParser
   static SystemConfig from( @Nonnull final DataElement element )
   {
     element.assertTokenCount( 2 );
-    element.assertTokenName( NAME );
+    element.assertTokenName( "system" );
     final String name = element.getStringAt( 1 );
     final SystemConfig config = new SystemConfig( name );
     parseConfig( config, element.getChildElements() );
@@ -26,7 +24,7 @@ final class SystemConfigParser
 
   static boolean matches( @Nonnull final DataElement element )
   {
-    return NAME.equals( element.getName() );
+    return "system".equals( element.getName() );
   }
 
   private static void parseConfig( @Nonnull final SystemConfig config,
