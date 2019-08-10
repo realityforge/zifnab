@@ -48,10 +48,27 @@ public class DataCommentTest
     final DataElement parent = new DataElement( null, "planet", "AK5" );
 
     final String comment = ValueUtil.randomString();
-    final DataComment child = new DataComment( parent, comment );
+    final DataComment child = parent.comment( comment );
 
     assertEquals( child.getParent(), parent );
     assertEquals( child.getComment(), comment );
+  }
+
+  @Test
+  public void constructNestedWithSourceLocation()
+  {
+    final DataElement parent = new DataElement( null, "planet", "AK5" );
+
+    final String comment = ValueUtil.randomString();
+    final SourceLocation location =
+      new SourceLocation( ValueUtil.randomString(),
+                          Math.abs( ValueUtil.randomInt() ),
+                          Math.abs( ValueUtil.randomInt() ) );
+    final DataComment element = parent.comment( location, comment );
+
+    assertEquals( element.getParent(), parent );
+    assertEquals( element.getComment(), comment );
+    assertEquals( element.getLocation(), location );
   }
 
   @Test
@@ -71,11 +88,11 @@ public class DataCommentTest
   {
     final DataComment comment1 = new DataComment( null, "The humanitarian mission!" );
     final DataElement element1 = new DataElement( null, "mission", "Drought Relief" );
-    new DataComment( element1, "The name of the mission as presented to user" );
-    new DataElement( element1, "name", "Drought relief to <planet>" );
-    final DataElement offer = new DataElement( element1, "to", "offer" );
-    new DataComment( offer, "This happens 1 in 10 times?" );
-    new DataElement( offer, "random", "<", "10" );
+    element1.comment( "The name of the mission as presented to user" );
+    element1.element( "name", "Drought relief to <planet>" );
+    final DataElement offer = element1.element( "to", "offer" );
+    offer.comment( "This happens 1 in 10 times?" );
+    offer.element( "random", "<", "10" );
 
     final DataComment comment2 = new DataComment( null, "The safe planet" );
     final DataComment comment3 = new DataComment( null, "... or so I hear" );

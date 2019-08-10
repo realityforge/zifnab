@@ -7,12 +7,6 @@ complete as there is too much un-said.
 * Change usages of `Collections.unmodifiableList(...)` so that they are compiled out in
   production mode.
 
-* Add factory methods onto both`DataDocument` and `DataElement` for creating children. Such as:
-  - `e.element(location, "planet", "mars")`
-  - `e.element("planet", "mars")`
-  - `e.comment(location, "Great planet!")`
-  - `e.comment("Great planet!")`
-
   These can be extracted into a common interface with default methods? Also `getChildElements()`
   can probably migrate there as well.
 

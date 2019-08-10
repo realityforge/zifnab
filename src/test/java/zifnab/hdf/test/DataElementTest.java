@@ -87,12 +87,31 @@ public class DataElementTest
   }
 
   @Test
+  public void constructNestedWithSourceLocation()
+  {
+    final DataElement parent = new DataElement( null, "planet", "AK5" );
+
+    final SourceLocation location =
+      new SourceLocation( ValueUtil.randomString(),
+                          Math.abs( ValueUtil.randomInt() ),
+                          Math.abs( ValueUtil.randomInt() ) );
+    final DataElement element = parent.element( location, "planet", "Dune" );
+
+    assertEquals( element.getParent(), parent );
+    assertEquals( element.getLocation(), location );
+    assertEquals( element.getName(), "planet" );
+    assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
+    assertTrue( element.getChildren().isEmpty() );
+    assertTrue( element.getChildElements().isEmpty() );
+  }
+
+  @Test
   public void constructNestedWithComments()
   {
     final DataElement parent = new DataElement( null, "planet", "AK5" );
 
-    final DataComment comment = new DataComment( parent, "The home planet of the queen in waiting" );
-    final DataElement child = new DataElement( parent, "name", "Akaron 5" );
+    final DataComment comment = parent.comment( "The home planet of the queen in waiting" );
+    final DataElement child = parent.element( "name", "Akaron 5" );
 
     assertNull( parent.getParent() );
     assertNull( parent.getLocation() );
@@ -158,19 +177,18 @@ public class DataElementTest
     throws Exception
   {
     final DataElement root = new DataElement( null, "mission", "Drought Relief" );
-    new DataElement( root, "name", "Drought relief to <planet>" );
-    new DataElement( root, "job" );
-    new DataElement( root, "repeat" );
-    new DataElement( root,
-                     "description",
-                     "The farming world of <destination> is currently experiencing a drought. Deliver <cargo> to the planet by <date> for <payment>." );
-    new DataElement( root, "cargo", "drought relief supplies", "25", "2", ".05" );
-    new DataElement( root, "deadline" );
-    final DataElement offer = new DataElement( root, "to", "offer" );
-    new DataElement( offer, "random", "<", "10" );
-    final DataElement source = new DataElement( root, "source" );
-    new DataElement( source, "government", "Republic" );
-    new DataElement( source, "not", "attributes", "farming" );
+    root.element( "name", "Drought relief to <planet>" );
+    root.element( "job" );
+    root.element( "repeat" );
+    root.element( "description",
+                  "The farming world of <destination> is currently experiencing a drought. Deliver <cargo> to the planet by <date> for <payment>." );
+    root.element( "cargo", "drought relief supplies", "25", "2", ".05" );
+    root.element( "deadline" );
+    final DataElement offer = root.element( "to", "offer" );
+    offer.element( "random", "<", "10" );
+    final DataElement source = root.element( "source" );
+    source.element( "government", "Republic" );
+    source.element( "not", "attributes", "farming" );
 
     final String output = writeElement( root );
     assertEquals( output,
@@ -225,7 +243,7 @@ public class DataElementTest
   public void assertTokenCount()
   {
     final DataElement element = new DataElement( null, "planet", "Dune" );
-    new DataElement( element, "name", "The Red Planet" );
+    element.element( "name", "The Red Planet" );
 
     element.assertTokenCount( 2 );
   }
@@ -235,7 +253,7 @@ public class DataElementTest
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
     final DataElement element = new DataElement( location, null, "planet", "Dune" );
-    new DataElement( element, "name", "The Red Planet" );
+    element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0 ) );
@@ -249,7 +267,7 @@ public class DataElementTest
   public void assertTokenCount_error_emptyLocation()
   {
     final DataElement element = new DataElement( null, "planet", "Dune" );
-    new DataElement( element, "name", "The Red Planet" );
+    element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0 ) );
@@ -263,7 +281,7 @@ public class DataElementTest
   public void assertTokenCountMM()
   {
     final DataElement element = new DataElement( null, "planet", "Dune" );
-    final DataElement child = new DataElement( element, "name", "The Red Planet" );
+    final DataElement child = element.element( "name", "The Red Planet" );
 
     element.assertTokenCount( 1, 2 );
     child.assertTokenCount( 0, 4 );
@@ -274,7 +292,7 @@ public class DataElementTest
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
     final DataElement element = new DataElement( location, null, "planet", "Dune" );
-    new DataElement( element, "name", "The Red Planet" );
+    element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0, 1 ) );
@@ -288,7 +306,7 @@ public class DataElementTest
   public void assertTokenCountMM_error_emptyLocation()
   {
     final DataElement element = new DataElement( null, "planet", "Dune" );
-    new DataElement( element, "name", "The Red Planet" );
+    element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0, 1 ) );

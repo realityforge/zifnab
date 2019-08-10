@@ -32,6 +32,34 @@ public final class DataDocument
                                            .collect( Collectors.toList() ) );
   }
 
+  @Nonnull
+  public DataElement element( @Nonnull final String... tokens )
+  {
+    return element( null, tokens );
+  }
+
+  @Nonnull
+  public DataElement element( @Nullable final SourceLocation location, @Nonnull final String... tokens )
+  {
+    final DataElement element = new DataElement( location, null, tokens );
+    append( element );
+    return element;
+  }
+
+  @Nonnull
+  public DataComment comment( @Nonnull final String comment )
+  {
+    return comment( null, comment );
+  }
+
+  @Nonnull
+  public DataComment comment( @Nullable final SourceLocation location, @Nonnull final String comment )
+  {
+    final DataComment node = new DataComment( location, null, comment );
+    append( node );
+    return node;
+  }
+
   public void append( @Nonnull final DataNode child )
   {
     if ( null == _children )

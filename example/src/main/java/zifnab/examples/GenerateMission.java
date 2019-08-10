@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Paths;
 import javax.annotation.Nonnull;
-import zifnab.hdf.DataComment;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
@@ -18,13 +17,12 @@ public final class GenerateMission
     throws IOException
   {
     final DataDocument document = new DataDocument();
-    document.append( new DataComment( null, "The humanitarian mission!" ) );
-    final DataElement element1 = new DataElement( null, "mission", "Drought Relief" );
-    document.append( element1 );
-    new DataComment( element1, "The name of the mission as presented to user" );
-    new DataElement( element1, "name", "Drought relief to <planet>" );
-    final DataElement offer = new DataElement( element1, "to", "offer" );
-    new DataElement( offer, "random", "<", "10" );
+    document.comment( "The humanitarian mission!" );
+    final DataElement element1 = document.element( "mission", "Drought Relief" );
+    element1.comment( "The name of the mission as presented to user" );
+    element1.element( "name", "Drought relief to <planet>" );
+    final DataElement offer = element1.element( "to", "offer" );
+    offer.element( "random", "<", "10" );
 
     final DataFile dataFile = new DataFile( Paths.get( "ignored.txt" ), document );
 

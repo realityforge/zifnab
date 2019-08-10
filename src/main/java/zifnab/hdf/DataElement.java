@@ -159,6 +159,30 @@ public final class DataElement
                                            .collect( Collectors.toList() ) );
   }
 
+  @Nonnull
+  public DataElement element( @Nonnull final String... tokens )
+  {
+    return element( null, tokens );
+  }
+
+  @Nonnull
+  public DataElement element( @Nullable final SourceLocation location, @Nonnull final String... tokens )
+  {
+    return new DataElement( location, this, tokens );
+  }
+
+  @Nonnull
+  public DataComment comment( @Nonnull final String comment )
+  {
+    return comment( null, comment );
+  }
+
+  @Nonnull
+  public DataComment comment( @Nullable final SourceLocation location, @Nonnull final String comment )
+  {
+    return new DataComment( location, this, comment );
+  }
+
   void append( @Nonnull final DataNode child )
   {
     if ( null == _children )

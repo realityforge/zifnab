@@ -3,6 +3,7 @@ package zifnab.hdf.test;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collections;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
@@ -10,6 +11,7 @@ import zifnab.hdf.DataComment;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
+import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
 public class DataDocumentTest
@@ -40,6 +42,37 @@ public class DataDocumentTest
 
     assertEquals( document.getChildren(), Arrays.asList( element1, comment1, element2 ) );
     assertEquals( document.getChildElements(), Arrays.asList( element1, element2 ) );
+  }
+
+  @Test
+  public void element()
+  {
+    final DataDocument document = new DataDocument();
+
+    assertTrue( document.getChildren().isEmpty() );
+
+    final SourceLocation location = new SourceLocation( "", 1, 0 );
+    final DataElement element = document.element( location, "My header license comment" );
+
+    assertEquals( element.getLocation(), location );
+    assertEquals( document.getChildren(), Collections.singletonList( element ) );
+    assertEquals( document.getChildElements(), Collections.singletonList( element ) );
+  }
+
+  @Test
+  public void comment()
+  {
+    final DataDocument document = new DataDocument();
+
+    assertTrue( document.getChildren().isEmpty() );
+
+    final SourceLocation location = new SourceLocation( "", 1, 0 );
+    final DataComment comment =
+      document.comment( location, "My header license comment" );
+
+    assertEquals( comment.getLocation(), location );
+    assertEquals( document.getChildren(), Collections.singletonList( comment ) );
+    assertEquals( document.getChildElements(), Collections.emptyList() );
   }
 
   @Test
