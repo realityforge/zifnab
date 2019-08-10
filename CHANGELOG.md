@@ -1,6 +1,7 @@
 # Change Log
 
-### Unreleased
+### [v0.03](https://github.com/realityforge/zifnab/tree/v0.03) (2019-08-10)
+[Full Changelog](https://github.com/realityforge/zifnab/compare/v0.02...v0.03)
 
 * Add initial spike for encoding, decoding, building and manipulating an in memory representation of the `system` entity from Endless Sky. The method `SystemConfig.from(DataElement)` is used to decode the system entity. The method `SystemConfig.encode(DataDocument,SystemConfig)` is used to encode the system entity. Various utilities exist on the `SystemConfig` class to access and mutate properties on the entity.
 * Add simplified `element()` and `comment()` factory methods onto both `DataDocument` and `DataElement` for creating children. Eaxample usage includes:
