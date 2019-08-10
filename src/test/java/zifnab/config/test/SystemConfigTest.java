@@ -52,12 +52,7 @@ public class SystemConfigTest
       "\t\tperiod 14.9791\n" +
       "\t\toffset 180";
 
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
-    assertTrue( SystemConfig.matches( element ) );
-    final SystemConfig system = SystemConfig.from( element );
+    final SystemConfig system = parseSystemConfig( data );
 
     assertEquals( system.getName(), "Blue Zone" );
     assertEquals( system.getGovernment(), "Coalition" );
@@ -178,12 +173,7 @@ public class SystemConfigTest
       "system \"Red Zone\"\n" +
       "\tpos 2.1 3.5\n";
 
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
-    assertTrue( SystemConfig.matches( element ) );
-    final SystemConfig system = SystemConfig.from( element );
+    final SystemConfig system = parseSystemConfig( data );
 
     assertEquals( system.getName(), "Red Zone" );
     assertNull( system.getGovernment() );
@@ -225,12 +215,7 @@ public class SystemConfigTest
       "\t\t\t\tdistance 50.1\n" +
       "\t\t\t\tperiod 4.2\n";
 
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
-    assertTrue( SystemConfig.matches( element ) );
-    final SystemConfig system = SystemConfig.from( element );
+    final SystemConfig system = parseSystemConfig( data );
 
     assertEquals( system.getName(), "Blue Zone" );
 
@@ -279,13 +264,8 @@ public class SystemConfigTest
       "\t\toffset 180\n" +
       "\t\tunknownkey 180\n";
 
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
-    assertTrue( SystemConfig.matches( element ) );
     final DataAccessException exception =
-      expectThrows( DataAccessException.class, () -> SystemConfig.from( element ) );
+      expectThrows( DataAccessException.class, () -> parseSystemConfig( data ) );
 
     assertEquals( exception.getMessage(), "Unexpected data element named 'unknownkey'" );
     final SourceLocation location = exception.getLocation();
@@ -303,13 +283,8 @@ public class SystemConfigTest
       "\tpos -100 50.5\n" +
       "\tbadkey 180\n";
 
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
-    assertTrue( SystemConfig.matches( element ) );
     final DataAccessException exception =
-      expectThrows( DataAccessException.class, () -> SystemConfig.from( element ) );
+      expectThrows( DataAccessException.class, () -> parseSystemConfig( data ) );
 
     assertEquals( exception.getMessage(), "Unexpected data element named 'badkey'" );
     final SourceLocation location = exception.getLocation();
@@ -326,13 +301,8 @@ public class SystemConfigTest
       "system \"Blue Zone\"\n" +
       "\tpos 50.5\n";
 
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
-    assertTrue( SystemConfig.matches( element ) );
     final DataAccessException exception =
-      expectThrows( DataAccessException.class, () -> SystemConfig.from( element ) );
+      expectThrows( DataAccessException.class, () -> parseSystemConfig( data ) );
 
     assertEquals( exception.getMessage(),
                   "Data element named 'pos' expected to contain 3 tokens but contains 2 tokens" );
@@ -340,6 +310,18 @@ public class SystemConfigTest
     assertNotNull( location );
     assertEquals( location.getLineNumber(), 2 );
     assertEquals( location.getColumnNumber(), 1 );
+  }
+
+  @Nonnull
+  private SystemConfig parseSystemConfig( @Nonnull final String data )
+    throws IOException, DataParseException
+  {
+    final List<DataElement> elements = asDataDocument( data ).getChildElements();
+    assertEquals( elements.size(), 1 );
+
+    final DataElement element = elements.get( 0 );
+    assertTrue( SystemConfig.matches( element ) );
+    return SystemConfig.from( element );
   }
 
   @Nonnull
