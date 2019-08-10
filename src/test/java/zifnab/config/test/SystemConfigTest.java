@@ -1,6 +1,8 @@
 package zifnab.config.test;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
@@ -309,6 +311,121 @@ public class SystemConfigTest
     assertEquals( location.getColumnNumber(), 1 );
   }
 
+  @Test
+  public void encodeForComplete()
+    throws Exception
+  {
+    final String data =
+      "system \"Blue Zone\"\n" +
+      "\tpos -100.0 50.5\n" +
+      "\tgovernment Coalition\n" +
+      "\thaze redHaze\n" +
+      "\tmusic dance123\n" +
+      "\thabitable 1200.68\n" +
+      "\tbelt 1090.0\n" +
+      "\tlink \"Home System\"\n" +
+      "\tlink \"Other Place\"\n" +
+      "\tasteroids \"medium rock\" 28 3.2928\n" +
+      "\tasteroids \"small rock\" 2 4.1454\n" +
+      "\tminables gold 17 3.14953\n" +
+      "\tminables titanium 46 3.06136\n" +
+      "\ttrade Clothing 202\n" +
+      "\ttrade Electronics 723\n" +
+      "\tfleet Heliarch 400\n" +
+      "\tfleet \"Small Arach\" 800\n" +
+      "\tobject\n" +
+      "\t\tsprite star/g0\n" +
+      "\t\tdistance 40.3837\n" +
+      "\t\tperiod 14.9791\n" +
+      "\tobject \"Zen - 2\"\n" +
+      "\t\tsprite star/k0\n" +
+      "\t\tdistance 89.6163\n" +
+      "\t\tperiod 14.9791\n" +
+      "\t\toffset 180.0\n";
+
+    assertEncodedFormMatchesInputData( data );
+  }
+
+  @Test
+  public void encodeForMinimal()
+    throws Exception
+  {
+    final String data =
+      "system \"Red Zone\"\n" +
+      "\tpos 2.1 3.5\n";
+
+    assertEncodedFormMatchesInputData( data );
+  }
+
+  @Test
+  public void encodeWillReorderElementsAndNormalizeDoubles()
+    throws Exception
+  {
+    final String data =
+      "system \"Blue Zone\"\n" +
+      "\tpos -100 50.5\n" +
+      "\tgovernment Coalition\n" +
+      "\tmusic dance123\n" +
+      "\thabitable 1200.68\n" +
+      "\tbelt 1090\n" +
+      "\thaze redHaze\n" +
+      "\tlink \"Other Place\"\n" +
+      "\tlink \"Home System\"\n" +
+      "\tasteroids \"small rock\" 2 4.1454\n" +
+      "\tasteroids \"medium rock\" 28 3.2928\n" +
+      "\tminables gold 17 3.14953\n" +
+      "\tminables titanium 46 3.06136\n" +
+      "\ttrade Clothing 202\n" +
+      "\ttrade Electronics 723\n" +
+      "\tfleet \"Small Arach\" 800\n" +
+      "\tfleet Heliarch 400\n" +
+      "\tobject\n" +
+      "\t\tsprite star/g0\n" +
+      "\t\tdistance 40.3837\n" +
+      "\t\tperiod 14.9791\n" +
+      "\tobject \"Zen - 2\"\n" +
+      "\t\tsprite star/k0\n" +
+      "\t\tdistance 89.6163\n" +
+      "\t\tperiod 14.9791\n" +
+      "\t\toffset 180";
+
+    final String expected =
+      "system \"Blue Zone\"\n" +
+      "\tpos -100.0 50.5\n" +
+      "\tgovernment Coalition\n" +
+      "\thaze redHaze\n" +
+      "\tmusic dance123\n" +
+      "\thabitable 1200.68\n" +
+      "\tbelt 1090.0\n" +
+      "\tlink \"Home System\"\n" +
+      "\tlink \"Other Place\"\n" +
+      "\tasteroids \"medium rock\" 28 3.2928\n" +
+      "\tasteroids \"small rock\" 2 4.1454\n" +
+      "\tminables gold 17 3.14953\n" +
+      "\tminables titanium 46 3.06136\n" +
+      "\ttrade Clothing 202\n" +
+      "\ttrade Electronics 723\n" +
+      "\tfleet Heliarch 400\n" +
+      "\tfleet \"Small Arach\" 800\n" +
+      "\tobject\n" +
+      "\t\tsprite star/g0\n" +
+      "\t\tdistance 40.3837\n" +
+      "\t\tperiod 14.9791\n" +
+      "\tobject \"Zen - 2\"\n" +
+      "\t\tsprite star/k0\n" +
+      "\t\tdistance 89.6163\n" +
+      "\t\tperiod 14.9791\n" +
+      "\t\toffset 180.0\n";
+
+    assertEncodedFormMatchesInputData( parseSystemConfig( data ), expected );
+  }
+
+  private void assertEncodedFormMatchesInputData( @Nonnull final String data )
+    throws Exception
+  {
+    assertEncodedFormMatchesInputData( parseSystemConfig( data ), data );
+  }
+
   @Nonnull
   private SystemConfig parseSystemConfig( @Nonnull final String data )
     throws Exception
@@ -319,6 +436,23 @@ public class SystemConfigTest
     final DataElement element = elements.get( 0 );
     assertTrue( SystemConfig.matches( element ) );
     return SystemConfig.from( element );
+  }
+
+  private void assertEncodedFormMatchesInputData( @Nonnull final SystemConfig system,
+                                                  @Nonnull final String inputData )
+    throws IOException
+  {
+    final DataDocument document = new DataDocument();
+    final DataElement element = SystemConfig.encode( document, system );
+
+    assertNotNull( element );
+    assertEquals( element.getName(), "system" );
+    assertEquals( element.getStringAt( 1 ), system.getName() );
+
+    final Path file = createTempDataFile();
+    new DataFile( file, document ).write();
+    final String encodedData = new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
+    assertEquals( encodedData, inputData );
   }
 
   @Nonnull

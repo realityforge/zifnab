@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 
 @SuppressWarnings( { "WeakerAccess", "unused" } )
@@ -50,6 +51,12 @@ public final class SystemConfig
   public static SystemConfig from( @Nonnull final DataElement element )
   {
     return SystemConfigParser.from( element );
+  }
+
+  @Nonnull
+  public static DataElement encode( @Nonnull final DataDocument document, @Nonnull final SystemConfig system )
+  {
+    return SystemConfigEncoder.encode( document, system );
   }
 
   public static boolean matches( @Nonnull final DataElement element )
