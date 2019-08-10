@@ -7,9 +7,6 @@ complete as there is too much un-said.
 * Change usages of `Collections.unmodifiableList(...)` so that they are compiled out in
   production mode.
 
-  These can be extracted into a common interface with default methods? Also `getChildElements()`
-  can probably migrate there as well.
-
 * Create `XConfig` objects for representing all the entities that we are going to be manipulating.
   These should have the ability:
   - to parse data from `DataElement` instances.
