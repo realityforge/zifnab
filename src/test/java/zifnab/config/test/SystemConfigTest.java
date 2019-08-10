@@ -318,6 +318,30 @@ public class SystemConfigTest
     assertEquals( location.getColumnNumber(), 1 );
   }
 
+  @Test
+  public void parseInvalidProperty()
+    throws Exception
+  {
+    final String data =
+      "system \"Blue Zone\"\n" +
+      "\tpos 50.5\n";
+
+    final List<DataElement> elements = asDataDocument( data ).getChildElements();
+    assertEquals( elements.size(), 1 );
+
+    final DataElement element = elements.get( 0 );
+    assertTrue( SystemConfig.matches( element ) );
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> SystemConfig.from( element ) );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'pos' expected to contain 3 tokens but contains 2 tokens" );
+    final SourceLocation location = exception.getLocation();
+    assertNotNull( location );
+    assertEquals( location.getLineNumber(), 2 );
+    assertEquals( location.getColumnNumber(), 1 );
+  }
+
   @Nonnull
   private DataDocument asDataDocument( @Nonnull final String data )
     throws IOException, DataParseException
