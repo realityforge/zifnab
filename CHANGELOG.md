@@ -8,7 +8,7 @@
   - `e.element("planet", "mars")`
   - `e.comment(location, "Great planet!")`
   - `e.comment("Great planet!")`
-
+* Eliminate the public constructors in `DataElement` and `DataComment` as well as the method `Document.append(DataNode)` and require that manual construction of data occurs via factory methods. This eliminates several scenarios where invalid data can be created by appending nodes to documents where the node is not a top-level node or is already owned by another document. 
 
 ### [v0.02](https://github.com/realityforge/zifnab/tree/v0.02) (2019-08-09)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.01...v0.02)

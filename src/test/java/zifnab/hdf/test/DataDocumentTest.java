@@ -33,12 +33,9 @@ public class DataDocumentTest
 
     assertTrue( document.getChildren().isEmpty() );
 
-    final DataElement element1 = new DataElement( null, "planet", "Dune" );
-    final DataComment comment1 = new DataComment( null, "some random comment" );
-    final DataElement element2 = new DataElement( null, "planet", "Mars" );
-    document.append( element1 );
-    document.append( comment1 );
-    document.append( element2 );
+    final DataElement element1 = document.element( "planet", "Dune" );
+    final DataComment comment1 = document.comment( "some random comment" );
+    final DataElement element2 = document.element( "planet", "Mars" );
 
     assertEquals( document.getChildren(), Arrays.asList( element1, comment1, element2 ) );
     assertEquals( document.getChildElements(), Arrays.asList( element1, element2 ) );
@@ -83,9 +80,9 @@ public class DataDocumentTest
 
     assertTrue( document.getChildren().isEmpty() );
 
-    document.append( new DataElement( null, "planet", "Dune" ) );
-    document.append( new DataComment( null, "The red planet" ) );
-    document.append( new DataElement( null, "planet", "Mars" ) );
+    document.element( "planet", "Dune" );
+    document.comment( "The red planet" );
+    document.element( "planet", "Mars" );
 
     final String output = writeDocument( document );
     assertEquals( output, "planet Dune\n" +

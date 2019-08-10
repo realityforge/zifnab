@@ -88,23 +88,17 @@ final class Parser
         {
           comment = _line.substring( _column + 1 );
         }
-        final DataComment node = new DataComment( location, _parentNode, comment );
-        _lastNode = node;
-        if ( null == _parentNode )
-        {
-          _document.append( node );
-        }
+        _lastNode = null == _parentNode ?
+                    _document.comment( location, comment ) :
+                    _parentNode.comment( location, comment );
       }
       else
       {
         final SourceLocation location = newLocation();
         final String[] tokens = parseTokens();
-        final DataElement node = new DataElement( location, _parentNode, tokens );
-        _lastNode = node;
-        if ( null == _parentNode )
-        {
-          _document.append( node );
-        }
+        _lastNode = null == _parentNode ?
+                    _document.element( location, tokens ) :
+                    _parentNode.element( location, tokens );
       }
     }
   }

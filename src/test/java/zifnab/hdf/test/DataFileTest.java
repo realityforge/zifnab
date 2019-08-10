@@ -1,9 +1,7 @@
 package zifnab.hdf.test;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+import java.io.StringWriter;
 import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
@@ -20,23 +18,20 @@ public class DataFileTest
   public void writeComplexRepresentation()
     throws Exception
   {
-    final DataElement mission = new DataElement( null, "mission", "Drought Relief" );
-    new DataElement( mission, "name", "Drought relief to <planet>" );
-    new DataElement( mission, "job" );
-    new DataElement( mission, "repeat" );
-    new DataElement( mission,
-                     "description",
-                     "The farming world of <destination> is currently experiencing a drought. Deliver <cargo> to the planet by <date> for <payment>." );
-    new DataElement( mission, "cargo", "drought relief supplies", "25", "2", ".05" );
-    new DataElement( mission, "deadline" );
-    final DataElement offer = new DataElement( mission, "to", "offer" );
-    new DataElement( offer, "random", "<", "10" );
-    final DataElement source = new DataElement( mission, "source" );
-    new DataElement( source, "government", "Republic" );
-    new DataElement( source, "not", "attributes", "farming" );
-
     final DataDocument document = new DataDocument();
-    document.append( mission );
+    final DataElement mission = document.element( "mission", "Drought Relief" );
+    mission.element( "name", "Drought relief to <planet>" );
+    mission.element( "job" );
+    mission.element( "repeat" );
+    mission.element( "description",
+                     "The farming world of <destination> is currently experiencing a drought. Deliver <cargo> to the planet by <date> for <payment>." );
+    mission.element( "cargo", "drought relief supplies", "25", "2", ".05" );
+    mission.element( "deadline" );
+    final DataElement offer = mission.element( "to", "offer" );
+    offer.element( "random", "<", "10" );
+    final DataElement source = mission.element( "source" );
+    source.element( "government", "Republic" );
+    source.element( "not", "attributes", "farming" );
 
     final String output = writeElement( document );
     assertEquals( output,
@@ -58,15 +53,12 @@ public class DataFileTest
   public void write_multipleRootElements()
     throws Exception
   {
-    final DataElement element1 = new DataElement( null, "tip", "spike:" );
-    final DataElement element2 = new DataElement( null, "planet", "Mars" );
-    final DataElement element3 = new DataElement( null, "planet", "Luna" );
+    final DataDocument document = new DataDocument();
+    document.element( "tip", "spike:" );
+    document.element( "planet", "Mars" );
+    document.element( "planet", "Luna" );
 
     final Path file = createTempDataFile();
-    final DataDocument document = new DataDocument();
-    document.append( element1 );
-    document.append( element2 );
-    document.append( element3 );
     createDataFile( document, file ).write();
     final String output = readContent( file );
     assertEquals( output, "tip spike:\n" +
@@ -80,11 +72,10 @@ public class DataFileTest
   public void write_defaultFile()
     throws Exception
   {
-    final DataElement element = new DataElement( null, "tip", "spike:" );
+    final DataDocument document = new DataDocument();
+    document.element( "tip", "spike:" );
 
     final Path file = createTempDataFile();
-    final DataDocument document = new DataDocument();
-    document.append( element );
     createDataFile( document, file ).write();
     final String output = readContent( file );
     assertEquals( output, "tip spike:\n" );
@@ -94,12 +85,11 @@ public class DataFileTest
   public void writeToDifferentFile()
     throws Exception
   {
-    final DataElement element = new DataElement( null, "tip", "spike:" );
+    final DataDocument document = new DataDocument();
+    document.element( "tip", "spike:" );
 
     final Path file1 = createTempDataFile();
     final Path file2 = createTempDataFile();
-    final DataDocument document = new DataDocument();
-    document.append( element );
     createDataFile( document, file1 ).writeTo( file2 );
     final String output = readContent( file2 );
     assertEquals( output, "tip spike:\n" );
@@ -109,14 +99,12 @@ public class DataFileTest
   public void writeToInMemoryWriter()
     throws Exception
   {
-    final DataElement element = new DataElement( null, "tip", "spike:" );
-
     final DataDocument document = new DataDocument();
-    document.append( element );
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    createDataFile( document, createTempDataFile() ).writeTo( new OutputStreamWriter( baos, StandardCharsets.UTF_8 ) );
-    final String output = new String( baos.toByteArray(), StandardCharsets.UTF_8 );
-    assertEquals( output, "tip spike:\n" );
+    document.element( "tip", "spike:" );
+
+    final StringWriter sw = new StringWriter();
+    createDataFile( document, createTempDataFile() ).writeTo( sw );
+    assertEquals( sw.toString(), "tip spike:\n" );
   }
 
   @Nonnull

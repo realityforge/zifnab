@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import javax.annotation.Nonnull;
 import org.realityforge.guiceyloops.shared.ValueUtil;
 import org.testng.annotations.Test;
@@ -23,7 +22,8 @@ public class DataElementTest
   @Test
   public void constructTopLevel()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
 
     assertNull( element.getParent() );
     assertNull( element.getLocation() );
@@ -40,13 +40,14 @@ public class DataElementTest
       new SourceLocation( ValueUtil.randomString(),
                           Math.abs( ValueUtil.randomInt() ),
                           Math.abs( ValueUtil.randomInt() ) );
-    final List<String> tokens = Arrays.asList( "planet", "Dune" );
-    final DataElement element = new DataElement( location, null, tokens );
+
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
 
     assertNull( element.getParent() );
     assertEquals( element.getLocation(), location );
     assertEquals( element.getName(), "planet" );
-    assertEquals( element.getTokens(), tokens );
+    assertEquals( element.getTokens(), Arrays.asList( "planet", "Dune" ) );
     assertTrue( element.getChildren().isEmpty() );
     assertTrue( element.getChildElements().isEmpty() );
   }
@@ -54,7 +55,8 @@ public class DataElementTest
   @Test
   public void constructWithVarargsCtor()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
 
     assertNull( element.getParent() );
     assertNull( element.getLocation() );
@@ -67,9 +69,10 @@ public class DataElementTest
   @Test
   public void constructNested()
   {
-    final DataElement parent = new DataElement( null, "planet", "AK5" );
+    final DataDocument document = new DataDocument();
+    final DataElement parent = document.element( "planet", "AK5" );
 
-    final DataElement child = new DataElement( parent, "name", "Akaron 5" );
+    final DataElement child = parent.element( "name", "Akaron 5" );
 
     assertNull( parent.getParent() );
     assertNull( parent.getLocation() );
@@ -89,7 +92,8 @@ public class DataElementTest
   @Test
   public void constructNestedWithSourceLocation()
   {
-    final DataElement parent = new DataElement( null, "planet", "AK5" );
+    final DataDocument document = new DataDocument();
+    final DataElement parent = document.element( "planet", "AK5" );
 
     final SourceLocation location =
       new SourceLocation( ValueUtil.randomString(),
@@ -108,7 +112,8 @@ public class DataElementTest
   @Test
   public void constructNestedWithComments()
   {
-    final DataElement parent = new DataElement( null, "planet", "AK5" );
+    final DataDocument document = new DataDocument();
+    final DataElement parent = document.element( "planet", "AK5" );
 
     final DataComment comment = parent.comment( "The home planet of the queen in waiting" );
     final DataElement child = parent.element( "name", "Akaron 5" );
@@ -136,9 +141,10 @@ public class DataElementTest
   public void writeWithOneLayer()
     throws Exception
   {
-    final DataElement root = new DataElement( null, "tip", "spike:" );
+    final DataDocument document = new DataDocument();
+    document.element( "tip", "spike:" );
 
-    final String output = writeElement( root );
+    final String output = writeElement( document );
     assertEquals( output, "tip spike:\n" );
   }
 
@@ -146,9 +152,10 @@ public class DataElementTest
   public void writeTokensWithSpaces()
     throws Exception
   {
-    final DataElement root = new DataElement( null, "tip", "awesome spike:" );
+    final DataDocument document = new DataDocument();
+    document.element( "tip", "awesome spike:" );
 
-    final String output = writeElement( root );
+    final String output = writeElement( document );
     assertEquals( output, "tip \"awesome spike:\"\n" );
   }
 
@@ -156,9 +163,10 @@ public class DataElementTest
   public void writeTokensWithQuotes()
     throws Exception
   {
-    final DataElement root = new DataElement( null, "planet", "Air \"quotes\"" );
+    final DataDocument document = new DataDocument();
+    document.element( "planet", "Air \"quotes\"" );
 
-    final String output = writeElement( root );
+    final String output = writeElement( document );
     assertEquals( output, "planet `Air \"quotes\"`\n" );
   }
 
@@ -166,9 +174,10 @@ public class DataElementTest
   public void writeEmptyToken()
     throws Exception
   {
-    final DataElement root = new DataElement( null, "planet", "" );
+    final DataDocument document = new DataDocument();
+    document.element( "planet", "" );
 
-    final String output = writeElement( root );
+    final String output = writeElement( document );
     assertEquals( output, "planet \"\"\n" );
   }
 
@@ -176,21 +185,22 @@ public class DataElementTest
   public void writeWithMultipleLayers()
     throws Exception
   {
-    final DataElement root = new DataElement( null, "mission", "Drought Relief" );
-    root.element( "name", "Drought relief to <planet>" );
-    root.element( "job" );
-    root.element( "repeat" );
-    root.element( "description",
-                  "The farming world of <destination> is currently experiencing a drought. Deliver <cargo> to the planet by <date> for <payment>." );
-    root.element( "cargo", "drought relief supplies", "25", "2", ".05" );
-    root.element( "deadline" );
-    final DataElement offer = root.element( "to", "offer" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "mission", "Drought Relief" );
+    element.element( "name", "Drought relief to <planet>" );
+    element.element( "job" );
+    element.element( "repeat" );
+    element.element( "description",
+                     "The farming world of <destination> is currently experiencing a drought. Deliver <cargo> to the planet by <date> for <payment>." );
+    element.element( "cargo", "drought relief supplies", "25", "2", ".05" );
+    element.element( "deadline" );
+    final DataElement offer = element.element( "to", "offer" );
     offer.element( "random", "<", "10" );
-    final DataElement source = root.element( "source" );
+    final DataElement source = element.element( "source" );
     source.element( "government", "Republic" );
     source.element( "not", "attributes", "farming" );
 
-    final String output = writeElement( root );
+    final String output = writeElement( document );
     assertEquals( output,
                   "mission \"Drought Relief\"\n" +
                   "\tname \"Drought relief to <planet>\"\n" +
@@ -209,7 +219,8 @@ public class DataElementTest
   @Test
   public void assertTokenName()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
 
     element.assertTokenName( "planet" );
   }
@@ -217,7 +228,8 @@ public class DataElementTest
   @Test
   public void assertTokenName_errorWithNoLocation()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenName( "Dune" ) );
@@ -230,7 +242,8 @@ public class DataElementTest
   public void assertTokenName_errorWithLocation()
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
-    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.assertTokenName( "Dune" ) );
@@ -242,7 +255,8 @@ public class DataElementTest
   @Test
   public void assertTokenCount()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
     element.element( "name", "The Red Planet" );
 
     element.assertTokenCount( 2 );
@@ -252,7 +266,8 @@ public class DataElementTest
   public void assertTokenCount_error()
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
-    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
     element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
@@ -266,7 +281,8 @@ public class DataElementTest
   @Test
   public void assertTokenCount_error_emptyLocation()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
     element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
@@ -280,7 +296,8 @@ public class DataElementTest
   @Test
   public void assertTokenCountMM()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
     final DataElement child = element.element( "name", "The Red Planet" );
 
     element.assertTokenCount( 1, 2 );
@@ -290,8 +307,9 @@ public class DataElementTest
   @Test
   public void assertTokenCountMM_error()
   {
+    final DataDocument document = new DataDocument();
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
-    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    final DataElement element = document.element( location, "planet", "Dune" );
     element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
@@ -305,7 +323,8 @@ public class DataElementTest
   @Test
   public void assertTokenCountMM_error_emptyLocation()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
     element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
@@ -319,7 +338,8 @@ public class DataElementTest
   @Test
   public void getStringAt()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
 
     assertEquals( element.getStringAt( 0 ), "planet" );
     assertEquals( element.getStringAt( 1 ), "Dune" );
@@ -328,7 +348,8 @@ public class DataElementTest
   @Test
   public void getStringAt_badIndex()
   {
-    final DataElement element = new DataElement( null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.getStringAt( 2 ) );
@@ -341,7 +362,8 @@ public class DataElementTest
   @Test
   public void getIntAt()
   {
-    final DataElement element = new DataElement( null, "trade", "sugar", "230" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "trade", "sugar", "230" );
 
     assertEquals( element.getIntAt( 2 ), 230 );
   }
@@ -350,7 +372,8 @@ public class DataElementTest
   public void getIntAt_badIndex()
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
-    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.getIntAt( 2 ) );
@@ -364,7 +387,8 @@ public class DataElementTest
   public void getIntAt_badType()
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
-    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.getIntAt( 1 ) );
@@ -377,7 +401,8 @@ public class DataElementTest
   @Test
   public void getDoubleAt()
   {
-    final DataElement element = new DataElement( null, "trade", "sugar", "23.5" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "trade", "sugar", "23.5" );
 
     assertEquals( element.getDoubleAt( 2 ), 23.5D );
   }
@@ -386,7 +411,8 @@ public class DataElementTest
   public void getDoubleAt_badIndex()
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
-    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.getDoubleAt( 2 ) );
@@ -400,7 +426,8 @@ public class DataElementTest
   public void getDoubleAt_badType()
   {
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
-    final DataElement element = new DataElement( location, null, "planet", "Dune" );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
 
     final DataAccessException exception =
       expectThrows( DataAccessException.class, () -> element.getDoubleAt( 1 ) );
@@ -411,12 +438,10 @@ public class DataElementTest
   }
 
   @Nonnull
-  private String writeElement( @Nonnull final DataElement root )
+  private String writeElement( @Nonnull final DataDocument document )
     throws IOException
   {
     final Path file = createTempDataFile();
-    final DataDocument document = new DataDocument();
-    document.append( root );
     new DataFile( file, document ).write();
     return readContent( file );
   }

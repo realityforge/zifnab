@@ -60,7 +60,7 @@ public final class DataDocument
     return node;
   }
 
-  public void append( @Nonnull final DataNode child )
+  private void append( @Nonnull final DataNode child )
   {
     if ( null == _children )
     {

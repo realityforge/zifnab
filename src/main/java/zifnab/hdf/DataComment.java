@@ -14,14 +14,9 @@ public final class DataComment
   @Nonnull
   private final String _comment;
 
-  public DataComment( @Nullable final DataElement parent, @Nonnull final String comment )
-  {
-    this( null, parent, comment );
-  }
-
-  public DataComment( @Nullable final SourceLocation location,
-                      @Nullable final DataElement parent,
-                      @Nonnull final String comment )
+  DataComment( @Nullable final SourceLocation location,
+               @Nullable final DataElement parent,
+               @Nonnull final String comment )
   {
     super( location );
     assert !comment.contains( "\n" );

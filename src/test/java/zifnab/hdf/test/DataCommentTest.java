@@ -10,7 +10,6 @@ import zifnab.hdf.DataComment;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
-import zifnab.hdf.DataNode;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
@@ -20,8 +19,9 @@ public class DataCommentTest
   @Test
   public void constructTopLevel()
   {
+    final DataDocument document = new DataDocument();
     final String comment = ValueUtil.randomString();
-    final DataComment element = new DataComment( null, comment );
+    final DataComment element = document.comment( comment );
 
     assertNull( element.getParent() );
     assertEquals( element.getComment(), comment );
@@ -30,12 +30,13 @@ public class DataCommentTest
   @Test
   public void constructWithSourceLocation()
   {
+    final DataDocument document = new DataDocument();
     final String comment = ValueUtil.randomString();
     final SourceLocation location =
       new SourceLocation( ValueUtil.randomString(),
                           Math.abs( ValueUtil.randomInt() ),
                           Math.abs( ValueUtil.randomInt() ) );
-    final DataComment element = new DataComment( location, null, comment );
+    final DataComment element = document.comment( location, comment );
 
     assertNull( element.getParent() );
     assertEquals( element.getComment(), comment );
@@ -45,7 +46,8 @@ public class DataCommentTest
   @Test
   public void constructNested()
   {
-    final DataElement parent = new DataElement( null, "planet", "AK5" );
+    final DataDocument document = new DataDocument();
+    final DataElement parent = document.element( "planet", "AK5" );
 
     final String comment = ValueUtil.randomString();
     final DataComment child = parent.comment( comment );
@@ -57,7 +59,8 @@ public class DataCommentTest
   @Test
   public void constructNestedWithSourceLocation()
   {
-    final DataElement parent = new DataElement( null, "planet", "AK5" );
+    final DataDocument document = new DataDocument();
+    final DataElement parent = document.element( "planet", "AK5" );
 
     final String comment = ValueUtil.randomString();
     final SourceLocation location =
@@ -75,10 +78,11 @@ public class DataCommentTest
   public void writeAtTopLevel()
     throws Exception
   {
-    final String comment = "Hello darkness, my old friend!";
-    final DataComment node = new DataComment( null, comment );
+    final DataDocument document = new DataDocument();
 
-    final String output = writeElement( node );
+    document.comment( "Hello darkness, my old friend!" );
+
+    final String output = writeElement( document );
     assertEquals( output, "# Hello darkness, my old friend!\n" );
   }
 
@@ -86,19 +90,20 @@ public class DataCommentTest
   public void writeWithMultipleLayers()
     throws Exception
   {
-    final DataComment comment1 = new DataComment( null, "The humanitarian mission!" );
-    final DataElement element1 = new DataElement( null, "mission", "Drought Relief" );
+    final DataDocument document = new DataDocument();
+    document.comment( "The humanitarian mission!" );
+    final DataElement element1 = document.element( "mission", "Drought Relief" );
     element1.comment( "The name of the mission as presented to user" );
     element1.element( "name", "Drought relief to <planet>" );
     final DataElement offer = element1.element( "to", "offer" );
     offer.comment( "This happens 1 in 10 times?" );
     offer.element( "random", "<", "10" );
 
-    final DataComment comment2 = new DataComment( null, "The safe planet" );
-    final DataComment comment3 = new DataComment( null, "... or so I hear" );
-    final DataElement element2 = new DataElement( null, "planet", "Dune" );
+    document.comment( "The safe planet" );
+    document.comment( "... or so I hear" );
+    document.element( "planet", "Dune" );
 
-    final String output = writeElement( comment1, element1, comment2, comment3, element2 );
+    final String output = writeElement( document );
     assertEquals( output,
                   "# The humanitarian mission!\n" +
                   "mission \"Drought Relief\"\n" +
@@ -114,15 +119,10 @@ public class DataCommentTest
   }
 
   @Nonnull
-  private String writeElement( @Nonnull final DataNode... nodes )
+  private String writeElement( @Nonnull final DataDocument document )
     throws IOException
   {
     final Path file = createTempDataFile();
-    final DataDocument document = new DataDocument();
-    for ( final DataNode node : nodes )
-    {
-      document.append( node );
-    }
     new DataFile( file, document ).write();
     return readContent( file );
   }

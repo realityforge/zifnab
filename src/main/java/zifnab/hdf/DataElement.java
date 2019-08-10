@@ -21,27 +21,15 @@ public final class DataElement
   @Nullable
   private List<DataNode> _children;
 
-  public DataElement( @Nullable final DataElement parent, @Nonnull final String... tokens )
-  {
-    this( null, parent, tokens );
-  }
-
-  public DataElement( @Nullable final SourceLocation location,
-                      @Nullable final DataElement parent,
-                      @Nonnull final String... tokens )
-  {
-    this( location, parent, Arrays.asList( tokens ) );
-  }
-
-  public DataElement( @Nullable final SourceLocation location,
-                      @Nullable final DataElement parent,
-                      @Nonnull final List<String> tokens )
+  DataElement( @Nullable final SourceLocation location,
+               @Nullable final DataElement parent,
+               @Nonnull final String... tokens )
   {
     super( location );
-    assert !tokens.isEmpty();
-    assert tokens.stream().noneMatch( line -> line.contains( "\n" ) );
     _parent = parent;
-    _tokens = new ArrayList<>( Objects.requireNonNull( tokens ) );
+    _tokens = Collections.unmodifiableList( Arrays.asList( Objects.requireNonNull( tokens ) ) );
+    assert !_tokens.isEmpty();
+    assert _tokens.stream().noneMatch( line -> line.contains( "\n" ) );
     if ( null != _parent )
     {
       _parent.append( this );
