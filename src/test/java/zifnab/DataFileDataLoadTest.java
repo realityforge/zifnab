@@ -11,6 +11,7 @@ import zifnab.config.TradeConfig;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
 import zifnab.hdf.DataParseException;
+import static org.testng.Assert.*;
 
 public class DataFileDataLoadTest
   extends AbstractTest
@@ -25,21 +26,21 @@ public class DataFileDataLoadTest
         .filter( file -> file.toString().endsWith( ".txt" ) )
         .collect( Collectors.toList() );
 
-
+    boolean failed = false;
     for ( final Path file : files )
     {
-      //System.out.println( "Processing: " + file );
+      System.out.println( "Processing: " + file );
       try
       {
         final DataFile dataFile = DataFile.read( file );
         for ( final DataElement element : dataFile.getDocument().getChildElements() )
         {
-          if( SystemConfig.matches( element  ) )
+          if ( SystemConfig.matches( element ) )
           {
             final SystemConfig systemConfig = SystemConfig.from( element );
             System.out.println( "Loaded " + systemConfig.getName() + " system." );
           }
-          else if( TradeConfig.matches( element  ) )
+          else if ( TradeConfig.matches( element ) )
           {
             final TradeConfig tradeConfig = TradeConfig.from( element );
             System.out.println( "Loaded " + tradeConfig.getCommodities().size() + " commodities." );
@@ -48,8 +49,12 @@ public class DataFileDataLoadTest
       }
       catch ( final DataParseException e )
       {
-        System.out.println( e.getLocation().getFilename() + ":" + e.getLocation().getLineNumber() + " : Error processing file: " + e.getMessage() );
+        failed = true;
+        System.out.println( e.getLocation().getFilename() + ":" + e.getLocation().getLineNumber() +
+                            " : Error processing file: " + e.getMessage() );
       }
     }
+
+    assertFalse( failed );
   }
 }
