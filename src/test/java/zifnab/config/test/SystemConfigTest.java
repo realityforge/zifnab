@@ -311,7 +311,7 @@ public class SystemConfigTest
 
   @Nonnull
   private SystemConfig parseSystemConfig( @Nonnull final String data )
-    throws IOException, DataParseException
+    throws Exception
   {
     final List<DataElement> elements = asDataDocument( data ).getChildElements();
     assertEquals( elements.size(), 1 );
