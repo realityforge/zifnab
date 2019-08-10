@@ -75,7 +75,7 @@ public final class DataElement
     }
   }
 
-  public void assertTokenCount( final int minLength, final int maxLength )
+  public void assertTokenCountRange( final int minLength, final int maxLength )
   {
     final int size = _tokens.size();
     if ( size < minLength || size > maxLength )

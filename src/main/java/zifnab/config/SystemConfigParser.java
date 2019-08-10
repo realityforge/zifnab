@@ -81,7 +81,7 @@ final class SystemConfigParser
   private static SystemConfig.StellarObject parseObject( @Nonnull final DataElement element )
   {
     element.assertTokenName( "object" );
-    element.assertTokenCount( 1, 2 );
+    element.assertTokenCountRange( 1, 2 );
     final String name = 2 == element.getTokens().size() ? element.getStringAt( 1 ) : null;
     final SystemConfig.StellarObject object = new SystemConfig.StellarObject( name );
     parseConfig( object, element.getChildElements() );

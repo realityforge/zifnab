@@ -294,18 +294,18 @@ public class DataElementTest
   }
 
   @Test
-  public void assertTokenCountMM()
+  public void assertTokenCountRange()
   {
     final DataDocument document = new DataDocument();
     final DataElement element = document.element( "planet", "Dune" );
     final DataElement child = element.element( "name", "The Red Planet" );
 
-    element.assertTokenCount( 1, 2 );
-    child.assertTokenCount( 0, 4 );
+    element.assertTokenCountRange( 1, 2 );
+    child.assertTokenCountRange( 0, 4 );
   }
 
   @Test
-  public void assertTokenCountMM_error()
+  public void assertTokenCountRange_error()
   {
     final DataDocument document = new DataDocument();
     final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
@@ -313,7 +313,7 @@ public class DataElementTest
     element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
-      expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0, 1 ) );
+      expectThrows( DataAccessException.class, () -> element.assertTokenCountRange( 0, 1 ) );
 
     assertEquals( exception.getMessage(),
                   "Data element named 'planet' expected to contain between 0 and 1 tokens but contains 2 tokens" );
@@ -321,14 +321,14 @@ public class DataElementTest
   }
 
   @Test
-  public void assertTokenCountMM_error_emptyLocation()
+  public void assertTokenCountRange_error_emptyLocation()
   {
     final DataDocument document = new DataDocument();
     final DataElement element = document.element( "planet", "Dune" );
     element.element( "name", "The Red Planet" );
 
     final DataAccessException exception =
-      expectThrows( DataAccessException.class, () -> element.assertTokenCount( 0, 1 ) );
+      expectThrows( DataAccessException.class, () -> element.assertTokenCountRange( 0, 1 ) );
 
     assertEquals( exception.getMessage(),
                   "Data element named 'planet' expected to contain between 0 and 1 tokens but contains 2 tokens" );
