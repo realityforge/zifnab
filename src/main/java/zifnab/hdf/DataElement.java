@@ -75,6 +75,22 @@ public final class DataElement
     }
   }
 
+  public void assertTokenCounts( @Nonnull final Integer... tokenCounts )
+  {
+    final int size = _tokens.size();
+    for ( final int tokenCount : tokenCounts )
+    {
+      if ( size == tokenCount )
+      {
+        return;
+      }
+    }
+    final String message =
+      "Data element named '" + getName() + "' expected to contain tokens with a count matching one of " +
+      Arrays.asList( tokenCounts ) + " but contains " + size + " tokens";
+    throw new DataAccessException( message, getLocation() );
+  }
+
   public void assertTokenCountRange( final int minLength, final int maxLength )
   {
     final int size = _tokens.size();

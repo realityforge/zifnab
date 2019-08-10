@@ -294,6 +294,33 @@ public class DataElementTest
   }
 
   @Test
+  public void assertTokenCounts()
+  {
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
+    final DataElement child = element.element( "name", "The Red Planet" );
+
+    element.assertTokenCounts( 1, 2 );
+    child.assertTokenCounts( 0, 1, 2, 3, 4 );
+  }
+
+  @Test
+  public void assertTokenCounts_error()
+  {
+    final DataDocument document = new DataDocument();
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataElement element = document.element( location, "planet", "Dune" );
+    element.element( "name", "The Red Planet" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.assertTokenCounts( 1, 3 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' expected to contain tokens with a count matching one of [1, 3] but contains 2 tokens" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
   public void assertTokenCountRange()
   {
     final DataDocument document = new DataDocument();
