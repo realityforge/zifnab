@@ -15,7 +15,6 @@ import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
-import zifnab.hdf.DataParseException;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
@@ -453,14 +452,5 @@ public class SystemConfigTest
     new DataFile( file, document ).write();
     final String encodedData = new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
     assertEquals( encodedData, inputData );
-  }
-
-  @Nonnull
-  private DataDocument asDataDocument( @Nonnull final String data )
-    throws IOException, DataParseException
-  {
-    final Path file = createTempDataFile();
-    writeContent( file, data );
-    return DataFile.read( file ).getDocument();
   }
 }

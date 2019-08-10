@@ -10,6 +10,9 @@ import javax.annotation.Nonnull;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
+import zifnab.hdf.DataDocument;
+import zifnab.hdf.DataFile;
+import zifnab.hdf.DataParseException;
 import static org.testng.Assert.*;
 
 public abstract class AbstractTest
@@ -46,5 +49,14 @@ public abstract class AbstractTest
     throws IOException
   {
     Files.write( path, content.getBytes( StandardCharsets.UTF_8 ) );
+  }
+
+  @Nonnull
+  protected final DataDocument asDataDocument( @Nonnull final String data )
+    throws IOException, DataParseException
+  {
+    final Path file = createTempDataFile();
+    writeContent( file, data );
+    return DataFile.read( file ).getDocument();
   }
 }
