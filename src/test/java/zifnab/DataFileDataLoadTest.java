@@ -20,8 +20,10 @@ public class DataFileDataLoadTest
   public void loadAllData()
     throws Exception
   {
+    final String dataDir = System.getProperty( "zifnab.data_dir" );
+    assertNotNull( dataDir, "Must specify zifnab.data_dir system property to point at Endless Sky data directory" );
     final List<Path> files =
-      Files.walk( Paths.get( "/Users/peter/Code/realityforge/endless-sky/data" ) )
+      Files.walk( Paths.get( dataDir ) )
         .filter( Files::isRegularFile )
         .filter( file -> file.toString().endsWith( ".txt" ) )
         .collect( Collectors.toList() );
