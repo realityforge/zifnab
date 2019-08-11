@@ -31,4 +31,5 @@ complete as there is too much un-said.
   - No systems with duplicate names exist.
   - `StellarObject` instances have position.
   - `StellarObject` instances do not contain themselves.
+  - `Commodity` instances either have both high and low or neither fields set.
   etc.
