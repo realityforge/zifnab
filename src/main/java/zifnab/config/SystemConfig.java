@@ -142,6 +142,11 @@ public final class SystemConfig
     return Collections.unmodifiableSet( links );
   }
 
+  public boolean isLinked( @Nonnull final String link )
+  {
+    return links.contains( link );
+  }
+
   public void addLink( @Nonnull final String link )
   {
     links.add( link );
