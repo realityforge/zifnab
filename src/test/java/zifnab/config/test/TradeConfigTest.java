@@ -21,6 +21,55 @@ public class TradeConfigTest
   extends AbstractTest
 {
   @Test
+  public void mutateCommodities()
+  {
+    final TradeConfig trade = new TradeConfig();
+
+    final String commodity1 = randomString();
+    final String commodity2 = randomString();
+
+    assertEquals( trade.getCommodities().size(), 0 );
+
+    final TradeConfig.Commodity commodity1Instance = trade.addSpecialCommodity( commodity1 );
+
+    assertEquals( trade.getCommodities().size(), 1 );
+    assertTrue( trade.getCommodities().contains( commodity1Instance ) );
+    assertNotNull( trade.findCommodityByName( commodity1 ) );
+    assertNull( trade.findCommodityByName( commodity2 ) );
+
+    final TradeConfig.Commodity commodity2Instance =
+      trade.addCommodity( commodity2, randomPositiveInt(), randomPositiveInt() );
+
+    assertEquals( trade.getCommodities().size(), 2 );
+    assertTrue( trade.getCommodities().contains( commodity1Instance ) );
+    assertTrue( trade.getCommodities().contains( commodity2Instance ) );
+    assertNotNull( trade.findCommodityByName( commodity1 ) );
+    assertNotNull( trade.findCommodityByName( commodity2 ) );
+
+    assertTrue( trade.removeCommodity( commodity2Instance ) );
+
+    assertEquals( trade.getCommodities().size(), 1 );
+    assertTrue( trade.getCommodities().contains( commodity1Instance ) );
+    assertNotNull( trade.findCommodityByName( commodity1 ) );
+    assertNull( trade.findCommodityByName( commodity2 ) );
+
+    // Already deleted so this is a noop
+    assertFalse( trade.removeCommodity( commodity2 ) );
+
+    assertEquals( trade.getCommodities().size(), 1 );
+    assertTrue( trade.getCommodities().contains( commodity1Instance ) );
+    assertNotNull( trade.findCommodityByName( commodity1 ) );
+    assertNull( trade.findCommodityByName( commodity2 ) );
+
+    // Already deleted so this is a noop
+    assertTrue( trade.removeCommodity( commodity1 ) );
+
+    assertEquals( trade.getCommodities().size(), 0 );
+    assertNull( trade.findCommodityByName( commodity1 ) );
+    assertNull( trade.findCommodityByName( commodity2 ) );
+  }
+
+  @Test
   public void parseStandardCommodityTrade()
     throws Exception
   {
