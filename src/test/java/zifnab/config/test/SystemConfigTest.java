@@ -388,6 +388,45 @@ public class SystemConfigTest
   }
 
   @Test
+  public void mutateObjects()
+  {
+    final SystemConfig system = new SystemConfig( randomString() );
+
+    assertTrue( system.getObjects().isEmpty() );
+
+    final SystemConfig.StellarObject object1 = new SystemConfig.StellarObject( null );
+    final SystemConfig.StellarObject object2 = new SystemConfig.StellarObject( randomString() );
+
+    system.addObject( object1 );
+
+    assertEquals( system.getObjects().size(), 1 );
+    assertTrue( system.getObjects().contains( object1 ) );
+
+    assertTrue( object1.getObjects().isEmpty() );
+
+    object1.addObject( object2 );
+
+    assertEquals( object1.getObjects().size(), 1 );
+    assertTrue( object1.getObjects().contains( object2 ) );
+
+    assertTrue( object1.removeObject( object2 ) );
+
+    assertEquals( object1.getObjects().size(), 0 );
+
+    assertFalse( object1.removeObject( object2 ) );
+
+    assertEquals( object1.getObjects().size(), 0 );
+
+    assertTrue( system.removeObject( object1 ) );
+
+    assertEquals( system.getObjects().size(), 0 );
+
+    assertFalse( system.removeObject( object1 ) );
+
+    assertEquals( system.getObjects().size(), 0 );
+  }
+
+  @Test
   public void parseCompletedSystem()
     throws Exception
   {
