@@ -36,6 +36,8 @@ public final class SystemConfig
   @Nonnull
   private final Map<String, Asteroid> asteroids = new HashMap<>();
   @Nonnull
+  private final Map<String, Minable> minables = new HashMap<>();
+  @Nonnull
   private final Map<String, Trade> trades = new HashMap<>();
   @Nonnull
   private final Map<String, Fleet> fleets = new HashMap<>();
@@ -169,14 +171,9 @@ public final class SystemConfig
     return asteroids.get( name );
   }
 
-  public void addMinable( @Nonnull final String name, final int count, final double energy )
-  {
-    asteroids.put( name, new Asteroid( name, count, energy, true ) );
-  }
-
   public void addAsteroid( @Nonnull final String name, final int count, final double energy )
   {
-    asteroids.put( name, new Asteroid( name, count, energy, false ) );
+    asteroids.put( name, new Asteroid( name, count, energy ) );
   }
 
   public boolean removeAsteroid( @Nonnull final String name )
@@ -191,6 +188,39 @@ public final class SystemConfig
     if ( found )
     {
       asteroids.remove( asteroid.getName() );
+    }
+    return found;
+  }
+
+  public void addMinable( @Nonnull final String name, final int count, final double energy )
+  {
+    minables.put( name, new Minable( name, count, energy ) );
+  }
+
+  @Nonnull
+  public Collection<Minable> getMinables()
+  {
+    return Collections.unmodifiableCollection( minables.values() );
+  }
+
+  @Nullable
+  public Minable findMinableByName( @Nonnull final String name )
+  {
+    return minables.get( name );
+  }
+
+  public boolean removeMinable( @Nonnull final String name )
+  {
+    return null != minables.remove( name );
+  }
+
+  public boolean removeMinable( @Nonnull final Minable minable )
+  {
+    final Minable existing = minables.get( minable.getName() );
+    final boolean found = existing == minable;
+    if ( found )
+    {
+      minables.remove( minable.getName() );
     }
     return found;
   }
@@ -349,16 +379,14 @@ public final class SystemConfig
     private final String name;
     private final int count;
     private final double energy;
-    private final boolean minable;
 
-    Asteroid( @Nonnull final String name, final int count, final double energy, final boolean minable )
+    Asteroid( @Nonnull final String name, final int count, final double energy )
     {
       assert count > 0;
       assert energy > 0;
       this.name = Objects.requireNonNull( name );
       this.count = count;
       this.energy = energy;
-      this.minable = minable;
     }
 
     @Nonnull
@@ -376,10 +404,38 @@ public final class SystemConfig
     {
       return energy;
     }
+  }
 
-    public boolean isMinable()
+  public static final class Minable
+  {
+    @Nonnull
+    private final String name;
+    private final int count;
+    private final double energy;
+
+    Minable( @Nonnull final String name, final int count, final double energy )
     {
-      return minable;
+      assert count > 0;
+      assert energy > 0;
+      this.name = Objects.requireNonNull( name );
+      this.count = count;
+      this.energy = energy;
+    }
+
+    @Nonnull
+    public String getName()
+    {
+      return name;
+    }
+
+    public int getCount()
+    {
+      return count;
+    }
+
+    public double getEnergy()
+    {
+      return energy;
     }
   }
 

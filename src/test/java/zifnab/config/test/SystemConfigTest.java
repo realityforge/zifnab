@@ -124,39 +124,40 @@ public class SystemConfigTest
     assertTrue( links.contains( "Other Place" ) );
     assertTrue( links.contains( "Home System" ) );
 
-    // Asteroids/Minables
+    // Asteroids
     {
-      assertEquals( system.getAsteroids().size(), 4 );
+      assertEquals( system.getAsteroids().size(), 2 );
 
       final SystemConfig.Asteroid asteroid1 = system.findAsteroidByName( "small rock" );
       assertNotNull( asteroid1 );
       assertEquals( asteroid1.getName(), "small rock" );
       assertEquals( asteroid1.getCount(), 2 );
       assertEquals( asteroid1.getEnergy(), 4.1454D );
-      assertFalse( asteroid1.isMinable() );
 
       final SystemConfig.Asteroid asteroid2 = system.findAsteroidByName( "medium rock" );
       assertNotNull( asteroid2 );
       assertEquals( asteroid2.getName(), "medium rock" );
       assertEquals( asteroid2.getCount(), 28 );
       assertEquals( asteroid2.getEnergy(), 3.2928D );
-      assertFalse( asteroid2.isMinable() );
+    }
 
-      final SystemConfig.Asteroid asteroid3 = system.findAsteroidByName( "gold" );
-      assertNotNull( asteroid3 );
-      assertEquals( asteroid3.getName(), "gold" );
-      assertEquals( asteroid3.getCount(), 17 );
-      assertEquals( asteroid3.getEnergy(), 3.14953D );
-      assertTrue( asteroid3.isMinable() );
+    // Minables
+    {
+      assertEquals( system.getMinables().size(), 2 );
 
-      final SystemConfig.Asteroid asteroid4 = system.findAsteroidByName( "titanium" );
-      assertNotNull( asteroid4 );
-      assertEquals( asteroid4.getName(), "titanium" );
-      assertEquals( asteroid4.getCount(), 46 );
-      assertEquals( asteroid4.getEnergy(), 3.06136D );
-      assertTrue( asteroid4.isMinable() );
+      final SystemConfig.Minable minable1 = system.findMinableByName( "gold" );
+      assertNotNull( minable1 );
+      assertEquals( minable1.getName(), "gold" );
+      assertEquals( minable1.getCount(), 17 );
+      assertEquals( minable1.getEnergy(), 3.14953D );
 
-      assertNull( system.findAsteroidByName( "noExisto" ) );
+      final SystemConfig.Minable minable2 = system.findMinableByName( "titanium" );
+      assertNotNull( minable2 );
+      assertEquals( minable2.getName(), "titanium" );
+      assertEquals( minable2.getCount(), 46 );
+      assertEquals( minable2.getEnergy(), 3.06136D );
+
+      assertNull( system.findMinableByName( "noExisto" ) );
     }
 
     // Trades

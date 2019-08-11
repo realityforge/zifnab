@@ -58,17 +58,15 @@ final class SystemConfigEncoder
 
     system.getAsteroids()
       .stream()
-      .filter( asteroid -> !asteroid.isMinable() )
       .sorted( Comparator.comparing( SystemConfig.Asteroid::getName ) )
       .forEachOrdered( asteroid -> element.element( "asteroids",
                                                     asteroid.getName(),
                                                     String.valueOf( asteroid.getCount() ),
                                                     String.valueOf( asteroid.getEnergy() ) ) );
 
-    system.getAsteroids()
+    system.getMinables()
       .stream()
-      .filter( SystemConfig.Asteroid::isMinable )
-      .sorted( Comparator.comparing( SystemConfig.Asteroid::getName ) )
+      .sorted( Comparator.comparing( SystemConfig.Minable::getName ) )
       .forEachOrdered( minable -> element.element( "minables",
                                                    minable.getName(),
                                                    String.valueOf( minable.getCount() ),
