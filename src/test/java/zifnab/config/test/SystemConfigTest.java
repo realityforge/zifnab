@@ -216,6 +216,71 @@ public class SystemConfigTest
   }
 
   @Test
+  public void mutateTrades()
+  {
+    final SystemConfig system = new SystemConfig( randomString() );
+
+    assertTrue( system.getTrades().isEmpty() );
+
+    final String trade1 = randomString();
+    final String trade2 = randomString();
+    final String trade3 = randomString();
+
+    system.addTrade( trade1, randomPositiveInt() );
+
+    assertEquals( system.getTrades().size(), 1 );
+    assertNotNull( system.findTradeByName( trade1 ) );
+    assertNull( system.findTradeByName( trade2 ) );
+    assertNull( system.findTradeByName( trade3 ) );
+
+    system.addTrade( trade2, randomPositiveInt() );
+
+    assertEquals( system.getTrades().size(), 2 );
+    assertNotNull( system.findTradeByName( trade1 ) );
+    assertNotNull( system.findTradeByName( trade2 ) );
+    assertNull( system.findTradeByName( trade3 ) );
+
+    // Add with same name is just an update
+    system.addTrade( trade2, randomPositiveInt() );
+
+    assertEquals( system.getTrades().size(), 2 );
+    assertNotNull( system.findTradeByName( trade1 ) );
+    assertNotNull( system.findTradeByName( trade2 ) );
+    assertNull( system.findTradeByName( trade3 ) );
+
+    final SystemConfig.Trade trade2Instance = system.findTradeByName( trade2 );
+    assertTrue( system.removeTrade( Objects.requireNonNull( trade2Instance ) ) );
+
+    assertEquals( system.getTrades().size(), 1 );
+    assertNotNull( system.findTradeByName( trade1 ) );
+    assertNull( system.findTradeByName( trade2 ) );
+    assertNull( system.findTradeByName( trade3 ) );
+
+    // Re-add trade with the same name but different instances
+    system.addTrade( trade2, randomPositiveInt() );
+
+    assertEquals( system.getTrades().size(), 2 );
+    assertNotNull( system.findTradeByName( trade1 ) );
+    assertNotNull( system.findTradeByName( trade2 ) );
+    assertNull( system.findTradeByName( trade3 ) );
+
+    // Remove where trade name matches but trade instance does not is a no-op
+    assertFalse( system.removeTrade( Objects.requireNonNull( trade2Instance ) ) );
+
+    assertEquals( system.getTrades().size(), 2 );
+    assertNotNull( system.findTradeByName( trade1 ) );
+    assertNotNull( system.findTradeByName( trade2 ) );
+    assertNull( system.findTradeByName( trade3 ) );
+
+    assertTrue( system.removeTrade( trade2 ) );
+
+    assertEquals( system.getTrades().size(), 1 );
+    assertNotNull( system.findTradeByName( trade1 ) );
+    assertNull( system.findTradeByName( trade2 ) );
+    assertNull( system.findTradeByName( trade3 ) );
+  }
+
+  @Test
   public void parseCompletedSystem()
     throws Exception
   {
