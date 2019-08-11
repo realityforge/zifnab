@@ -14,6 +14,7 @@ import org.testng.ITestResult;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataFile;
 import zifnab.hdf.DataParseException;
+import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
 public abstract class AbstractTest
@@ -67,11 +68,22 @@ public abstract class AbstractTest
     return DataFile.read( file ).getDocument();
   }
 
+  @Nonnull
+  protected final SourceLocation randomSourceLocation()
+  {
+    return new SourceLocation( randomString(), randomPositiveInt(), randomPositiveInt() );
+  }
+
   @SuppressWarnings( "WeakerAccess" )
   @Nonnull
   protected final Random getRandom()
   {
     return _random;
+  }
+
+  protected final int randomPositiveInt()
+  {
+    return Math.abs( randomInt() );
   }
 
   protected final int randomInt()

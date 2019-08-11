@@ -31,8 +31,7 @@ public class DataCommentTest
   {
     final DataDocument document = new DataDocument();
     final String comment = randomString();
-    final SourceLocation location =
-      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
+    final SourceLocation location = randomSourceLocation();
     final DataComment element = document.comment( location, comment );
 
     assertNull( element.getParent() );
@@ -60,8 +59,7 @@ public class DataCommentTest
     final DataElement parent = document.element( "planet", "AK5" );
 
     final String comment = randomString();
-    final SourceLocation location =
-      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
+    final SourceLocation location = randomSourceLocation();
     final DataComment element = parent.comment( location, comment );
 
     assertEquals( element.getParent(), parent );

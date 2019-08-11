@@ -35,8 +35,7 @@ public class DataElementTest
   @Test
   public void constructWithSourceLocation()
   {
-    final SourceLocation location =
-      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
+    final SourceLocation location = randomSourceLocation();
 
     final DataDocument document = new DataDocument();
     final DataElement element = document.element( location, "planet", "Dune" );
@@ -92,8 +91,7 @@ public class DataElementTest
     final DataDocument document = new DataDocument();
     final DataElement parent = document.element( "planet", "AK5" );
 
-    final SourceLocation location =
-      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
+    final SourceLocation location = randomSourceLocation();
     final DataElement element = parent.element( location, "planet", "Dune" );
 
     assertEquals( element.getParent(), parent );
