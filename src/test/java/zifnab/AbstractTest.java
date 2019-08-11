@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Random;
 import javax.annotation.Nonnull;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
@@ -18,6 +19,12 @@ import static org.testng.Assert.*;
 public abstract class AbstractTest
   implements IHookable
 {
+  /// Used when generating random string
+  @Nonnull
+  private static final String STRING_CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
+  @Nonnull
+  private final Random _random = new Random();
+
   @Override
   public void run( final IHookCallBack callBack, final ITestResult testResult )
   {
@@ -58,5 +65,35 @@ public abstract class AbstractTest
     final Path file = createTempDataFile();
     writeContent( file, data );
     return DataFile.read( file ).getDocument();
+  }
+
+  @SuppressWarnings( "WeakerAccess" )
+  @Nonnull
+  protected final Random getRandom()
+  {
+    return _random;
+  }
+
+  protected final int randomInt()
+  {
+    return getRandom().nextInt();
+  }
+
+  @Nonnull
+  protected final String randomString()
+  {
+    return randomString( 12 );
+  }
+
+  @SuppressWarnings( { "WeakerAccess", "SameParameterValue" } )
+  @Nonnull
+  protected final String randomString( final int length )
+  {
+    final StringBuilder sb = new StringBuilder();
+    for ( int i = 0; i < length; i++ )
+    {
+      sb.append( STRING_CHARACTERS.charAt( getRandom().nextInt( STRING_CHARACTERS.length() ) ) );
+    }
+    return sb.toString();
   }
 }

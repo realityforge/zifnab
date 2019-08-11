@@ -3,7 +3,6 @@ package zifnab.hdf.test;
 import java.io.IOException;
 import java.nio.file.Path;
 import javax.annotation.Nonnull;
-import org.realityforge.guiceyloops.shared.ValueUtil;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
 import zifnab.hdf.DataComment;
@@ -20,7 +19,7 @@ public class DataCommentTest
   public void constructTopLevel()
   {
     final DataDocument document = new DataDocument();
-    final String comment = ValueUtil.randomString();
+    final String comment = randomString();
     final DataComment element = document.comment( comment );
 
     assertNull( element.getParent() );
@@ -31,11 +30,9 @@ public class DataCommentTest
   public void constructWithSourceLocation()
   {
     final DataDocument document = new DataDocument();
-    final String comment = ValueUtil.randomString();
+    final String comment = randomString();
     final SourceLocation location =
-      new SourceLocation( ValueUtil.randomString(),
-                          Math.abs( ValueUtil.randomInt() ),
-                          Math.abs( ValueUtil.randomInt() ) );
+      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
     final DataComment element = document.comment( location, comment );
 
     assertNull( element.getParent() );
@@ -49,7 +46,7 @@ public class DataCommentTest
     final DataDocument document = new DataDocument();
     final DataElement parent = document.element( "planet", "AK5" );
 
-    final String comment = ValueUtil.randomString();
+    final String comment = randomString();
     final DataComment child = parent.comment( comment );
 
     assertEquals( child.getParent(), parent );
@@ -62,11 +59,9 @@ public class DataCommentTest
     final DataDocument document = new DataDocument();
     final DataElement parent = document.element( "planet", "AK5" );
 
-    final String comment = ValueUtil.randomString();
+    final String comment = randomString();
     final SourceLocation location =
-      new SourceLocation( ValueUtil.randomString(),
-                          Math.abs( ValueUtil.randomInt() ),
-                          Math.abs( ValueUtil.randomInt() ) );
+      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
     final DataComment element = parent.comment( location, comment );
 
     assertEquals( element.getParent(), parent );

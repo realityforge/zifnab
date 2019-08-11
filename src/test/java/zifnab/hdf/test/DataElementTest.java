@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.annotation.Nonnull;
-import org.realityforge.guiceyloops.shared.ValueUtil;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
 import zifnab.hdf.DataAccessException;
@@ -37,9 +36,7 @@ public class DataElementTest
   public void constructWithSourceLocation()
   {
     final SourceLocation location =
-      new SourceLocation( ValueUtil.randomString(),
-                          Math.abs( ValueUtil.randomInt() ),
-                          Math.abs( ValueUtil.randomInt() ) );
+      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
 
     final DataDocument document = new DataDocument();
     final DataElement element = document.element( location, "planet", "Dune" );
@@ -96,9 +93,7 @@ public class DataElementTest
     final DataElement parent = document.element( "planet", "AK5" );
 
     final SourceLocation location =
-      new SourceLocation( ValueUtil.randomString(),
-                          Math.abs( ValueUtil.randomInt() ),
-                          Math.abs( ValueUtil.randomInt() ) );
+      new SourceLocation( randomString(), Math.abs( randomInt() ), Math.abs( randomInt() ) );
     final DataElement element = parent.element( location, "planet", "Dune" );
 
     assertEquals( element.getParent(), parent );
