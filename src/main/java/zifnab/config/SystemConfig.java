@@ -171,9 +171,12 @@ public final class SystemConfig
     return asteroids.get( name );
   }
 
-  public void addAsteroid( @Nonnull final String name, final int count, final double energy )
+  @Nonnull
+  public Asteroid addAsteroid( @Nonnull final String name, final int count, final double energy )
   {
-    asteroids.put( name, new Asteroid( name, count, energy ) );
+    final Asteroid asteroid = new Asteroid( name, count, energy );
+    asteroids.put( name, asteroid );
+    return asteroid;
   }
 
   public boolean removeAsteroid( @Nonnull final String name )
@@ -192,9 +195,12 @@ public final class SystemConfig
     return found;
   }
 
-  public void addMinable( @Nonnull final String name, final int count, final double energy )
+  @Nonnull
+  public Minable addMinable( @Nonnull final String name, final int count, final double energy )
   {
-    minables.put( name, new Minable( name, count, energy ) );
+    final Minable minable = new Minable( name, count, energy );
+    minables.put( name, minable );
+    return minable;
   }
 
   @Nonnull
@@ -237,9 +243,12 @@ public final class SystemConfig
     return trades.get( name );
   }
 
-  public void addTrade( @Nonnull final String name, final int base )
+  @Nonnull
+  public Trade addTrade( @Nonnull final String name, final int base )
   {
-    addTrade( new Trade( name, base ) );
+    final Trade trade = new Trade( name, base );
+    addTrade( trade );
+    return trade;
   }
 
   public void addTrade( @Nonnull final Trade trade )
@@ -275,14 +284,12 @@ public final class SystemConfig
     return fleets.get( name );
   }
 
-  public void addFleet( @Nonnull final String name, final int period )
+  @Nonnull
+  public Fleet addFleet( @Nonnull final String name, final int period )
   {
-    addFleet( new Fleet( name, period ) );
-  }
-
-  public void addFleet( @Nonnull final Fleet fleet )
-  {
-    fleets.put( fleet.getName(), fleet );
+    final Fleet fleet = new Fleet( name, period );
+    fleets.put( name, fleet );
+    return fleet;
   }
 
   public boolean removeFleet( @Nonnull final String name )
@@ -518,6 +525,11 @@ public final class SystemConfig
     public void addObject( @Nonnull final StellarObject object )
     {
       objects.add( object );
+    }
+
+    public boolean removeObject( @Nonnull final StellarObject object )
+    {
+      return objects.remove( object );
     }
   }
 }

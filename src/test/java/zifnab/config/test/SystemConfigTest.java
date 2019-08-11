@@ -96,24 +96,33 @@ public class SystemConfigTest
     final String asteroid2 = randomString();
     final String asteroid3 = randomString();
 
-    system.addAsteroid( asteroid1, randomPositiveInt(), randomPositiveDouble() );
+    final SystemConfig.Asteroid asteroid1Instance =
+      system.addAsteroid( asteroid1, randomPositiveInt(), randomPositiveDouble() );
 
     assertEquals( system.getAsteroids().size(), 1 );
+    assertTrue( system.getAsteroids().contains( asteroid1Instance ) );
     assertNotNull( system.findAsteroidByName( asteroid1 ) );
     assertNull( system.findAsteroidByName( asteroid2 ) );
     assertNull( system.findAsteroidByName( asteroid3 ) );
 
-    system.addAsteroid( asteroid2, randomPositiveInt(), randomPositiveDouble() );
+    final SystemConfig.Asteroid asteroid2aInstance =
+      system.addAsteroid( asteroid2, randomPositiveInt(), randomPositiveDouble() );
 
     assertEquals( system.getAsteroids().size(), 2 );
+    assertTrue( system.getAsteroids().contains( asteroid1Instance ) );
+    assertTrue( system.getAsteroids().contains( asteroid2aInstance ) );
     assertNotNull( system.findAsteroidByName( asteroid1 ) );
     assertNotNull( system.findAsteroidByName( asteroid2 ) );
     assertNull( system.findAsteroidByName( asteroid3 ) );
 
     // Add with same name is just an update
-    system.addAsteroid( asteroid2, randomPositiveInt(), randomPositiveDouble() );
+    final SystemConfig.Asteroid asteroid2bInstance =
+      system.addAsteroid( asteroid2, randomPositiveInt(), randomPositiveDouble() );
 
     assertEquals( system.getAsteroids().size(), 2 );
+    assertTrue( system.getAsteroids().contains( asteroid1Instance ) );
+    assertFalse( system.getAsteroids().contains( asteroid2aInstance ) );
+    assertTrue( system.getAsteroids().contains( asteroid2bInstance ) );
     assertNotNull( system.findAsteroidByName( asteroid1 ) );
     assertNotNull( system.findAsteroidByName( asteroid2 ) );
     assertNull( system.findAsteroidByName( asteroid3 ) );
@@ -122,6 +131,9 @@ public class SystemConfigTest
     assertTrue( system.removeAsteroid( Objects.requireNonNull( asteroid2Instance ) ) );
 
     assertEquals( system.getAsteroids().size(), 1 );
+    assertTrue( system.getAsteroids().contains( asteroid1Instance ) );
+    assertFalse( system.getAsteroids().contains( asteroid2aInstance ) );
+    assertFalse( system.getAsteroids().contains( asteroid2bInstance ) );
     assertNotNull( system.findAsteroidByName( asteroid1 ) );
     assertNull( system.findAsteroidByName( asteroid2 ) );
     assertNull( system.findAsteroidByName( asteroid3 ) );
@@ -161,24 +173,33 @@ public class SystemConfigTest
     final String minable2 = randomString();
     final String minable3 = randomString();
 
-    system.addMinable( minable1, randomPositiveInt(), randomPositiveDouble() );
+    final SystemConfig.Minable minable1Instance =
+      system.addMinable( minable1, randomPositiveInt(), randomPositiveDouble() );
 
     assertEquals( system.getMinables().size(), 1 );
+    assertTrue( system.getMinables().contains( minable1Instance ) );
     assertNotNull( system.findMinableByName( minable1 ) );
     assertNull( system.findMinableByName( minable2 ) );
     assertNull( system.findMinableByName( minable3 ) );
 
-    system.addMinable( minable2, randomPositiveInt(), randomPositiveDouble() );
+    final SystemConfig.Minable minable2aInstance =
+      system.addMinable( minable2, randomPositiveInt(), randomPositiveDouble() );
 
     assertEquals( system.getMinables().size(), 2 );
+    assertTrue( system.getMinables().contains( minable1Instance ) );
+    assertTrue( system.getMinables().contains( minable2aInstance ) );
     assertNotNull( system.findMinableByName( minable1 ) );
     assertNotNull( system.findMinableByName( minable2 ) );
     assertNull( system.findMinableByName( minable3 ) );
 
     // Add with same name is just an update
-    system.addMinable( minable2, randomPositiveInt(), randomPositiveDouble() );
+    final SystemConfig.Minable minable2bInstance =
+      system.addMinable( minable2, randomPositiveInt(), randomPositiveDouble() );
 
     assertEquals( system.getMinables().size(), 2 );
+    assertTrue( system.getMinables().contains( minable1Instance ) );
+    assertFalse( system.getMinables().contains( minable2aInstance ) );
+    assertTrue( system.getMinables().contains( minable2bInstance ) );
     assertNotNull( system.findMinableByName( minable1 ) );
     assertNotNull( system.findMinableByName( minable2 ) );
     assertNull( system.findMinableByName( minable3 ) );
@@ -187,6 +208,9 @@ public class SystemConfigTest
     assertTrue( system.removeMinable( Objects.requireNonNull( minable2Instance ) ) );
 
     assertEquals( system.getMinables().size(), 1 );
+    assertTrue( system.getMinables().contains( minable1Instance ) );
+    assertFalse( system.getMinables().contains( minable2aInstance ) );
+    assertFalse( system.getMinables().contains( minable2bInstance ) );
     assertNotNull( system.findMinableByName( minable1 ) );
     assertNull( system.findMinableByName( minable2 ) );
     assertNull( system.findMinableByName( minable3 ) );
@@ -226,24 +250,30 @@ public class SystemConfigTest
     final String trade2 = randomString();
     final String trade3 = randomString();
 
-    system.addTrade( trade1, randomPositiveInt() );
+    final SystemConfig.Trade trade1Instance = system.addTrade( trade1, randomPositiveInt() );
 
     assertEquals( system.getTrades().size(), 1 );
+    assertTrue( system.getTrades().contains( trade1Instance ) );
     assertNotNull( system.findTradeByName( trade1 ) );
     assertNull( system.findTradeByName( trade2 ) );
     assertNull( system.findTradeByName( trade3 ) );
 
-    system.addTrade( trade2, randomPositiveInt() );
+    final SystemConfig.Trade trade2aInstance = system.addTrade( trade2, randomPositiveInt() );
 
     assertEquals( system.getTrades().size(), 2 );
+    assertTrue( system.getTrades().contains( trade1Instance ) );
+    assertTrue( system.getTrades().contains( trade2aInstance ) );
     assertNotNull( system.findTradeByName( trade1 ) );
     assertNotNull( system.findTradeByName( trade2 ) );
     assertNull( system.findTradeByName( trade3 ) );
 
     // Add with same name is just an update
-    system.addTrade( trade2, randomPositiveInt() );
+    final SystemConfig.Trade trade2bInstance = system.addTrade( trade2, randomPositiveInt() );
 
     assertEquals( system.getTrades().size(), 2 );
+    assertTrue( system.getTrades().contains( trade1Instance ) );
+    assertFalse( system.getTrades().contains( trade2aInstance ) );
+    assertTrue( system.getTrades().contains( trade2bInstance ) );
     assertNotNull( system.findTradeByName( trade1 ) );
     assertNotNull( system.findTradeByName( trade2 ) );
     assertNull( system.findTradeByName( trade3 ) );
@@ -252,6 +282,9 @@ public class SystemConfigTest
     assertTrue( system.removeTrade( Objects.requireNonNull( trade2Instance ) ) );
 
     assertEquals( system.getTrades().size(), 1 );
+    assertTrue( system.getTrades().contains( trade1Instance ) );
+    assertFalse( system.getTrades().contains( trade2aInstance ) );
+    assertFalse( system.getTrades().contains( trade2bInstance ) );
     assertNotNull( system.findTradeByName( trade1 ) );
     assertNull( system.findTradeByName( trade2 ) );
     assertNull( system.findTradeByName( trade3 ) );
@@ -291,24 +324,30 @@ public class SystemConfigTest
     final String fleet2 = randomString();
     final String fleet3 = randomString();
 
-    system.addFleet( fleet1, randomPositiveInt() );
+    final SystemConfig.Fleet fleet1Instance = system.addFleet( fleet1, randomPositiveInt() );
 
     assertEquals( system.getFleets().size(), 1 );
+    assertTrue( system.getFleets().contains( fleet1Instance ) );
     assertNotNull( system.findFleetByName( fleet1 ) );
     assertNull( system.findFleetByName( fleet2 ) );
     assertNull( system.findFleetByName( fleet3 ) );
 
-    system.addFleet( fleet2, randomPositiveInt() );
+    final SystemConfig.Fleet fleet2aInstance = system.addFleet( fleet2, randomPositiveInt() );
 
     assertEquals( system.getFleets().size(), 2 );
+    assertTrue( system.getFleets().contains( fleet1Instance ) );
+    assertTrue( system.getFleets().contains( fleet2aInstance ) );
     assertNotNull( system.findFleetByName( fleet1 ) );
     assertNotNull( system.findFleetByName( fleet2 ) );
     assertNull( system.findFleetByName( fleet3 ) );
 
     // Add with same name is just an update
-    system.addFleet( fleet2, randomPositiveInt() );
+    final SystemConfig.Fleet fleet2bInstance = system.addFleet( fleet2, randomPositiveInt() );
 
     assertEquals( system.getFleets().size(), 2 );
+    assertTrue( system.getFleets().contains( fleet1Instance ) );
+    assertFalse( system.getFleets().contains( fleet2aInstance ) );
+    assertTrue( system.getFleets().contains( fleet2bInstance ) );
     assertNotNull( system.findFleetByName( fleet1 ) );
     assertNotNull( system.findFleetByName( fleet2 ) );
     assertNull( system.findFleetByName( fleet3 ) );
@@ -317,6 +356,9 @@ public class SystemConfigTest
     assertTrue( system.removeFleet( Objects.requireNonNull( fleet2Instance ) ) );
 
     assertEquals( system.getFleets().size(), 1 );
+    assertTrue( system.getFleets().contains( fleet1Instance ) );
+    assertFalse( system.getFleets().contains( fleet2aInstance ) );
+    assertFalse( system.getFleets().contains( fleet2bInstance ) );
     assertNotNull( system.findFleetByName( fleet1 ) );
     assertNull( system.findFleetByName( fleet2 ) );
     assertNull( system.findFleetByName( fleet3 ) );
