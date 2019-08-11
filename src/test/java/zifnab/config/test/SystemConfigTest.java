@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
@@ -82,6 +83,71 @@ public class SystemConfigTest
     assertTrue( system.isLinked( system1 ) );
     assertFalse( system.isLinked( system2 ) );
     assertFalse( system.isLinked( system3 ) );
+  }
+
+  @Test
+  public void mutateAsteroids()
+  {
+    final SystemConfig system = new SystemConfig( randomString() );
+
+    assertTrue( system.getAsteroids().isEmpty() );
+
+    final String asteroid1 = randomString();
+    final String asteroid2 = randomString();
+    final String asteroid3 = randomString();
+
+    system.addAsteroid( asteroid1, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getAsteroids().size(), 1 );
+    assertNotNull( system.findAsteroidByName( asteroid1 ) );
+    assertNull( system.findAsteroidByName( asteroid2 ) );
+    assertNull( system.findAsteroidByName( asteroid3 ) );
+
+    system.addAsteroid( asteroid2, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getAsteroids().size(), 2 );
+    assertNotNull( system.findAsteroidByName( asteroid1 ) );
+    assertNotNull( system.findAsteroidByName( asteroid2 ) );
+    assertNull( system.findAsteroidByName( asteroid3 ) );
+
+    // Add with same name is just an update
+    system.addAsteroid( asteroid2, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getAsteroids().size(), 2 );
+    assertNotNull( system.findAsteroidByName( asteroid1 ) );
+    assertNotNull( system.findAsteroidByName( asteroid2 ) );
+    assertNull( system.findAsteroidByName( asteroid3 ) );
+
+    final SystemConfig.Asteroid asteroid2Instance = system.findAsteroidByName( asteroid2 );
+    assertTrue( system.removeAsteroid( Objects.requireNonNull( asteroid2Instance ) ) );
+
+    assertEquals( system.getAsteroids().size(), 1 );
+    assertNotNull( system.findAsteroidByName( asteroid1 ) );
+    assertNull( system.findAsteroidByName( asteroid2 ) );
+    assertNull( system.findAsteroidByName( asteroid3 ) );
+
+    // Re-add asteroid with the same name but different instances
+    system.addAsteroid( asteroid2, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getAsteroids().size(), 2 );
+    assertNotNull( system.findAsteroidByName( asteroid1 ) );
+    assertNotNull( system.findAsteroidByName( asteroid2 ) );
+    assertNull( system.findAsteroidByName( asteroid3 ) );
+
+    // Remove where asteroid name matches but asteroid instance does not is a no-op
+    assertFalse( system.removeAsteroid( Objects.requireNonNull( asteroid2Instance ) ) );
+
+    assertEquals( system.getAsteroids().size(), 2 );
+    assertNotNull( system.findAsteroidByName( asteroid1 ) );
+    assertNotNull( system.findAsteroidByName( asteroid2 ) );
+    assertNull( system.findAsteroidByName( asteroid3 ) );
+
+    assertTrue( system.removeAsteroid( asteroid2 ) );
+
+    assertEquals( system.getAsteroids().size(), 1 );
+    assertNotNull( system.findAsteroidByName( asteroid1 ) );
+    assertNull( system.findAsteroidByName( asteroid2 ) );
+    assertNull( system.findAsteroidByName( asteroid3 ) );
   }
 
   @Test
