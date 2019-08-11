@@ -91,6 +91,16 @@ public abstract class AbstractTest
     return getRandom().nextInt();
   }
 
+  protected final double randomPositiveDouble()
+  {
+    return Math.abs( randomDouble() );
+  }
+
+  protected final double randomDouble()
+  {
+    return getRandom().nextDouble();
+  }
+
   @Nonnull
   protected final String randomString()
   {
