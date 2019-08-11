@@ -17,6 +17,7 @@ import zifnab.hdf.DataParseException;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
+@SuppressWarnings( { "WeakerAccess", "SameParameterValue" } )
 public abstract class AbstractTest
   implements IHookable
 {
@@ -74,7 +75,6 @@ public abstract class AbstractTest
     return new SourceLocation( randomString(), randomPositiveInt(), randomPositiveInt() );
   }
 
-  @SuppressWarnings( "WeakerAccess" )
   @Nonnull
   protected final Random getRandom()
   {
@@ -97,7 +97,6 @@ public abstract class AbstractTest
     return randomString( 12 );
   }
 
-  @SuppressWarnings( { "WeakerAccess", "SameParameterValue" } )
   @Nonnull
   protected final String randomString( final int length )
   {
