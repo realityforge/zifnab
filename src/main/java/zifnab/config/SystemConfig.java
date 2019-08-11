@@ -524,6 +524,7 @@ public final class SystemConfig
 
     public void addObject( @Nonnull final StellarObject object )
     {
+      assert this != object;
       objects.add( object );
     }
 
