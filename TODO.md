@@ -20,3 +20,5 @@ complete as there is too much un-said.
   - https://github.com/EndlessSkyCommunity/awesome-endless-sky
 
 * Add a simple application that exposes a (read-only?) GraphQL API for accessing ES data.
+
+* Consider renaming `Minable` to `Mineral`, `MineralAsteroid` or similar.
