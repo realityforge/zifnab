@@ -33,3 +33,5 @@ complete as there is too much un-said.
   - `StellarObject` instances do not contain themselves.
   - `Commodity` instances either have both high and low or neither fields set.
   etc.
+
+* Consider changing all the `addX` methods so that they fail if a matching entity already exists.
