@@ -22,3 +22,12 @@ complete as there is too much un-said.
 * Add a simple application that exposes a (read-only?) GraphQL API for accessing ES data.
 
 * Consider renaming `Minable` to `Mineral`, `MineralAsteroid` or similar.
+
+* Add separate verification phase that verifies hard constraints. These constraints may include;
+  - cross-entity references all valid. i.e. `System.Trade.Name` exists as commodity defined in `Trade.Commodity.Name`
+  - images referenced in sprites are all present and accounted for.
+  - sounds referenced are all present and accounted for.
+  - No planets with duplicate names exist.
+  - No systems with duplicate names exist.
+  - `StellarObject` instances have position.
+  etc.
