@@ -5,6 +5,8 @@
 * Rename `DataElement.assertTokenCount(int min,int max)` to `DataElement.assertTokenCountRange(int min,int max)` for the sake of improved clarity.
 * Add `DataElement.assertTokenCounts(int...)` helper method to assert that one of a set of token counts is expected.
 * Add initial support for encoding, decoding, representing and manipulating the `trade` entity.
+* Add `SystemConfig.isLinked(String)` helper method.
+* Separate the representation of `minables` and `asteroids` which involved; introducing a separate config object `SystemConfig.Minable`, modifying existing methods on `SystemConfig` that manipulate `minables`, introducing new methods to access `minables` and removing the `SystemConfig.Asteroid.isMinable()` method.
 
 ### [v0.03](https://github.com/realityforge/zifnab/tree/v0.03) (2019-08-10)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.02...v0.03)
