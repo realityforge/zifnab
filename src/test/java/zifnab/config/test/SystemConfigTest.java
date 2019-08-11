@@ -22,6 +22,58 @@ public class SystemConfigTest
   extends AbstractTest
 {
   @Test
+  public void mutateLinks()
+  {
+    final SystemConfig system = new SystemConfig( randomString() );
+
+    assertTrue( system.getLinks().isEmpty() );
+
+    final String system1 = randomString();
+    final String system2 = randomString();
+    final String system3 = randomString();
+
+    system.addLink( system1 );
+
+    assertEquals( system.getLinks().size(), 1 );
+    assertTrue( system.getLinks().contains( system1 ) );
+    assertFalse( system.getLinks().contains( system2 ) );
+    assertFalse( system.getLinks().contains( system3 ) );
+    assertTrue( system.isLinked( system1 ) );
+    assertFalse( system.isLinked( system2 ) );
+    assertFalse( system.isLinked( system3 ) );
+
+    system.addLink( system2 );
+
+    assertEquals( system.getLinks().size(), 2 );
+    assertTrue( system.getLinks().contains( system1 ) );
+    assertTrue( system.getLinks().contains( system2 ) );
+    assertFalse( system.getLinks().contains( system3 ) );
+    assertTrue( system.isLinked( system1 ) );
+    assertTrue( system.isLinked( system2 ) );
+    assertFalse( system.isLinked( system3 ) );
+
+    assertTrue( system.removeLink( system2 ) );
+
+    assertEquals( system.getLinks().size(), 1 );
+    assertTrue( system.getLinks().contains( system1 ) );
+    assertFalse( system.getLinks().contains( system2 ) );
+    assertFalse( system.getLinks().contains( system3 ) );
+    assertTrue( system.isLinked( system1 ) );
+    assertFalse( system.isLinked( system2 ) );
+    assertFalse( system.isLinked( system3 ) );
+
+    assertFalse( system.removeLink( system2 ) );
+
+    assertEquals( system.getLinks().size(), 1 );
+    assertTrue( system.getLinks().contains( system1 ) );
+    assertFalse( system.getLinks().contains( system2 ) );
+    assertFalse( system.getLinks().contains( system3 ) );
+    assertTrue( system.isLinked( system1 ) );
+    assertFalse( system.isLinked( system2 ) );
+    assertFalse( system.isLinked( system3 ) );
+  }
+
+  @Test
   public void parseCompletedSystem()
     throws Exception
   {
