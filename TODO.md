@@ -30,4 +30,5 @@ complete as there is too much un-said.
   - No planets with duplicate names exist.
   - No systems with duplicate names exist.
   - `StellarObject` instances have position.
+  - `StellarObject` instances do not contain themselves.
   etc.
