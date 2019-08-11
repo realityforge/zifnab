@@ -171,17 +171,12 @@ public final class SystemConfig
 
   public void addMinable( @Nonnull final String name, final int count, final double energy )
   {
-    addAsteroid( new Asteroid( name, count, energy, true ) );
+    asteroids.put( name, new Asteroid( name, count, energy, true ) );
   }
 
   public void addAsteroid( @Nonnull final String name, final int count, final double energy )
   {
-    addAsteroid( new Asteroid( name, count, energy, false ) );
-  }
-
-  public void addAsteroid( @Nonnull final Asteroid asteroid )
-  {
-    asteroids.put( asteroid.getName(), asteroid );
+    asteroids.put( name, new Asteroid( name, count, energy, false ) );
   }
 
   public boolean removeAsteroid( @Nonnull final String name )
