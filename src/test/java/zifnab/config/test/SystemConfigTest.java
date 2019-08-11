@@ -52,6 +52,17 @@ public class SystemConfigTest
     assertTrue( system.isLinked( system2 ) );
     assertFalse( system.isLinked( system3 ) );
 
+    // Duplicate link is a no-op
+    system.addLink( system2 );
+
+    assertEquals( system.getLinks().size(), 2 );
+    assertTrue( system.getLinks().contains( system1 ) );
+    assertTrue( system.getLinks().contains( system2 ) );
+    assertFalse( system.getLinks().contains( system3 ) );
+    assertTrue( system.isLinked( system1 ) );
+    assertTrue( system.isLinked( system2 ) );
+    assertFalse( system.isLinked( system3 ) );
+
     assertTrue( system.removeLink( system2 ) );
 
     assertEquals( system.getLinks().size(), 1 );
