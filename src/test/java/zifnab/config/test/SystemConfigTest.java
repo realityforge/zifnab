@@ -151,6 +151,71 @@ public class SystemConfigTest
   }
 
   @Test
+  public void mutateMinables()
+  {
+    final SystemConfig system = new SystemConfig( randomString() );
+
+    assertTrue( system.getMinables().isEmpty() );
+
+    final String minable1 = randomString();
+    final String minable2 = randomString();
+    final String minable3 = randomString();
+
+    system.addMinable( minable1, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getMinables().size(), 1 );
+    assertNotNull( system.findMinableByName( minable1 ) );
+    assertNull( system.findMinableByName( minable2 ) );
+    assertNull( system.findMinableByName( minable3 ) );
+
+    system.addMinable( minable2, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getMinables().size(), 2 );
+    assertNotNull( system.findMinableByName( minable1 ) );
+    assertNotNull( system.findMinableByName( minable2 ) );
+    assertNull( system.findMinableByName( minable3 ) );
+
+    // Add with same name is just an update
+    system.addMinable( minable2, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getMinables().size(), 2 );
+    assertNotNull( system.findMinableByName( minable1 ) );
+    assertNotNull( system.findMinableByName( minable2 ) );
+    assertNull( system.findMinableByName( minable3 ) );
+
+    final SystemConfig.Minable minable2Instance = system.findMinableByName( minable2 );
+    assertTrue( system.removeMinable( Objects.requireNonNull( minable2Instance ) ) );
+
+    assertEquals( system.getMinables().size(), 1 );
+    assertNotNull( system.findMinableByName( minable1 ) );
+    assertNull( system.findMinableByName( minable2 ) );
+    assertNull( system.findMinableByName( minable3 ) );
+
+    // Re-add minable with the same name but different instances
+    system.addMinable( minable2, randomPositiveInt(), randomPositiveDouble() );
+
+    assertEquals( system.getMinables().size(), 2 );
+    assertNotNull( system.findMinableByName( minable1 ) );
+    assertNotNull( system.findMinableByName( minable2 ) );
+    assertNull( system.findMinableByName( minable3 ) );
+
+    // Remove where minable name matches but minable instance does not is a no-op
+    assertFalse( system.removeMinable( Objects.requireNonNull( minable2Instance ) ) );
+
+    assertEquals( system.getMinables().size(), 2 );
+    assertNotNull( system.findMinableByName( minable1 ) );
+    assertNotNull( system.findMinableByName( minable2 ) );
+    assertNull( system.findMinableByName( minable3 ) );
+
+    assertTrue( system.removeMinable( minable2 ) );
+
+    assertEquals( system.getMinables().size(), 1 );
+    assertNotNull( system.findMinableByName( minable1 ) );
+    assertNull( system.findMinableByName( minable2 ) );
+    assertNull( system.findMinableByName( minable3 ) );
+  }
+
+  @Test
   public void parseCompletedSystem()
     throws Exception
   {
