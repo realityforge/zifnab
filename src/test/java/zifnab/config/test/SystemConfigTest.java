@@ -281,6 +281,71 @@ public class SystemConfigTest
   }
 
   @Test
+  public void mutateFleets()
+  {
+    final SystemConfig system = new SystemConfig( randomString() );
+
+    assertTrue( system.getFleets().isEmpty() );
+
+    final String fleet1 = randomString();
+    final String fleet2 = randomString();
+    final String fleet3 = randomString();
+
+    system.addFleet( fleet1, randomPositiveInt() );
+
+    assertEquals( system.getFleets().size(), 1 );
+    assertNotNull( system.findFleetByName( fleet1 ) );
+    assertNull( system.findFleetByName( fleet2 ) );
+    assertNull( system.findFleetByName( fleet3 ) );
+
+    system.addFleet( fleet2, randomPositiveInt() );
+
+    assertEquals( system.getFleets().size(), 2 );
+    assertNotNull( system.findFleetByName( fleet1 ) );
+    assertNotNull( system.findFleetByName( fleet2 ) );
+    assertNull( system.findFleetByName( fleet3 ) );
+
+    // Add with same name is just an update
+    system.addFleet( fleet2, randomPositiveInt() );
+
+    assertEquals( system.getFleets().size(), 2 );
+    assertNotNull( system.findFleetByName( fleet1 ) );
+    assertNotNull( system.findFleetByName( fleet2 ) );
+    assertNull( system.findFleetByName( fleet3 ) );
+
+    final SystemConfig.Fleet fleet2Instance = system.findFleetByName( fleet2 );
+    assertTrue( system.removeFleet( Objects.requireNonNull( fleet2Instance ) ) );
+
+    assertEquals( system.getFleets().size(), 1 );
+    assertNotNull( system.findFleetByName( fleet1 ) );
+    assertNull( system.findFleetByName( fleet2 ) );
+    assertNull( system.findFleetByName( fleet3 ) );
+
+    // Re-add fleet with the same name but different instances
+    system.addFleet( fleet2, randomPositiveInt() );
+
+    assertEquals( system.getFleets().size(), 2 );
+    assertNotNull( system.findFleetByName( fleet1 ) );
+    assertNotNull( system.findFleetByName( fleet2 ) );
+    assertNull( system.findFleetByName( fleet3 ) );
+
+    // Remove where fleet name matches but fleet instance does not is a no-op
+    assertFalse( system.removeFleet( Objects.requireNonNull( fleet2Instance ) ) );
+
+    assertEquals( system.getFleets().size(), 2 );
+    assertNotNull( system.findFleetByName( fleet1 ) );
+    assertNotNull( system.findFleetByName( fleet2 ) );
+    assertNull( system.findFleetByName( fleet3 ) );
+
+    assertTrue( system.removeFleet( fleet2 ) );
+
+    assertEquals( system.getFleets().size(), 1 );
+    assertNotNull( system.findFleetByName( fleet1 ) );
+    assertNull( system.findFleetByName( fleet2 ) );
+    assertNull( system.findFleetByName( fleet3 ) );
+  }
+
+  @Test
   public void parseCompletedSystem()
     throws Exception
   {
