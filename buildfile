@@ -43,6 +43,7 @@ define 'zifnab' do
       xml << '<name>com.sun.istack.internal.Nullable</name>'
       xml << '<name>org.jetbrains.annotations.Nullable</name>'
       xml << '<name>org.jetbrains.annotations.NotNull</name>'
+      xml << '<name>org.testng.AssertJUnit</name>'
     end
   end
   ipr.add_component('NullableNotNullManager') do |component|
