@@ -233,6 +233,36 @@ public class ImageRegistryTest
   }
 
   @Test
+  public void populateRegistryFromDirectory_station()
+    throws Exception
+  {
+    final Path dir = FileUtil.createLocalTempDir();
+
+    Files.createDirectory( dir.resolve( "planet" ) );
+    FileUtil.write( dir.resolve( "planet" ).resolve( "stationBeta.jpg" ), new byte[ 0 ] );
+    FileUtil.write( dir.resolve( "planet" ).resolve( "red.jpg" ), new byte[ 0 ] );
+
+    final ImageRegistry registry = new ImageRegistry();
+
+    assertEquals( registry.getImages().size(), 0 );
+
+    ImageRegistry.populateRegistryFromDirectory( registry, dir );
+
+    assertEquals( registry.getImages().size(), 2 );
+    final Image image1 = registry.findImage( "planet", "red" );
+    assertNotNull( image1 );
+    assertEquals( image1.getCategory(), "planet" );
+    assertEquals( image1.getName(), "red" );
+    assertEquals( image1.getKey(), "planet/red" );
+
+    final Image image2 = registry.findImage( "station", "stationBeta" );
+    assertNotNull( image2 );
+    assertEquals( image2.getCategory(), "station" );
+    assertEquals( image2.getName(), "stationBeta" );
+    assertEquals( image2.getKey(), "planet/stationBeta" );
+  }
+
+  @Test
   public void populateRegistryFromDirectory_singlePng()
     throws Exception
   {
