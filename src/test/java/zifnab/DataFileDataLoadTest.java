@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.assets.Image;
 import zifnab.assets.ImageRegistry;
+import zifnab.config.GalaxyConfig;
 import zifnab.config.SystemConfig;
 import zifnab.config.TradeConfig;
 import zifnab.hdf.DataElement;
@@ -39,15 +40,20 @@ public class DataFileDataLoadTest
         final DataFile dataFile = DataFile.read( file );
         for ( final DataElement element : dataFile.getDocument().getChildElements() )
         {
-          if ( SystemConfig.matches( element ) )
+          if ( GalaxyConfig.matches( element ) )
           {
-            final SystemConfig systemConfig = SystemConfig.from( element );
-            System.out.println( "Loaded " + systemConfig.getName() + " system." );
+            final GalaxyConfig config = GalaxyConfig.from( element );
+            System.out.println( "Loaded " + config.getName() + " galaxy." );
+          }
+          else if ( SystemConfig.matches( element ) )
+          {
+            final SystemConfig config = SystemConfig.from( element );
+            System.out.println( "Loaded " + config.getName() + " system." );
           }
           else if ( TradeConfig.matches( element ) )
           {
-            final TradeConfig tradeConfig = TradeConfig.from( element );
-            System.out.println( "Loaded " + tradeConfig.getCommodities().size() + " commodities." );
+            final TradeConfig config = TradeConfig.from( element );
+            System.out.println( "Loaded " + config.getCommodities().size() + " commodities." );
           }
         }
       }
