@@ -9,7 +9,7 @@ install:
   - rvm use 2.3.1
   - gem install bundler
   - bundle install
-  - git clone --depth 1 --branch RemoveStrayTabs https://github.com/realityforge/endless-sky.git
+  - git clone --depth 1 https://github.com/endless-sky/endless-sky.git
 script: buildr clean package ENDLESS_SKY_DIR=endless-sky/data
 git:
   depth: 10
