@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
@@ -835,10 +834,7 @@ public class SystemConfigTest
   private SystemConfig parseSystemConfig( @Nonnull final String data )
     throws Exception
   {
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
+    final DataElement element = asDataElement( data );
     assertTrue( SystemConfig.matches( element ) );
     return SystemConfig.from( element );
   }

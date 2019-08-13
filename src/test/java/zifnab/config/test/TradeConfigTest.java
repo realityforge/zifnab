@@ -260,10 +260,7 @@ public class TradeConfigTest
   private TradeConfig parseConfig( @Nonnull final String data )
     throws Exception
   {
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
+    final DataElement element = asDataElement( data );
     assertTrue( TradeConfig.matches( element ) );
     return TradeConfig.from( element );
   }

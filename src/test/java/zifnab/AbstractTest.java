@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
 import zifnab.hdf.DataDocument;
+import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
 import zifnab.hdf.DataParseException;
 import zifnab.hdf.SourceLocation;
@@ -58,6 +60,15 @@ public abstract class AbstractTest
     throws IOException
   {
     Files.write( path, content.getBytes( StandardCharsets.UTF_8 ) );
+  }
+
+  @Nonnull
+  protected final DataElement asDataElement( @Nonnull final String data )
+    throws IOException, DataParseException
+  {
+    final List<DataElement> elements = asDataDocument( data ).getChildElements();
+    assertEquals( elements.size(), 1 );
+    return elements.get( 0 );
   }
 
   @Nonnull

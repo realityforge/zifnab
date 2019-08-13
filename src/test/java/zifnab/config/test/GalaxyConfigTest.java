@@ -14,6 +14,7 @@ import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
+import zifnab.hdf.DataParseException;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
@@ -146,10 +147,7 @@ public class GalaxyConfigTest
   private GalaxyConfig parseGalaxyConfig( @Nonnull final String data )
     throws Exception
   {
-    final List<DataElement> elements = asDataDocument( data ).getChildElements();
-    assertEquals( elements.size(), 1 );
-
-    final DataElement element = elements.get( 0 );
+    final DataElement element = asDataElement( data );
     assertTrue( GalaxyConfig.matches( element ) );
     return GalaxyConfig.from( element );
   }
