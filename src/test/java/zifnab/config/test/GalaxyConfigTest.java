@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
@@ -14,7 +13,6 @@ import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
-import zifnab.hdf.DataParseException;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
