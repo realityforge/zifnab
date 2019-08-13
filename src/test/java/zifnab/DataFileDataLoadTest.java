@@ -3,10 +3,13 @@ package zifnab;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
+import zifnab.assets.Image;
+import zifnab.assets.ImageRegistry;
 import zifnab.config.SystemConfig;
 import zifnab.config.TradeConfig;
 import zifnab.hdf.DataElement;
@@ -57,6 +60,23 @@ public class DataFileDataLoadTest
     }
 
     assertFalse( failed );
+  }
+
+  @Test
+  public void populateRegistryFromDirectory()
+    throws Exception
+  {
+    final ImageRegistry registry = new ImageRegistry();
+    ImageRegistry.populateRegistryFromDirectory( registry, endlessSkyDir().resolve( "images" ) );
+    for ( final String category : registry.getCategories() )
+    {
+      final Collection<Image> images = registry.findImagesByCategory( category );
+      System.out.println( "Category: " + category + " (" + images.size() + " images)" );
+      for ( final Image image : images )
+      {
+        System.out.println( "  " + image.getName() );
+      }
+    }
   }
 
   @Nonnull
