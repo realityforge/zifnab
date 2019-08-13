@@ -27,7 +27,7 @@ define 'zifnab' do
 
   test.using :testng
   test.with :gir
-  test.options[:java_args] = %W(-ea -Dzifnab.data_dir=#{ENV['ENDLESS_SKY_DIR'] || project._('../endless-sky/data')})
+  test.options[:java_args] = %W(-ea -Dzifnab.endless_sky_dir"=#{ENV['ENDLESS_SKY_DIR'] || project._('../endless-sky')})
 
   ipr.add_default_testng_configuration(:jvm_args => '-ea ')
 

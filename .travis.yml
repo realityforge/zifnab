@@ -10,6 +10,6 @@ install:
   - gem install bundler
   - bundle install
   - git clone --depth 1 https://github.com/endless-sky/endless-sky.git
-script: buildr clean package ENDLESS_SKY_DIR=endless-sky/data
+script: buildr clean package ENDLESS_SKY_DIR=endless-sky
 git:
   depth: 10
