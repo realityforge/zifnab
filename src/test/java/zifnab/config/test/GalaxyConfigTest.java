@@ -1,9 +1,6 @@
 package zifnab.config.test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.AbstractTest;
@@ -12,7 +9,6 @@ import zifnab.config.Position;
 import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
-import zifnab.hdf.DataFile;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
@@ -161,9 +157,6 @@ public class GalaxyConfigTest
     assertEquals( element.getName(), "galaxy" );
     assertEquals( element.getStringAt( 1 ), galaxy.getName() );
 
-    final Path file = createTempDataFile();
-    new DataFile( file, document ).write();
-    final String encodedData = new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
-    assertEquals( encodedData, inputData );
+    assertDocumentMatches( document, inputData );
   }
 }

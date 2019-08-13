@@ -1,9 +1,6 @@
 package zifnab.config.test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
@@ -14,7 +11,6 @@ import zifnab.config.SystemConfig;
 import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
-import zifnab.hdf.DataFile;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
@@ -850,9 +846,6 @@ public class SystemConfigTest
     assertEquals( element.getName(), "system" );
     assertEquals( element.getStringAt( 1 ), system.getName() );
 
-    final Path file = createTempDataFile();
-    new DataFile( file, document ).write();
-    final String encodedData = new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
-    assertEquals( encodedData, inputData );
+    assertDocumentMatches( document, inputData );
   }
 }

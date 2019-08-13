@@ -80,6 +80,15 @@ public abstract class AbstractTest
     return DataFile.read( file ).getDocument();
   }
 
+  protected final void assertDocumentMatches( @Nonnull final DataDocument document, @Nonnull final String data )
+    throws IOException
+  {
+    final Path file = createTempDataFile();
+    new DataFile( file, document ).write();
+    final String encodedData = new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
+    assertEquals( encodedData, data );
+  }
+
   @Nonnull
   protected final SourceLocation randomSourceLocation()
   {
