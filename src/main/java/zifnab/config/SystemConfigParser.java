@@ -82,7 +82,7 @@ final class SystemConfigParser
   {
     element.assertTokenName( "object" );
     element.assertTokenCountRange( 1, 2 );
-    final String name = 2 == element.getTokens().size() ? element.getStringAt( 1 ) : null;
+    final String name = 2 == element.getTokenCount() ? element.getStringAt( 1 ) : null;
     final SystemConfig.StellarObject object = new SystemConfig.StellarObject( name );
     parseConfig( object, element.getChildElements() );
     return object;

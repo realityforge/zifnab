@@ -47,7 +47,7 @@ final class TradeConfigParser
     element.assertTokenName( "commodity" );
     element.assertTokenCounts( 2, 4 );
     final TradeConfig.Commodity commodity =
-      2 == element.getTokens().size() ?
+      2 == element.getTokenCount() ?
       config.addSpecialCommodity( element.getStringAt( 1 ) ) :
       config.addCommodity( element.getStringAt( 1 ),
                            element.getIntAt( 2 ),

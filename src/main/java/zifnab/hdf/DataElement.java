@@ -54,6 +54,11 @@ public final class DataElement
     return Collections.unmodifiableList( _tokens );
   }
 
+  public int getTokenCount()
+  {
+    return _tokens.size();
+  }
+
   public void assertTokenName( @Nonnull final String name )
   {
     if ( !name.equals( getName() ) )
@@ -65,7 +70,7 @@ public final class DataElement
 
   public void assertTokenCount( final int length )
   {
-    final int size = _tokens.size();
+    final int size = getTokenCount();
     if ( length != size )
     {
       final String message =
@@ -77,7 +82,7 @@ public final class DataElement
 
   public void assertTokenCounts( @Nonnull final Integer... tokenCounts )
   {
-    final int size = _tokens.size();
+    final int size = getTokenCount();
     for ( final int tokenCount : tokenCounts )
     {
       if ( size == tokenCount )
@@ -93,7 +98,7 @@ public final class DataElement
 
   public void assertTokenCountRange( final int minLength, final int maxLength )
   {
-    final int size = _tokens.size();
+    final int size = getTokenCount();
     if ( size < minLength || size > maxLength )
     {
       final String message =
@@ -106,7 +111,7 @@ public final class DataElement
   @Nonnull
   public String getStringAt( final int index )
   {
-    if ( index >= _tokens.size() )
+    if ( index >= getTokenCount() )
     {
       final String message =
         "Data element named '" + getName() + "' does not contain a token at index " + index;
