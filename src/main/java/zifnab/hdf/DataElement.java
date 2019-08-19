@@ -163,6 +163,30 @@ public final class DataElement
     }
   }
 
+  public double getDoubleAt( final int index, final double min )
+  {
+    final double value = getDoubleAt( index );
+    if ( min > value )
+    {
+      throw new DataAccessException( "Token at index " + index + " for data element named '" + getName() +
+                                     "' has value '" + value + "' which is below the expected minimum " +
+                                     "value " + min, getLocation() );
+    }
+    return value;
+  }
+
+  public double getDoubleAt( final int index, final double min, final double max )
+  {
+    final double value = getDoubleAt( index, min );
+    if ( max < value )
+    {
+      throw new DataAccessException( "Token at index " + index + " for data element named '" + getName() +
+                                     "' has value '" + value + "' which is above the expected maximum " +
+                                     "value " + min, getLocation() );
+    }
+    return value;
+  }
+
   @Nonnull
   public List<DataNode> getChildren()
   {

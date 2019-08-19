@@ -10,6 +10,7 @@
 * Separate the representation of `minables` and `asteroids` which involved; introducing a separate config object `SystemConfig.Minable`, modifying existing methods on `SystemConfig` that manipulate `minables`, introducing new methods to access `minables` and removing the `SystemConfig.Asteroid.isMinable()` method.
 * Refactor several of the `SystemConfig.addX(...)` methods to return the object created.
 * Add the `DataElement.getIntAt(int index, int min)` method that will generate an exception if the value is below the specified minimum.
+* Add the `DataElement.getDoubleAt(int index, int min)` method that will generate an exception if the value is below the specified minimum and the `DataElement.getDoubleAt(int index, int min, int max)` method that will generate an exception if the value is above the specified maximum.
 
 ### [v0.03](https://github.com/realityforge/zifnab/tree/v0.03) (2019-08-10)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.02...v0.03)

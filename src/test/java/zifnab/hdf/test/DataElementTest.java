@@ -472,6 +472,36 @@ public class DataElementTest
     assertEquals( exception.getLocation(), location );
   }
 
+  @Test
+  public void getDoubleAt_belowMinimum()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "speed", "-2" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getDoubleAt( 1, 0D ) );
+
+    assertEquals( exception.getMessage(),
+                  "Token at index 1 for data element named 'speed' has value '-2.0' which is below the expected minimum value 0.0" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
+  public void getDoubleAt_aboveMinimum()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "chance", "2" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getDoubleAt( 1, 0D, 1D ) );
+
+    assertEquals( exception.getMessage(),
+                  "Token at index 1 for data element named 'chance' has value '2.0' which is above the expected maximum value 0.0" );
+    assertEquals( exception.getLocation(), location );
+  }
+
   @Nonnull
   private String writeElement( @Nonnull final DataDocument document )
     throws IOException
