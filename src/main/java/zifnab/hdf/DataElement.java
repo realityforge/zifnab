@@ -137,6 +137,18 @@ public final class DataElement
     }
   }
 
+  public int getIntAt( final int index, final int min )
+  {
+    final int value = getIntAt( index );
+    if ( min > value )
+    {
+      throw new DataAccessException( "Token at index " + index + " for data element named '" + getName() +
+                                     "' has value '" + value + "' which is below the expected minimum " +
+                                     "value " + min, getLocation() );
+    }
+    return value;
+  }
+
   public double getDoubleAt( final int index )
   {
     final String token = getStringAt( index );

@@ -419,6 +419,21 @@ public class DataElementTest
   }
 
   @Test
+  public void getIntAt_belowMin()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "age", "1" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, () -> element.getIntAt( 1, 18 ) );
+
+    assertEquals( exception.getMessage(),
+                  "Token at index 1 for data element named 'age' has value '1' which is below the expected minimum value 18" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
   public void getDoubleAt()
   {
     final DataDocument document = new DataDocument();
