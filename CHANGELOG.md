@@ -4,6 +4,7 @@
 
 * Rename `DataElement.assertTokenCount(int min,int max)` to `DataElement.assertTokenCountRange(int min,int max)` for the sake of improved clarity.
 * Add `DataElement.assertTokenCounts(int...)` helper method to assert that one of a set of token counts is expected.
+* Add `DataElement.getTokenCount()` helper method to simplify accessing the number of tokens for an element.
 * Add initial support for encoding, decoding, representing and manipulating the entities: `trade` and `galaxy`.
 * Add `SystemConfig.isLinked(String)` helper method.
 * Separate the representation of `minables` and `asteroids` which involved; introducing a separate config object `SystemConfig.Minable`, modifying existing methods on `SystemConfig` that manipulate `minables`, introducing new methods to access `minables` and removing the `SystemConfig.Asteroid.isMinable()` method.
