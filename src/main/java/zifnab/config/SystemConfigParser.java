@@ -118,7 +118,7 @@ final class SystemConfigParser
       switch ( name )
       {
         case "sprite":
-          element.assertLeafNode();
+          //TODO: Should be parsing a SpriteConfig here
           element.assertTokenCount( 2 );
           object.setSprite( element.getStringAt( 1 ) );
           break;
