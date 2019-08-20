@@ -35,10 +35,12 @@ final class GalaxyConfigParser
       switch ( name )
       {
         case "pos":
+          element.assertLeafNode();
           element.assertTokenCount( 3 );
           config.setPos( new Position( element.getDoubleAt( 1 ), element.getDoubleAt( 2 ) ) );
           break;
         case "sprite":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           config.setSprite( element.getStringAt( 1 ) );
           break;

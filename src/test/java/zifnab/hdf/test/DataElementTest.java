@@ -246,6 +246,31 @@ public class DataElementTest
   }
 
   @Test
+  public void assertLeafNode()
+  {
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( "planet", "Dune" );
+
+    element.assertLeafNode();
+  }
+
+  @Test
+  public void assertLeafNode_whenChildrenPresent()
+  {
+    final SourceLocation location = new SourceLocation( "file.txt", 1, 0 );
+    final DataDocument document = new DataDocument();
+    final DataElement element = document.element( location, "planet", "Dune" );
+    element.element( "name", "The Red Planet" );
+
+    final DataAccessException exception =
+      expectThrows( DataAccessException.class, element::assertLeafNode );
+
+    assertEquals( exception.getMessage(),
+                  "Data element named 'planet' expected to have 0 children but has 1 children" );
+    assertEquals( exception.getLocation(), location );
+  }
+
+  @Test
   public void assertTokenCount()
   {
     final DataDocument document = new DataDocument();

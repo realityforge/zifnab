@@ -54,6 +54,7 @@ final class TradeConfigParser
     final List<DataElement> children = element.getChildElements();
     for ( final DataElement child : children )
     {
+      child.assertLeafNode();
       child.assertTokenCount( 1 );
       commodity.addItem( child.getName() );
     }

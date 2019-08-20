@@ -36,46 +36,57 @@ final class SystemConfigParser
       switch ( name )
       {
         case "pos":
+          element.assertLeafNode();
           element.assertTokenCount( 3 );
           config.setPos( new Position( element.getDoubleAt( 1 ), element.getDoubleAt( 2 ) ) );
           break;
         case "government":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           config.setGovernment( element.getStringAt( 1 ) );
           break;
         case "haze":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           config.setHaze( element.getStringAt( 1 ) );
           break;
         case "music":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           config.setMusic( element.getStringAt( 1 ) );
           break;
         case "habitable":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           config.setHabitable( element.getDoubleAt( 1 ) );
           break;
         case "belt":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           config.setBelt( element.getDoubleAt( 1 ) );
           break;
         case "link":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           config.addLink( element.getStringAt( 1 ) );
           break;
         case "asteroids":
+          element.assertLeafNode();
           element.assertTokenCount( 4 );
           config.addAsteroid( element.getStringAt( 1 ), element.getIntAt( 2 ), element.getDoubleAt( 3 ) );
           break;
         case "minables":
+          element.assertLeafNode();
           element.assertTokenCount( 4 );
           config.addMinable( element.getStringAt( 1 ), element.getIntAt( 2 ), element.getDoubleAt( 3 ) );
           break;
         case "trade":
+          element.assertLeafNode();
           element.assertTokenCount( 3 );
           config.addTrade( element.getStringAt( 1 ), element.getIntAt( 2 ) );
           break;
         case "fleet":
+          element.assertLeafNode();
           element.assertTokenCount( 3 );
           config.addFleet( element.getStringAt( 1 ), element.getIntAt( 2 ) );
           break;
@@ -107,18 +118,22 @@ final class SystemConfigParser
       switch ( name )
       {
         case "sprite":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           object.setSprite( element.getStringAt( 1 ) );
           break;
         case "distance":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           object.setDistance( element.getDoubleAt( 1 ) );
           break;
         case "period":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           object.setPeriod( element.getDoubleAt( 1 ) );
           break;
         case "offset":
+          element.assertLeafNode();
           element.assertTokenCount( 2 );
           object.setOffset( element.getDoubleAt( 1 ) );
           break;

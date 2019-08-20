@@ -59,6 +59,17 @@ public final class DataElement
     return _tokens.size();
   }
 
+  public void assertLeafNode()
+  {
+    final int childCount = getChildElements().size();
+    if ( 0 != childCount )
+    {
+      final String message =
+        "Data element named '" + getName() + "' expected to have 0 children but has " + childCount + " children";
+      throw new DataAccessException( message, getLocation() );
+    }
+  }
+
   public void assertTokenName( @Nonnull final String name )
   {
     if ( !name.equals( getName() ) )

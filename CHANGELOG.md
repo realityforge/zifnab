@@ -11,6 +11,7 @@
 * Refactor several of the `SystemConfig.addX(...)` methods to return the object created.
 * Add the `DataElement.getIntAt(int index, int min)` method that will generate an exception if the value is below the specified minimum.
 * Add the `DataElement.getDoubleAt(int index, int min)` method that will generate an exception if the value is below the specified minimum and the `DataElement.getDoubleAt(int index, int min, int max)` method that will generate an exception if the value is above the specified maximum.
+* Add the `DataElement.assertLeafNode()` helper method to verify element shape during parsing.
 
 ### [v0.03](https://github.com/realityforge/zifnab/tree/v0.03) (2019-08-10)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.02...v0.03)
