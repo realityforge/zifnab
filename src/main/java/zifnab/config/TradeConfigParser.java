@@ -44,7 +44,6 @@ final class TradeConfigParser
 
   private static void parseCommodity( @Nonnull final TradeConfig config, @Nonnull final DataElement element )
   {
-    element.assertTokenName( "commodity" );
     element.assertTokenCounts( 2, 4 );
     final TradeConfig.Commodity commodity =
       2 == element.getTokenCount() ?
