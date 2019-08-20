@@ -35,28 +35,16 @@ final class GalaxyConfigParser
       switch ( name )
       {
         case "pos":
-          parsePos( config, element );
+          element.assertTokenCount( 3 );
+          config.setPos( new Position( element.getDoubleAt( 1 ), element.getDoubleAt( 2 ) ) );
           break;
         case "sprite":
-          parseSprite( config, element );
+          element.assertTokenCount( 2 );
+          config.setSprite( element.getStringAt( 1 ) );
           break;
         default:
           throw new DataAccessException( "Unexpected data element named '" + name + "'", element.getLocation() );
       }
     }
-  }
-
-  private static void parseSprite( @Nonnull final GalaxyConfig config, @Nonnull final DataElement element )
-  {
-    element.assertTokenName( "sprite" );
-    element.assertTokenCount( 2 );
-    config.setSprite( element.getStringAt( 1 ) );
-  }
-
-  private static void parsePos( @Nonnull final GalaxyConfig config, @Nonnull final DataElement element )
-  {
-    element.assertTokenName( "pos" );
-    element.assertTokenCount( 3 );
-    config.setPos( new Position( element.getDoubleAt( 1 ), element.getDoubleAt( 2 ) ) );
   }
 }
