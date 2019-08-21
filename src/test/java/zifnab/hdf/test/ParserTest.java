@@ -318,6 +318,33 @@ public class ParserTest
     assertChildIsLeafElement( tributeChildren, 2, tribute, "fleet", "Large Republic", "50" );
   }
 
+  @Test
+  public void normalizeWhitespaceBetweenCommentsAndFollowingElementToOneOrZeroSpaces()
+    throws Exception
+  {
+    final Path file = createTempDataFile();
+    writeContent( file, "# This is a file comment\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "planet Mars\n" +
+                        "\n" +
+                        "# an attached comment" +
+                        "planet Earth\n" );
+
+    final DataFile dataFile = DataFile.read( file );
+    dataFile.write();
+
+    assertEquals( readContent( file ),
+                  "# This is a file comment\n" +
+                  "\n" +
+                  "planet Mars\n" +
+                  "\n" +
+                  "# an attached comment" +
+                  "planet Earth\n" );
+  }
+
   @Nonnull
   private DataElement ensureChildIsElement( @Nonnull final List<DataNode> children,
                                             final int index,

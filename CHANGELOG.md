@@ -16,6 +16,7 @@
 * Ensure that when a `DataComment` with an empty comment string is emitted that there is not trailing whitespace on the line.
 * Add an example `zifnab.examples.NormalizeDataFiles` that all data files from a data directory and write them out, thus normalizing the data.
 * Ensure that outputting a token in a `DataElement` is quoted if the token contains a tab.
+* Normalize whitespace between lines when writing a `DataComment` followed bya `DataElement` when the data was originally read from a file. If the original file had one or more new lines between the comment and the element then omit a single new line otherwise emit no new line.
 
 ### [v0.03](https://github.com/realityforge/zifnab/tree/v0.03) (2019-08-10)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.02...v0.03)

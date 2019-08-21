@@ -72,15 +72,19 @@ public final class DataDocument
   void write( @Nonnull final Writer writer )
     throws IOException
   {
+    int lastLineNumber = -1;
     boolean lastChildWasAnElement = false;
     for ( final DataNode child : getChildren() )
     {
-      if ( lastChildWasAnElement )
+      final SourceLocation location = child.getLocation();
+      final int lineNumber = null == location ? -1 : location.getLineNumber();
+      if ( lastChildWasAnElement || ( -1 != lastLineNumber && -1 != lineNumber && lastLineNumber != lineNumber - 1 ) )
       {
         writer.write( "\n" );
       }
       child.write( writer, 0 );
       lastChildWasAnElement = child instanceof DataElement;
+      lastLineNumber = null == location ? -1 : location.getLineNumber();
     }
   }
 }
