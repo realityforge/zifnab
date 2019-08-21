@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import zifnab.assets.Image;
 import zifnab.assets.ImageRegistry;
 import zifnab.config.GalaxyConfig;
+import zifnab.config.OutfitConfig;
 import zifnab.config.SystemConfig;
 import zifnab.config.TradeConfig;
 import zifnab.hdf.DataElement;
@@ -54,6 +55,11 @@ public class DataFileDataLoadTest
           {
             final TradeConfig config = TradeConfig.from( element );
             System.out.println( "Loaded " + config.getCommodities().size() + " commodities." );
+          }
+          else if ( OutfitConfig.matches( element ) )
+          {
+            final OutfitConfig config = OutfitConfig.from( element );
+            System.out.println( "Loaded " + config.getName() + " outfit." );
           }
         }
       }
