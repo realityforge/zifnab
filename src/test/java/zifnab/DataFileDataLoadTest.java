@@ -12,6 +12,7 @@ import zifnab.assets.Image;
 import zifnab.assets.ImageRegistry;
 import zifnab.config.GalaxyConfig;
 import zifnab.config.OutfitConfig;
+import zifnab.config.StarConfig;
 import zifnab.config.SystemConfig;
 import zifnab.config.TradeConfig;
 import zifnab.hdf.DataElement;
@@ -60,6 +61,11 @@ public class DataFileDataLoadTest
           {
             final OutfitConfig config = OutfitConfig.from( element );
             System.out.println( "Loaded " + config.getName() + " outfit." );
+          }
+          else if ( StarConfig.matches( element ) )
+          {
+            final StarConfig config = StarConfig.from( element );
+            System.out.println( "Loaded " + config.getName() + " star." );
           }
         }
       }
