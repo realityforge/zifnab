@@ -15,6 +15,7 @@
 * Add initial support for scanning and registering image assets using the `ImageRegistry` class.
 * Ensure that when a `DataComment` with an empty comment string is emitted that there is not trailing whitespace on the line.
 * Add an example `zifnab.examples.NormalizeDataFiles` that all data files from a data directory and write them out, thus normalizing the data.
+* Ensure that outputting a token in a `DataElement` is quoted if the token contains a tab.
 
 ### [v0.03](https://github.com/realityforge/zifnab/tree/v0.03) (2019-08-10)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.02...v0.03)

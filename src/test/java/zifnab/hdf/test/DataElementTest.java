@@ -153,6 +153,28 @@ public class DataElementTest
   }
 
   @Test
+  public void writeTokensWithTabs()
+    throws Exception
+  {
+    final DataDocument document = new DataDocument();
+    document.element( "description", "\tAnd then the magic happened" );
+
+    final String output = writeElement( document );
+    assertEquals( output, "description \"\tAnd then the magic happened\"\n" );
+  }
+
+  @Test
+  public void writeTokensWithLeadingTab()
+    throws Exception
+  {
+    final DataDocument document = new DataDocument();
+    document.element( "\tAnd so the story goes..." );
+
+    final String output = writeElement( document );
+    assertEquals( output, "\"\tAnd so the story goes...\"\n" );
+  }
+
+  @Test
   public void writeTokensWithQuotes()
     throws Exception
   {

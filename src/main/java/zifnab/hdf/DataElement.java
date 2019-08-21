@@ -308,7 +308,7 @@ public final class DataElement
       }
       else
       {
-        final boolean tokenContainsSpace = token.contains( " " );
+        final boolean tokenContainsSpace = token.contains( " " ) || token.contains( "\t" );
         if ( tokenContainsSpace )
         {
           writer.write( '"' );
