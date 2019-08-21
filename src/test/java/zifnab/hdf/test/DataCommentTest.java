@@ -80,6 +80,18 @@ public class DataCommentTest
   }
 
   @Test
+  public void writeEmptyComment()
+    throws Exception
+  {
+    final DataDocument document = new DataDocument();
+
+    document.comment( "" );
+
+    final String output = writeElement( document );
+    assertEquals( output, "#\n" );
+  }
+
+  @Test
   public void writeWithMultipleLayers()
     throws Exception
   {

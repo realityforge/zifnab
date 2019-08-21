@@ -45,8 +45,15 @@ public final class DataComment
     throws IOException
   {
     writeIndent( writer, depth );
-    writer.write( "# " );
-    writer.write( _comment );
-    writer.write( '\n' );
+    if ( _comment.isEmpty() )
+    {
+      writer.write( "#\n" );
+    }
+    else
+    {
+      writer.write( "# " );
+      writer.write( _comment );
+      writer.write( '\n' );
+    }
   }
 }
