@@ -68,17 +68,18 @@ final class Parser
   private void parseLine()
     throws DataParseException
   {
-    if ( !_line.isEmpty() )
+    final int length = _line.length();
+    if ( 0 != length )
     {
       _column = 0;
       parseIndentation();
-      if ( _line.length() > _column )
+      if ( length > _column )
       {
         if ( '#' == _line.charAt( _column ) )
         {
           final SourceLocation location = newLocation();
           final String comment;
-          if ( _line.length() > _column + 1 && ' ' == _line.charAt( _column + 1 ) )
+          if ( length > _column + 1 && ' ' == _line.charAt( _column + 1 ) )
           {
             comment = _line.substring( _column + 2 );
           }
