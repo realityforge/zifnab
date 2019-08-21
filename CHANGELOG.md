@@ -1,6 +1,7 @@
 # Change Log
 
-### Unreleased
+### [v0.04](https://github.com/realityforge/zifnab/tree/v0.04) (2019-08-21)
+[Full Changelog](https://github.com/realityforge/zifnab/compare/v0.03...v0.04)
 
 * Rename `DataElement.assertTokenCount(int min,int max)` to `DataElement.assertTokenCountRange(int min,int max)` for the sake of improved clarity.
 * Add `DataElement.assertTokenCounts(int...)` helper method to assert that one of a set of token counts is expected.
