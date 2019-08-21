@@ -72,33 +72,32 @@ final class Parser
     {
       _column = 0;
       parseIndentation();
-      if ( _line.length() <= _column )
+      if ( _line.length() > _column )
       {
-        return;
-      }
-      else if ( '#' == _line.charAt( _column ) )
-      {
-        final SourceLocation location = newLocation();
-        final String comment;
-        if ( _line.length() > _column + 1 && ' ' == _line.charAt( _column + 1 ) )
+        if ( '#' == _line.charAt( _column ) )
         {
-          comment = _line.substring( _column + 2 );
+          final SourceLocation location = newLocation();
+          final String comment;
+          if ( _line.length() > _column + 1 && ' ' == _line.charAt( _column + 1 ) )
+          {
+            comment = _line.substring( _column + 2 );
+          }
+          else
+          {
+            comment = _line.substring( _column + 1 );
+          }
+          _lastNode = null == _parentNode ?
+                      _document.comment( location, comment ) :
+                      _parentNode.comment( location, comment );
         }
         else
         {
-          comment = _line.substring( _column + 1 );
+          final SourceLocation location = newLocation();
+          final String[] tokens = parseTokens();
+          _lastNode = null == _parentNode ?
+                      _document.element( location, tokens ) :
+                      _parentNode.element( location, tokens );
         }
-        _lastNode = null == _parentNode ?
-                    _document.comment( location, comment ) :
-                    _parentNode.comment( location, comment );
-      }
-      else
-      {
-        final SourceLocation location = newLocation();
-        final String[] tokens = parseTokens();
-        _lastNode = null == _parentNode ?
-                    _document.element( location, tokens ) :
-                    _parentNode.element( location, tokens );
       }
     }
   }
