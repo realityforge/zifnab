@@ -4,6 +4,10 @@ This document is essentially a list of shorthand notes describing work yet to co
 Unfortunately it is not complete enough for other people to pick work off the list and
 complete as there is too much un-said.
 
+* Emit doubles as integers if they are integer-like
+
+* Add tool that normalizes data format (i.e. remove unnecessary `"`, ```` etc )
+
 * Change usages of `Collections.unmodifiableList(...)` so that they are compiled out in
   production mode.
 
