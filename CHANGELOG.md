@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Rename the `zifnab` artifact to `zifnab-core` by moving the code to a sub-project. This is to enable other modules to be exported from the project.
+
 ### [v0.04](https://github.com/realityforge/zifnab/tree/v0.04) (2019-08-21)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.03...v0.04)
 

@@ -18,16 +18,23 @@ define 'zifnab' do
   pom.add_github_project('realityforge/zifnab')
   pom.add_developer('realityforge', 'Peter Donald')
 
-  pom.dependency_filter = Proc.new { |_| false }
-  compile.with PACKAGED_DEPS
+  define 'core' do
+    pom.dependency_filter = Proc.new { |_| false }
+    compile.with PACKAGED_DEPS
 
-  package(:jar)
-  package(:sources)
-  package(:javadoc)
+    package(:jar)
+    package(:sources)
+    package(:javadoc)
 
-  test.using :testng
-  test.with :gir
-  test.options[:java_args] = %W(-ea -Dzifnab.endless_sky_dir=#{ENV['ENDLESS_SKY_DIR'] || project._('../endless-sky')})
+    test.using :testng
+    test.with :gir
+    test.options[:java_args] = %W(-ea -Dzifnab.endless_sky_dir=#{ENV['ENDLESS_SKY_DIR'] || project._('../endless-sky')})
+  end
+
+  define 'example' do
+    compile.with project('core').package(:jar),
+                 project('core').compile.dependencies
+  end
 
   ipr.add_default_testng_configuration(:jvm_args => "-ea  -Dzifnab.endless_sky_dir=#{ENV['ENDLESS_SKY_DIR'] || project._('../endless-sky')}")
 
@@ -67,18 +74,3 @@ define 'zifnab' do
     end
   end
 end
-
-define 'example', :base_dir => "#{File.dirname(__FILE__)}/example" do
-  compile.options.source = '1.8'
-  compile.options.target = '1.8'
-
-  compile.with project('zifnab').package(:jar),
-               project('zifnab').compile.dependencies
-
-  package(:jar)
-
-  project.no_ipr
-end
-
-task('idea' => 'example:idea')
-task('package' => 'example:package')
