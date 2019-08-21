@@ -6,7 +6,7 @@ complete as there is too much un-said.
 
 * Emit doubles as integers if they are integer-like
 
-* Emit doubles without leading 0 to maintain consistency with current data sets.
+* Emit doubles without leading 0 or trailing 0 to maintain consistency with current data sets.
 
 * Add tool that normalizes data format (i.e. remove unnecessary `"`, ```` etc )
 
