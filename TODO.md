@@ -6,8 +6,6 @@ complete as there is too much un-said.
 
 * Emit doubles as integers if they are integer-like
 
-* Add tool that normalizes data format (i.e. remove unnecessary `"`, ```` etc )
-
 * Change usages of `Collections.unmodifiableList(...)` so that they are compiled out in
   production mode.
 
