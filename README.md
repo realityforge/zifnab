@@ -16,12 +16,12 @@ The Maven dependencies are:
 <dependency>
   <groupId>org.realityforge.zifnab</groupId>
   <artifactId>zifnab-hdf</artifactId>
-  <version>0.04</version>
+  <version>0.05</version>
 </dependency>
 <dependency>
   <groupId>org.realityforge.zifnab</groupId>
   <artifactId>zifnab-core</artifactId>
-  <version>0.04</version>
+  <version>0.05</version>
 </dependency>
 ```
 
