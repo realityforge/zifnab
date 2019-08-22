@@ -10,9 +10,14 @@ Zifnab is a simple library for manipulating and generating content for the [Endl
 ### Getting Started
 
 The library is released to Maven Central and can be downloaded using normal dependency download mechanisms.
-The Maven dependency is:
+The Maven dependencies are:
 
 ```xml
+<dependency>
+  <groupId>org.realityforge.zifnab</groupId>
+  <artifactId>zifnab-hdf</artifactId>
+  <version>0.04</version>
+</dependency>
 <dependency>
   <groupId>org.realityforge.zifnab</groupId>
   <artifactId>zifnab-core</artifactId>
@@ -24,7 +29,8 @@ See the `examples/` directory for a few examples of the tools in use.
 
 ### Data File Format
 
-The `zifnab.hdf` package contains tools for reading and writing the data file format used by `Endless Sky`.
+The `zifnab.hdf` package contains tools for reading and writing the data file format used by `Endless Sky`. The
+package is included in the `zifnab-hdf` artifact.
 
 #### Reading
 

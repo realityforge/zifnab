@@ -1,7 +1,6 @@
 package zifnab.hdf.test;
 
 import org.testng.annotations.Test;
-import zifnab.AbstractTest;
 import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 

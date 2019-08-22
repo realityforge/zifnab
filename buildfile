@@ -18,7 +18,7 @@ define 'zifnab' do
   pom.add_github_project('realityforge/zifnab')
   pom.add_developer('realityforge', 'Peter Donald')
 
-  define 'core' do
+  define 'hdf' do
     pom.dependency_filter = Proc.new { |_| false }
     compile.with PACKAGED_DEPS
 
@@ -28,7 +28,21 @@ define 'zifnab' do
 
     test.using :testng
     test.with :gir
-    test.options[:java_args] = %W(-ea -Dzifnab.endless_sky_dir=#{ENV['ENDLESS_SKY_DIR'] || project._('../endless-sky')})
+    test.options[:java_args] = %w(-ea)
+  end
+
+  define 'core' do
+    pom.dependency_filter = Proc.new { |_| false }
+    compile.with project('hdf').package(:jar),
+                 project('hdf').compile.dependencies
+
+    package(:jar)
+    package(:sources)
+    package(:javadoc)
+
+    test.using :testng
+    test.with :gir
+    test.options[:java_args] = %W(-ea -Dzifnab.endless_sky_dir=#{ENV['ENDLESS_SKY_DIR'] || project._('../../endless-sky')})
   end
 
   define 'example' do

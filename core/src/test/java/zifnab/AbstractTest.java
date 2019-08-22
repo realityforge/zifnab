@@ -16,7 +16,6 @@ import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
 import zifnab.hdf.DataFile;
 import zifnab.hdf.DataParseException;
-import zifnab.hdf.SourceLocation;
 import static org.testng.Assert.*;
 
 @SuppressWarnings( { "WeakerAccess", "SameParameterValue" } )
@@ -47,13 +46,6 @@ public abstract class AbstractTest
     throws IOException
   {
     return Files.createTempFile( "zifnab", ".txt" );
-  }
-
-  @Nonnull
-  protected final String readContent( @Nonnull final Path file )
-    throws IOException
-  {
-    return new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
   }
 
   protected final void writeContent( @Nonnull final Path path, @Nonnull final String content )
@@ -87,12 +79,6 @@ public abstract class AbstractTest
     new DataFile( file, document ).write();
     final String encodedData = new String( Files.readAllBytes( file ), StandardCharsets.UTF_8 );
     assertEquals( encodedData, data );
-  }
-
-  @Nonnull
-  protected final SourceLocation randomSourceLocation()
-  {
-    return new SourceLocation( randomString(), randomPositiveInt(), randomPositiveInt() );
   }
 
   @Nonnull

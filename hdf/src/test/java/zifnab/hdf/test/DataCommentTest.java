@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
-import zifnab.AbstractTest;
 import zifnab.hdf.DataComment;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
