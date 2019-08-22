@@ -1,6 +1,7 @@
 # Change Log
 
-### Unreleased
+### [v0.05](https://github.com/realityforge/zifnab/tree/v0.05) (2019-08-23)
+[Full Changelog](https://github.com/realityforge/zifnab/compare/v0.04...v0.05)
 
 * Rename the `zifnab` artifact to `zifnab-core` by moving the code to a sub-project. This is to enable other modules to be exported from the project.
 * Extract the `zifnab.hdf` package into a separate maven artifact with artifactId `zifnab-hdf`. This allows access to the tools to read and write the Endless Sky's data format without caring about the entity representation.
