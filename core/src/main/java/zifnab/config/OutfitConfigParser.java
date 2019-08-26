@@ -66,8 +66,7 @@ final class OutfitConfigParser
           break;
         case "flare sprite":
           element.assertTokenCount( 2 );
-          //TODO: Should be parsing a SpriteConfig here
-          config.setFlareSprite( element.getStringAt( 1 ) );
+          config.setFlareSprite( SpriteConfig.from( element ) );
           break;
         case "flare sound":
           element.assertLeafNode();
@@ -139,14 +138,10 @@ final class OutfitConfigParser
           config.setNoDamageScaling( Boolean.TRUE );
           break;
         case "sprite":
-          //TODO: Should be parsing a SpriteConfig here
-          element.assertTokenCount( 2 );
-          config.setSprite( element.getStringAt( 1 ) );
+          config.setSprite( SpriteConfig.from( element ) );
           break;
         case "hardpoint sprite":
-          //TODO: Should be parsing a SpriteConfig here
-          element.assertTokenCount( 2 );
-          config.setHardpointSprite( element.getStringAt( 1 ) );
+          config.setHardpointSprite( SpriteConfig.from( element ) );
           break;
         case "sound":
           element.assertTokenCount( 2 );

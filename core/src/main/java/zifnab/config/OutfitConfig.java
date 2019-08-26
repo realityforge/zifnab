@@ -34,9 +34,8 @@ public final class OutfitConfig
   private String category;
   @Nullable
   private String description;
-  //TODO: Flare sprite should be a config which contains all the sprite data
   @Nullable
-  private String flareSprite;
+  private SpriteConfig flareSprite;
   @Nullable
   private String flareSound;
   @Nullable
@@ -119,12 +118,12 @@ public final class OutfitConfig
   }
 
   @Nullable
-  public String getFlareSprite()
+  public SpriteConfig getFlareSprite()
   {
     return flareSprite;
   }
 
-  public void setFlareSprite( @Nullable final String flareSprite )
+  public void setFlareSprite( @Nullable final SpriteConfig flareSprite )
   {
     this.flareSprite = flareSprite;
   }
@@ -260,9 +259,9 @@ public final class OutfitConfig
     @Nullable
     private Boolean noDamageScaling;
     @Nullable
-    private String sprite;
+    private SpriteConfig sprite;
     @Nullable
-    private String hardpointSprite;
+    private SpriteConfig hardpointSprite;
     @Nullable
     private String sound;
     @Nullable
@@ -375,23 +374,23 @@ public final class OutfitConfig
     }
 
     @Nullable
-    public String getSprite()
+    public SpriteConfig getSprite()
     {
       return sprite;
     }
 
-    public void setSprite( @Nullable final String sprite )
+    public void setSprite( @Nullable final SpriteConfig sprite )
     {
       this.sprite = sprite;
     }
 
     @Nullable
-    public String getHardpointSprite()
+    public SpriteConfig getHardpointSprite()
     {
       return hardpointSprite;
     }
 
-    public void setHardpointSprite( @Nullable final String hardpointSprite )
+    public void setHardpointSprite( @Nullable final SpriteConfig hardpointSprite )
     {
       this.hardpointSprite = hardpointSprite;
     }

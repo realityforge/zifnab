@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import zifnab.AbstractTest;
 import zifnab.config.OutfitConfig;
 import zifnab.config.Position;
+import zifnab.config.SpriteConfig;
 import zifnab.hdf.DataAccessException;
 import zifnab.hdf.DataDocument;
 import zifnab.hdf.DataElement;
@@ -113,7 +114,10 @@ public class OutfitConfigTest
     assertEquals( outfit.getCost(), 25000 );
     assertEquals( outfit.getThumbnail(), "outfit/boom" );
     assertEquals( outfit.getMass(), 2.0D );
-    assertEquals( outfit.getFlareSprite(), "effect/atomic flare/tiny" );
+    final SpriteConfig flareSprite = outfit.getFlareSprite();
+    assertNotNull( flareSprite );
+    assertEquals( flareSprite.getName(), "effect/atomic flare/tiny" );
+    assertEquals( flareSprite.getFrameRate(), 14D );
     assertEquals( outfit.getFlareSound(), "tinkle/tinkle" );
     assertEquals( outfit.getAfterburnerEffect(), "ionic afterburner" );
     assertEquals( outfit.getFlotsamSprite(), "effect/flotsam aluminum" );
@@ -139,8 +143,13 @@ public class OutfitConfigTest
     assertEquals( weapon.getAmmo(), "Gatling Gun Ammo" );
     assertEquals( weapon.getSound(), "explosion tiny" );
     assertEquals( weapon.getIcon(), "icon/gat" );
-    assertEquals( weapon.getSprite(), "projectile/tinyflare" );
-    assertEquals( weapon.getHardpointSprite(), "hardpoint/pulse turret" );
+    final SpriteConfig sprite = weapon.getSprite();
+    assertNotNull( sprite );
+    assertEquals( sprite.getName(), "projectile/tinyflare" );
+    assertTrue( sprite.isRandomStartFrame() );
+    final SpriteConfig hardpointSprite = weapon.getHardpointSprite();
+    assertNotNull( hardpointSprite );
+    assertEquals( hardpointSprite.getName(), "hardpoint/pulse turret" );
     assertEquals( weapon.getLifetime(), 1 );
     assertEquals( weapon.getRandomLifetime(), 2 );
     assertEquals( weapon.getReload(), 3D );
@@ -417,6 +426,7 @@ public class OutfitConfigTest
       "\tthumbnail outfit/boom\n" +
       "\tmass 2.0\n" +
       "\t\"flare sprite\" \"effect/atomic flare/tiny\"\n" +
+      "\t\t\"frame rate\" 14.0\n" +
       "\t\"flare sound\" tinkle/tinkle\n" +
       "\t\"afterburner effect\" \"ionic afterburner\"\n" +
       "\t\"flotsam sprite\" \"effect/flotsam aluminum\"\n" +
@@ -438,6 +448,7 @@ public class OutfitConfigTest
       "\t\tphasing\n" +
       "\t\t\"no damage scaling\"\n" +
       "\t\tsprite projectile/tinyflare\n" +
+      "\t\t\t\"random start frame\"\n" +
       "\t\t\"hardpoint sprite\" \"hardpoint/pulse turret\"\n" +
       "\t\t\"hardpoint offset\" 7.0\n" +
       "\t\tsound \"explosion tiny\"\n" +

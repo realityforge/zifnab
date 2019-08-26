@@ -48,10 +48,10 @@ final class OutfitConfigEncoder
     {
       element.element( "mass", String.valueOf( mass ) );
     }
-    final String flareSprite = outfit.getFlareSprite();
+    final SpriteConfig flareSprite = outfit.getFlareSprite();
     if ( null != flareSprite )
     {
-      element.element( "flare sprite", flareSprite );
+      SpriteConfig.encode( element, "flare sprite", flareSprite );
     }
     final String flareSound = outfit.getFlareSound();
     if ( null != flareSound )
@@ -115,17 +115,15 @@ final class OutfitConfigEncoder
     {
       element.element( "no damage scaling" );
     }
-    final String sprite = config.getSprite();
+    final SpriteConfig sprite = config.getSprite();
     if ( null != sprite )
     {
-      //TODO: Should emit a SpriteConfig here
-      element.element( "sprite", sprite );
+      SpriteConfig.encode( element, "sprite", sprite );
     }
-    final String hardpointSprite = config.getHardpointSprite();
+    final SpriteConfig hardpointSprite = config.getHardpointSprite();
     if ( null != hardpointSprite )
     {
-      //TODO: Should emit a SpriteConfig here
-      element.element( "hardpoint sprite", hardpointSprite );
+      SpriteConfig.encode( element, "hardpoint sprite", hardpointSprite );
     }
     final Position hardpointOffset = config.getHardpointOffset();
     if ( null != hardpointOffset )
