@@ -52,7 +52,7 @@ public final class OutfitConfig
   private final Set<String> licenses = new HashSet<>();
   //TODO: These arbitrary attributes can probably be extracted as actual properties
   @Nonnull
-  private final Map<String, String> attributes = new HashMap<>();
+  private final Map<String, Double> attributes = new HashMap<>();
   private int cost;
   private double mass;
 
@@ -231,12 +231,12 @@ public final class OutfitConfig
   }
 
   @Nonnull
-  public Map<String, String> getAttributes()
+  public Map<String, Double> getAttributes()
   {
     return Collections.unmodifiableMap( attributes );
   }
 
-  public void addAttribute( @Nonnull final String key, @Nonnull final String value )
+  public void addAttribute( @Nonnull final String key, @Nonnull final Double value )
   {
     attributes.put( key, value );
   }

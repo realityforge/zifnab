@@ -74,8 +74,11 @@ final class OutfitConfigEncoder
       final DataElement licensesElement = element.element( "licenses" );
       licenses.stream().sorted().forEachOrdered( licensesElement::element );
     }
-    final Map<String, String> attributes = outfit.getAttributes();
-    attributes.keySet().stream().sorted().forEachOrdered( key -> element.element( key, attributes.get( key ) ) );
+    final Map<String, Double> attributes = outfit.getAttributes();
+    attributes.keySet()
+      .stream()
+      .sorted()
+      .forEachOrdered( key -> element.element( key, String.valueOf( attributes.get( key ) ) ) );
 
     final OutfitConfig.Weapon weapon = outfit.getWeapon();
     if ( null != weapon )

@@ -123,16 +123,16 @@ public class OutfitConfigTest
     assertEquals( outfit.getFlotsamSprite(), "effect/flotsam aluminum" );
     assertEquals( outfit.getAmmo(), "boomers" );
     assertEquals( outfit.getLicenses(), new HashSet<>( Arrays.asList( "Ace Pilots", "Coalition" ) ) );
-    final Map<String, String> attributes = outfit.getAttributes();
+    final Map<String, Double> attributes = outfit.getAttributes();
     assertEquals( attributes.size(), 8 );
-    assertEquals( attributes.get( "afterburner thrust" ), "29.0" );
-    assertEquals( attributes.get( "outfit space" ), "-8" );
-    assertEquals( attributes.get( "afterburner energy" ), "5.1" );
-    assertEquals( attributes.get( "boom round capacity" ), "3000" );
-    assertEquals( attributes.get( "afterburner fuel" ), ".1" );
-    assertEquals( attributes.get( "weapon capacity" ), "-8" );
-    assertEquals( attributes.get( "gun ports" ), "-1" );
-    assertEquals( attributes.get( "afterburner heat" ), "12.0" );
+    assertEquals( attributes.get( "afterburner thrust" ), 29D );
+    assertEquals( attributes.get( "outfit space" ), -8D );
+    assertEquals( attributes.get( "afterburner energy" ), 5.1D );
+    assertEquals( attributes.get( "boom round capacity" ), 3000D );
+    assertEquals( attributes.get( "afterburner fuel" ), 0.1D );
+    assertEquals( attributes.get( "weapon capacity" ), -8D );
+    assertEquals( attributes.get( "gun ports" ), -1D );
+    assertEquals( attributes.get( "afterburner heat" ), 12D );
     final OutfitConfig.Weapon weapon = outfit.getWeapon();
     assertNotNull( weapon );
     assertEquals( weapon.getStream(), Boolean.TRUE );
@@ -264,13 +264,13 @@ public class OutfitConfigTest
       "\t\t\"Ace Pilots\"\n" +
       "\t\tCoalition\n" +
       "\t\"afterburner energy\" 5.1\n" +
-      "\t\"afterburner fuel\" .1\n" +
+      "\t\"afterburner fuel\" 0.1\n" +
       "\t\"afterburner heat\" 12.0\n" +
       "\t\"afterburner thrust\" 29.0\n" +
-      "\t\"boom round capacity\" 3000\n" +
-      "\t\"gun ports\" -1\n" +
-      "\t\"outfit space\" -8\n" +
-      "\t\"weapon capacity\" -8\n" +
+      "\t\"boom round capacity\" 3000.0\n" +
+      "\t\"gun ports\" -1.0\n" +
+      "\t\"outfit space\" -8.0\n" +
+      "\t\"weapon capacity\" -8.0\n" +
       "\tweapon\n" +
       "\t\tstream\n" +
       "\t\tcluster\n" +
@@ -434,13 +434,13 @@ public class OutfitConfigTest
       "\t\t\"Ace Pilots\"\n" +
       "\t\tCoalition\n" +
       "\t\"afterburner energy\" 5.1\n" +
-      "\t\"afterburner fuel\" .1\n" +
+      "\t\"afterburner fuel\" 0.1\n" +
       "\t\"afterburner heat\" 12.0\n" +
       "\t\"afterburner thrust\" 29.0\n" +
-      "\t\"boom round capacity\" 3000\n" +
-      "\t\"gun ports\" -1\n" +
-      "\t\"outfit space\" -8\n" +
-      "\t\"weapon capacity\" -8\n" +
+      "\t\"boom round capacity\" 3000.0\n" +
+      "\t\"gun ports\" -1.0\n" +
+      "\t\"outfit space\" -8.0\n" +
+      "\t\"weapon capacity\" -8.0\n" +
       "\tweapon\n" +
       "\t\tstream\n" +
       "\t\tcluster\n" +

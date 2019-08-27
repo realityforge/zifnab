@@ -3,6 +3,7 @@
 ### Unreleased
 
 * Model the `outfit/flare sprite`, `outfit/weapon/sprite`, `outfit/weapon/hardpoint sprite` and `system/object/sprite` properties as sprite configurations.
+* Fix the type of the arbitrary attributes associated with `outfit` entities so that they are represented as `double` values.
 
 ### [v0.05](https://github.com/realityforge/zifnab/tree/v0.05) (2019-08-23)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.04...v0.05)

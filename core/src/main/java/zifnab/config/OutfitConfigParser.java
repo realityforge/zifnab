@@ -96,7 +96,7 @@ final class OutfitConfigParser
           // Must be one of the arbitrary attributes
           element.assertLeafNode();
           element.assertTokenCount( 2 );
-          config.addAttribute( element.getStringAt( 0 ), element.getStringAt( 1 ) );
+          config.addAttribute( element.getStringAt( 0 ), element.getDoubleAt( 1 ) );
       }
     }
   }
