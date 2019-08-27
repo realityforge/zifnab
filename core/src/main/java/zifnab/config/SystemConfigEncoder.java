@@ -107,10 +107,10 @@ final class SystemConfigEncoder
     final String name = object.getName();
     final DataElement element = null != name ? parent.element( "object", name ) : parent.element( "object" );
 
-    final String sprite = object.getSprite();
+    final SpriteConfig sprite = object.getSprite();
     if ( null != sprite )
     {
-      element.element( "sprite", sprite );
+      SpriteConfig.encode( element, "sprite", sprite );
     }
 
     element.element( "distance", String.valueOf( object.getDistance() ) );

@@ -2,7 +2,7 @@
 
 ### Unreleased
 
-* Model the `outfit/flare sprite`, `outfit/weapon/sprite` and `outfit/weapon/hardpoint sprite` properties as sprite configurations.
+* Model the `outfit/flare sprite`, `outfit/weapon/sprite`, `outfit/weapon/hardpoint sprite` and `system/object/sprite` properties as sprite configurations.
 
 ### [v0.05](https://github.com/realityforge/zifnab/tree/v0.05) (2019-08-23)
 [Full Changelog](https://github.com/realityforge/zifnab/compare/v0.04...v0.05)

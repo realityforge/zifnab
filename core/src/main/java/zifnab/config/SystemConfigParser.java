@@ -120,7 +120,7 @@ final class SystemConfigParser
         case "sprite":
           //TODO: Should be parsing a SpriteConfig here
           element.assertTokenCount( 2 );
-          object.setSprite( element.getStringAt( 1 ) );
+          object.setSprite( SpriteConfig.from( element ) );
           break;
         case "distance":
           element.assertLeafNode();

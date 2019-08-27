@@ -451,7 +451,7 @@ public final class SystemConfig
     @Nullable
     private final String name;
     @Nullable
-    private String sprite;
+    private SpriteConfig sprite;
     private double distance;
     private double period;
     private double offset;
@@ -470,12 +470,12 @@ public final class SystemConfig
     }
 
     @Nullable
-    public String getSprite()
+    public SpriteConfig getSprite()
     {
       return sprite;
     }
 
-    public void setSprite( @Nullable final String sprite )
+    public void setSprite( @Nullable final SpriteConfig sprite )
     {
       this.sprite = sprite;
     }
