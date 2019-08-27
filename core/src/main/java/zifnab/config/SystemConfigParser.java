@@ -118,8 +118,6 @@ final class SystemConfigParser
       switch ( name )
       {
         case "sprite":
-          //TODO: Should be parsing a SpriteConfig here
-          element.assertTokenCount( 2 );
           object.setSprite( SpriteConfig.from( element ) );
           break;
         case "distance":
