@@ -16,8 +16,7 @@ final class GalaxyConfigParser
   {
     element.assertTokenCount( 2 );
     element.assertTokenName( "galaxy" );
-    final String name = element.getStringAt( 1 );
-    final GalaxyConfig config = new GalaxyConfig( name );
+    final GalaxyConfig config = new GalaxyConfig( element.getStringAt( 1 ) );
     parseConfig( config, element.getChildElements() );
     return config;
   }
