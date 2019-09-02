@@ -4,12 +4,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import zifnab.assets.Image;
 import zifnab.assets.ImageRegistry;
+import zifnab.config.EffectConfig;
 import zifnab.config.GalaxyConfig;
 import zifnab.config.OutfitConfig;
 import zifnab.config.StarConfig;
@@ -32,6 +35,8 @@ public class DataFileDataLoadTest
         .filter( Files::isRegularFile )
         .filter( file -> file.toString().endsWith( ".txt" ) )
         .collect( Collectors.toList() );
+
+    final Set<String> attributeKeys = new HashSet<>();
 
     boolean failed = false;
     for ( final Path file : files )
@@ -61,11 +66,18 @@ public class DataFileDataLoadTest
           {
             final OutfitConfig config = OutfitConfig.from( element );
             System.out.println( "Loaded " + config.getName() + " outfit." );
+
+            attributeKeys.addAll( config.getAttributes().keySet() );
           }
           else if ( StarConfig.matches( element ) )
           {
             final StarConfig config = StarConfig.from( element );
             System.out.println( "Loaded " + config.getName() + " star." );
+          }
+          else if ( EffectConfig.matches( element ) )
+          {
+            final EffectConfig config = EffectConfig.from( element );
+            System.out.println( "Loaded " + config.getName() + " effect." );
           }
         }
       }
@@ -78,6 +90,11 @@ public class DataFileDataLoadTest
     }
 
     assertFalse( failed );
+
+    for ( final String attributeKey : attributeKeys )
+    {
+      System.out.println( "Outfit Attribute Key = " + attributeKey );
+    }
   }
 
   @Test
