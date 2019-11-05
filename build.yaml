@@ -9,4 +9,4 @@ artifacts:
 
   javax_annotation: org.realityforge.javax.annotation:javax.annotation:jar:1.0.1
 
-  gir: org.realityforge.gir:gir-core:jar:0.10
+  gir: org.realityforge.gir:gir-core:jar:0.11

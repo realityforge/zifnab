@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Upgrade the `org.realityforge.gir` artifact to version `0.11`.
 * Upgrade the `org.realityforge.javax.annotation` artifact to version `1.0.1`.
 * Model the `outfit/flare sprite`, `outfit/weapon/sprite`, `outfit/weapon/hardpoint sprite` and `system/object/sprite` properties as sprite configurations.
 * Fix the type of the arbitrary attributes associated with `outfit` entities so that they are represented as `double` values.
