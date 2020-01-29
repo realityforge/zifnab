@@ -1,6 +1,5 @@
 # zifnab: Endless Sky Content Editing Tools
 
-[![Build Status](https://secure.travis-ci.org/realityforge/zifnab.svg?branch=master)](http://travis-ci.org/realityforge/zifnab)
 [<img src="https://img.shields.io/maven-central/v/org.realityforge.zifnab/zifnab-core.svg?label=latest%20release"/>](https://search.maven.org/search?q=g:org.realityforge.zifnab%20a:zifnab-core)
 
 ## What is zifnab?
